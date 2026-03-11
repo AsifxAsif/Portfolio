@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Basic Meta Tags -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!-- Primary Meta Tags -->
+    <title>Projects Portfolio - Md. Asifuzzaman | Software Engineer</title>
+    <meta name="title" content="Projects Portfolio - Md. Asifuzzaman | Software Engineer">
+    <meta name="description"
+        content="Explore 15+ software engineering projects by Md. Asifuzzaman including Nexus E-commerce, Lost & Found Android App, Leaf Disease Classification AI, IoT Energy Monitoring, and more.">
+    <meta name="keywords"
+        content="Software Projects, E-commerce Platform, Android App, AI ML Projects, IoT Projects, Network Design, Java Spring Boot, React, Python, Full-Stack Projects">
+    <meta name="author" content="Md. Asifuzzaman">
+    <meta name="robots" content="index, follow">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://asifxasif.github.io/projects.html">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://asifxasif.github.io/projects.html">
+    <meta property="og:title" content="Projects Portfolio - Md. Asifuzzaman | Software Engineer">
+    <meta property="og:description"
+        content="Explore 15+ software engineering projects including full-stack applications, AI/ML models, mobile apps, and IoT systems.">
+    <meta property="og:image" content="https://asifxasif.github.io/assets/og-image-projects.webp">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Md. Asifuzzaman Projects Portfolio">
+    <meta property="og:site_name" content="Md. Asifuzzaman Portfolio">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://asifxasif.github.io/projects.html">
+    <meta name="twitter:title" content="Projects Portfolio - Md. Asifuzzaman | Software Engineer">
+    <meta name="twitter:description"
+        content="Explore 15+ software engineering projects including full-stack applications, AI/ML models, mobile apps, and IoT systems.">
+    <meta name="twitter:image" content="https://asifxasif.github.io/assets/og-image-projects.webp">
+
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#ff2a2a">
+
+    <!-- Icons & Favicon -->
+    <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
+    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+
+    <!-- Preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&display=swap" media="print"
+        onload="this.media='all'">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="style.css">
+
+    <noscript>
+        <link rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&display=swap">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    </noscript>
+
+    <!-- JSON-LD Structured Data - ItemList -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "ItemList",
+        "name": "Md. Asifuzzaman's Software Projects",
+        "description": "Collection of software engineering projects including web, mobile, AI, and IoT applications.",
+        "numberOfItems": 9,
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Nexus E-commerce Platform",
+                "description": "Hybrid e-commerce platform with comprehensive testing suite using Spring Boot and JUnit."
+            },
+            {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Lost & Found Android App",
+                "description": "Mobile application for reporting lost items with Firebase integration."
+            },
+            {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "Leaf Disease Classification AI",
+                "description": "Deep learning framework achieving 96.74% accuracy for agricultural disease detection."
+            }
+        ]
+    }
+    </script>
+    
+    <style>
+        .projects-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+            transition: min-height 0.3s ease;
+            position: relative;
+        }
+
+        .project-card-detailed {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            transition: opacity 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.9);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .project-card-detailed:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+        }
+
+        .project-card-detailed.hidden {
+            display: none !important;
+        }
+
+        .project-header {
+            padding: 25px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .project-category {
+            display: inline-block;
+            padding: 6px 15px;
+            background: black;
+            color: white;
+            border-radius: 15px;
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+        }
+
+        .project-header h3 {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 10px;
+        }
+
+        .project-meta {
+            display: flex;
+            gap: 15px;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-secondary);
+            flex-wrap: wrap;
+        }
+
+        .project-content {
+            padding: 25px;
+            flex: 1;
+        }
+
+        .project-description {
+            font-size: 13px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .tech-stack {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .tech-tag {
+            padding: 5px 12px;
+            background: #f0f0f0;
+            border-radius: 15px;
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-secondary);
+        }
+
+        .project-features {
+            margin-bottom: 20px;
+        }
+
+        .features-title {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .features-list {
+            list-style: none;
+        }
+
+        .features-list li {
+            position: relative;
+            padding-left: 20px;
+            margin-bottom: 8px;
+            font-size: 12px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        .features-list li:before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: var(--accent-red);
+        }
+
+        .project-links {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .project-link {
+            flex: 1;
+            padding: 10px;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 12px;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+        }
+
+        .project-link.primary {
+            background: black;
+            color: white;
+        }
+
+        .project-link.primary:hover {
+            background: var(--accent-red);
+            transform: translateY(-2px);
+        }
+
+        .project-link.secondary {
+            background: transparent;
+            color: var(--text-primary);
+            border: 1px solid #ddd;
+        }
+
+        .project-link.secondary:hover {
+            border-color: black;
+            transform: translateY(-2px);
+        }
+
+        .project-stats {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px 25px;
+            background: #f8f9fa;
+            border-top: 1px solid #f0f0f0;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-secondary);
+            margin-top: auto;
+        }
+
+        .project-stat {
+            text-align: center;
+            flex: 1;
+        }
+
+        .project-stat .number {
+            display: block;
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 3px;
+        }
+
+        .filter-section {
+            margin-bottom: 30px;
+        }
+
+        .category-filters {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            padding: 10px 0;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .category-filter {
+            padding: 8px 20px;
+            background: transparent;
+            border: 1.5px solid black;
+            border-radius: 20px;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            color: var(--text-primary);
+        }
+
+        .category-filter:hover {
+            background: black;
+            color: white;
+        }
+
+        .category-filter.active {
+            background: black;
+            color: white;
+        }
+
+        .no-projects-message {
+            text-align: center;
+            padding: 50px;
+            grid-column: 1 / -1;
+            color: var(--text-secondary);
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        }
+
+        @media (max-width: 1024px) {
+            .projects-container {
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            .projects-container {
+                grid-template-columns: 1fr;
+            }
+
+            .project-header h3 {
+                font-size: 18px;
+            }
+
+            .project-meta {
+                flex-direction: column;
+                gap: 5px;
+            }
+
+            .project-links {
+                flex-direction: column;
+            }
+
+            .project-stats {
+                flex-wrap: wrap;
+                gap: 15px;
+            }
+
+            .category-filters {
+                flex-wrap: wrap;
+            }
+        }
+
+        @media (max-width: 480px) {
+
+            .project-header,
+            .project-content {
+                padding: 20px;
+            }
+
+            .project-header h3 {
+                font-size: 16px;
+            }
+
+            .project-description {
+                font-size: 12px;
+            }
+
+            .features-list li {
+                font-size: 11px;
+            }
+
+            .tech-tag {
+                padding: 4px 10px;
+                font-size: 8px;
+            }
+
+            .project-stat .number {
+                font-size: 12px;
+            }
+
+            .category-filter {
+                padding: 6px 15px;
+                font-size: 9px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="main-container">
+        <nav class="navbar">
+            <a href="index.html" class="logo">
+                <img src="./assets/Name.webp" alt="">
+            </a>
+
+            <div class="hamburger-menu" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="projects.html" class="active">Projects</a>
+                <a href="tech.html">Tech Stack</a>
+                <a href="certificates.html">Certificates</a>
+                <a href="resume.html">Resume</a>
+                <a href="profile.html">Profile</a>
+            </div>
+
+            <div class="profile-icon">
+                <a href="profile.html">
+                    <img src="./assets/profile.webp" alt="Profile">
+                </a>
+            </div>
+        </nav>
+
+        <a href="javascript:history.back()" class="back-btn">
+            <i class="fa-solid fa-arrow-left"></i> Go Back
+        </a>
+
+        <div class="page-header">
+            <h1>PROJECT PORTFOLIO</h1>
+            <p>Complete collection of academic and personal projects showcasing full-stack development, AI integration,
+                testing, and problem-solving skills.</p>
+        </div>
+
+        <div class="filter-section">
+            <div class="category-filters">
+                <button class="category-filter active" data-category="all">All Projects</button>
+                <button class="category-filter" data-category="web">Web Development</button>
+                <button class="category-filter" data-category="mobile">Mobile Apps</button>
+                <button class="category-filter" data-category="ai">AI/ML</button>
+                <button class="category-filter" data-category="testing">Testing & QA</button>
+                <button class="category-filter" data-category="network">Networks</button>
+                <button class="category-filter" data-category="system">Systems</button>
+            </div>
+        </div>
+
+        <div class="projects-container" id="projectsContainer">
+            <!-- Projects will be dynamically loaded from projects-data.js -->
+        </div>
+    </div>
+
+    <script src="back-button.js"></script>
+    <!-- Load project data -->
+    <script src="projects-data.js"></script>
+    <script>
+        // Animation Script - FIXED VERSION
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        let particleCount;
+
+        // Define Particle class FIRST before it's used
+        class Particle {
+            constructor() {
+                this.reset();
+            }
+            reset() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2.5 + 1;
+                this.speedX = Math.random() * 0.4 - 0.2;
+                this.speedY = Math.random() * 0.4 - 0.2;
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) {
+                    this.reset();
+                }
+            }
+            draw() {
+                ctx.fillStyle = 'rgba(0,0,0,1)';
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+            // Update particle count based on screen size
+            particleCount = window.innerWidth < 768 ? 30 : 100;
+
+            // Recreate particles to fit new canvas size
+            particles = [];
+            for (let i = 0; i < particleCount; i++) {
+                particles.push(new Particle());
+            }
+        }
+
+        canvas.style.position = 'fixed';
+        canvas.style.top = '0';
+        canvas.style.left = '0';
+        canvas.style.zIndex = '-1';
+        canvas.style.pointerEvents = 'none';
+        document.body.appendChild(canvas);
+
+        // Debounced resize handler
+        let resizeTimeout;
+        window.addEventListener('resize', function () {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(function () {
+                requestAnimationFrame(resizeCanvas);
+            }, 100);
+        });
+
+        window.addEventListener('orientationchange', function () {
+            setTimeout(function () {
+                requestAnimationFrame(resizeCanvas);
+            }, 150);
+        });
+
+        // Initial resize
+        resizeCanvas();
+
+        function connect() {
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const dist = Math.hypot(dx, dy);
+                    if (dist < 100) {
+                        ctx.strokeStyle = `rgba(0,0,0,${1 - dist / 300})`;
+                        ctx.lineWidth = 0.5;
+                        ctx.beginPath();
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => { p.update(); p.draw(); });
+            connect();
+            requestAnimationFrame(animate);
+        }
+        animate();
+
+        // Force a resize after a short delay
+        setTimeout(function () {
+            requestAnimationFrame(resizeCanvas);
+        }, 500);
+
+        // Periodic check for canvas size (every 2 seconds)
+        setInterval(function () {
+            if (canvas.width !== window.innerWidth || canvas.height !== window.innerHeight) {
+                requestAnimationFrame(resizeCanvas);
+            }
+        }, 2000);
+
+        // Navigation
+        function toggleMenu() {
+            const navLinks = document.querySelector('.nav-links');
+            navLinks.classList.toggle('active');
+            const hamburger = document.querySelector('.hamburger-menu');
+            hamburger.classList.toggle('active');
+        }
+
+        document.addEventListener('click', (e) => {
+            const navLinks = document.querySelector('.nav-links');
+            const hamburger = document.querySelector('.hamburger-menu');
+            if (!e.target.closest('.nav-links') && !e.target.closest('.hamburger-menu')) {
+                navLinks.classList.remove('active');
+                hamburger.classList.remove('active');
+            }
+        });
+    </script>
+    <script>
+        // Store all projects data
+        let allProjects = [];
+
+        // Filter projects by category
+        function filterProjects(category) {
+            // Update active filter button
+            const filters = document.querySelectorAll('.category-filter');
+            filters.forEach(filter => {
+                filter.classList.remove('active');
+                if (filter.dataset.category === category) {
+                    filter.classList.add('active');
+                }
+            });
+
+            const container = document.getElementById('projectsContainer');
+
+            // Store current scroll position
+            const scrollPosition = window.scrollY;
+
+            // Clear container
+            container.innerHTML = '';
+
+            // Filter projects
+            const filteredProjects = category === 'all'
+                ? allProjects
+                : allProjects.filter(project => project.categories.includes(category));
+
+            // Show message if no projects found
+            if (filteredProjects.length === 0) {
+                const noProjectsMessage = document.createElement('div');
+                noProjectsMessage.className = 'no-projects-message';
+                noProjectsMessage.innerHTML = '<p>No projects found in this category</p>';
+                container.appendChild(noProjectsMessage);
+            } else {
+                // Render filtered projects
+                filteredProjects.forEach(project => {
+                    const projectCard = createProjectCard(project);
+                    container.appendChild(projectCard);
+                });
+            }
+
+            // Restore scroll position
+            window.scrollTo(0, scrollPosition);
+        }
+
+        // Load projects from projectsData
+        function loadProjects() {
+            const container = document.getElementById('projectsContainer');
+
+            // Store all projects
+            allProjects = projectsData;
+
+            // Clear container
+            container.innerHTML = '';
+
+            // Render all projects
+            allProjects.forEach(project => {
+                const projectCard = createProjectCard(project);
+                container.appendChild(projectCard);
+            });
+
+            // Add click event listeners to filter buttons
+            const filterButtons = document.querySelectorAll('.category-filter');
+            filterButtons.forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const category = e.target.dataset.category;
+                    filterProjects(category);
+                });
+            });
+        }
+
+        /// Create project card HTML
+        function createProjectCard(project) {
+            const card = document.createElement('div');
+            card.className = 'project-card-detailed';
+
+            // Set category color
+            const categoryColors = {
+                'web': 'var(--accent-red)',
+                'mobile': '#00a86b',
+                'ai': '#8e2de2',
+                'system': '#f46b45',
+                'network': '#4a00e0',
+                'testing': '#000428'
+            };
+
+            const categoryColor = categoryColors[project.categories[0]] || 'black';
+
+            // Get stat keys and values safely
+            const statKeys = Object.keys(project.stats || {});
+
+            // Function to get stat value by index with fallback
+            function getStatValue(index) {
+                if (!project.stats || !statKeys[index]) return '';
+                const key = statKeys[index];
+                return project.stats[key] || '';
+            }
+
+            // Function to get stat label by index
+            function getStatLabel(index) {
+                if (!statKeys[index]) return '';
+                // Format the key: remove numbers, add spaces before capitals
+                return statKeys[index]
+                    .replace(/([A-Z])/g, ' $1') // Add space before capitals
+                    .replace(/[0-9]/g, '') // Remove numbers
+                    .trim()
+                    .toUpperCase() || statKeys[index].toUpperCase();
+            }
+
+            // Generate code sample link based on project
+            function getCodeSampleLink(project) {
+                const codeLinks = {
+                    1: "https://github.com/AsifxAsif/Nexus_backend",
+                    2: "https://github.com/Nayma-Amin/Lost-and-Found",
+                    3: "https://github.com/AsifxAsif/Hog_plum_disease",
+                    4: "https://github.com/AsifxAsif/Smart-Energy-Monitoring",
+                    5: "https://github.com/AsifxAsif/Campus-Network-Design",
+                    6: "https://github.com/yourusername/restaurant-management",
+                    7: "https://github.com/AsifxAsif/CSE412_Group2",
+                    8: "https://github.com/yourusername/edmond-karp-algorithm",
+                    9: "https://github.com/AsifxAsif/XTry-Visual-TryOn"
+                };
+
+                return codeLinks[project.id] || "https://github.com/yourusername";
+            }
+
+            card.innerHTML = `
+        <div class="project-header">
+            <span class="project-category" style="background: ${categoryColor};">${project.category}</span>
+            <h3>${project.title}</h3>
+            <div class="project-meta">
+                <span><i class="fa-solid fa-calendar"></i> ${project.date}</span>
+                <span><i class="fa-solid fa-code"></i> ${project.tech[0]}</span>
+                <span><i class="fa-solid fa-users"></i> ${project.team}</span>
+            </div>
+        </div>
+        <div class="project-content">
+            <p class="project-description">${project.description}</p>
+            
+            <div class="tech-stack">
+                ${project.tech.map(tag => `<span class="tech-tag">${tag}</span>`).join('')}
+            </div>
+
+            <div class="project-features">
+                <div class="features-title">Key Features</div>
+                <ul class="features-list">
+                    ${project.features.map(feature => `<li>${feature}</li>`).join('')}
+                </ul>
+            </div>
+
+            <div class="project-links">
+                <a href="project-details.html?id=${project.id}" class="project-link primary">View Details</a>
+                <a href="${getCodeSampleLink(project)}" class="project-link secondary" target="_blank" rel="noopener noreferrer">Code Samples</a>
+            </div>
+        </div>
+        <div class="project-stats">
+            <div class="project-stat">
+                <span class="number">${getStatValue(0)}</span>
+                <span>${getStatLabel(0)}</span>
+            </div>
+            <div class="project-stat">
+                <span class="number">${getStatValue(1)}</span>
+                <span>${getStatLabel(1)}</span>
+            </div>
+            <div class="project-stat">
+                <span class="number">${getStatValue(2)}</span>
+                <span>${getStatLabel(2)}</span>
+            </div>
+        </div>
+    `;
+
+            return card;
+        }
+
+        // Toggle mobile menu
+        function toggleMenu() {
+            const navLinks = document.querySelector('.nav-links');
+            navLinks.classList.toggle('active');
+            const hamburger = document.querySelector('.hamburger-menu');
+            hamburger.classList.toggle('active');
+        }
+
+        // Close menu when clicking outside
+        document.addEventListener('click', (e) => {
+            const navLinks = document.querySelector('.nav-links');
+            const hamburger = document.querySelector('.hamburger-menu');
+            if (!e.target.closest('.nav-links') && !e.target.closest('.hamburger-menu')) {
+                navLinks.classList.remove('active');
+                hamburger.classList.remove('active');
+            }
+        });
+
+        // Initialize on load
+        document.addEventListener('DOMContentLoaded', () => {
+            loadProjects();
+        });
+    </script>
+</body>
+
+</html>

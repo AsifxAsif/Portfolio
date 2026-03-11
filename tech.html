@@ -1,0 +1,1083 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Basic Meta Tags -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!-- Primary Meta Tags -->
+    <title>Tech Stack - Md. Asifuzzaman | Skills & Technologies</title>
+    <meta name="title" content="Tech Stack - Md. Asifuzzaman | Skills & Technologies">
+    <meta name="description"
+        content="Complete technology stack of Md. Asifuzzaman including Java Spring Boot, Python AI/ML, Android Development, Cybersecurity, Software Testing, and more. View backend, frontend, and specialized skills.">
+    <meta name="keywords"
+        content="Tech Stack, Programming Skills, Java Spring Boot, Python, AI ML, Android Development, Cybersecurity, Software Testing, Database, Docker, Git">
+    <meta name="author" content="Md. Asifuzzaman">
+    <meta name="robots" content="index, follow">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://asifxasif.github.io/tech.html">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://asifxasif.github.io/tech.html">
+    <meta property="og:title" content="Tech Stack - Md. Asifuzzaman | Skills & Technologies">
+    <meta property="og:description"
+        content="Complete technology stack of Md. Asifuzzaman including backend, frontend, database, and cybersecurity skills.">
+    <meta property="og:image" content="https://asifxasif.github.io/assets/og-image-tech.webp">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Md. Asifuzzaman Technology Stack">
+    <meta property="og:site_name" content="Md. Asifuzzaman Portfolio">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://asifxasif.github.io/tech.html">
+    <meta name="twitter:title" content="Tech Stack - Md. Asifuzzaman | Skills & Technologies">
+    <meta name="twitter:description"
+        content="Complete technology stack of Md. Asifuzzaman including backend, frontend, database, and cybersecurity skills.">
+    <meta name="twitter:image" content="https://asifxasif.github.io/assets/og-image-tech.webp">
+
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#ff2a2a">
+
+    <!-- Icons & Favicon -->
+    <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
+    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+
+    <!-- Preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&display=swap" media="print"
+        onload="this.media='all'">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="style.css">
+
+    <noscript>
+        <link rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&display=swap">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    </noscript>
+
+    <!-- JSON-LD Structured Data - Skills -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Md. Asifuzzaman",
+        "knowsAbout": [
+            {
+                "@type": "ComputerLanguage",
+                "name": "Java",
+                "description": "Spring Boot, JUnit"
+            },
+            {
+                "@type": "ComputerLanguage",
+                "name": "Python",
+                "description": "AI/ML, Flask, TensorFlow"
+            },
+            {
+                "@type": "ComputerLanguage",
+                "name": "JavaScript",
+                "description": "React, Node.js"
+            },
+            {
+                "@type": "ComputerLanguage",
+                "name": "SQL",
+                "description": "MySQL, Oracle, Database Design"
+            },
+            {
+                "@type": "ComputerLanguage",
+                "name": "Android",
+                "description": "Java, XML, Firebase"
+            }
+        ],
+        "skills": "Software Testing, Cybersecurity, Docker, Git, REST APIs"
+    }
+    </script>
+
+    <style>
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 60px;
+        }
+
+        .tech-category {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.9);
+        }
+
+        .tech-category h3 {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid black;
+            display: inline-block;
+        }
+
+        .tech-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .tech-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 12px;
+            background: #f8f9fa;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .tech-item:hover {
+            transform: translateX(5px);
+            background: #f0f0f0;
+        }
+
+        .tech-icon {
+            width: 40px;
+            height: 40px;
+            background: black;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .tech-info h4 {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 3px;
+        }
+
+        .tech-info p {
+            font-size: 11px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .research-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .research-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.9);
+            transition: all 0.3s ease;
+        }
+
+        .research-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+        }
+
+        .research-icon {
+            width: 60px;
+            height: 60px;
+            background: black;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .research-card h3 {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 15px;
+        }
+
+        .research-card p {
+            font-size: 13px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .research-tags {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .research-tag {
+            padding: 5px 12px;
+            background: #f0f0f0;
+            border-radius: 15px;
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-secondary);
+        }
+
+        .timeline-container {
+            max-width: 800px;
+            margin: 0 auto 60px;
+            position: relative;
+        }
+
+        .timeline-container::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: #f0f0f0;
+            transform: translateX(-50%);
+        }
+
+        .timeline-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .timeline-item:nth-child(odd) {
+            flex-direction: row-reverse;
+        }
+
+        .timeline-content {
+            width: 45%;
+            background: white;
+            padding: 25px;
+            border-radius: 16px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.9);
+        }
+
+        .timeline-year {
+            width: 45%;
+            text-align: center;
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-primary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 16px;
+            height: 16px;
+            background: var(--accent-red);
+            border-radius: 50%;
+            border: 3px solid white;
+            box-shadow: 0 0 0 2px #f0f0f0;
+        }
+
+        .pub-list {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .pub-item {
+            background: white;
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.9);
+        }
+
+        .pub-item h3 {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 10px;
+        }
+
+        .pub-meta {
+            display: flex;
+            gap: 20px;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-secondary);
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        .pub-item p {
+            font-size: 13px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .pub-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 20px;
+            background: black;
+            color: white;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+        }
+
+        .pub-link:hover {
+            background: var(--accent-red);
+            transform: translateY(-2px);
+        }
+
+        .skill-meter {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 5px;
+        }
+
+        .meter-dots {
+            display: flex;
+            gap: 4px;
+        }
+
+        .meter-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #cccccc;
+        }
+
+        .meter-dot.filled {
+            background: black;
+        }
+
+        @media (max-width: 1024px) {
+
+            .tech-grid,
+            .research-grid {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+
+            .tech-grid,
+            .research-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .timeline-container::before {
+                left: 20px;
+            }
+
+            .timeline-item {
+                flex-direction: row !important;
+            }
+
+            .timeline-content {
+                width: calc(100% - 60px);
+                margin-left: 60px;
+            }
+
+            .timeline-year {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 60px;
+                text-align: left;
+                font-size: 12px;
+            }
+
+            .timeline-dot {
+                left: 20px;
+            }
+
+            .tech-category,
+            .research-card,
+            .pub-item {
+                padding: 25px;
+            }
+        }
+
+        @media (max-width: 480px) {
+
+            .tech-category,
+            .research-card,
+            .pub-item {
+                padding: 20px;
+            }
+
+            .timeline-content {
+                padding: 20px;
+            }
+
+            .tech-item {
+                gap: 12px;
+                padding: 10px;
+            }
+
+            .tech-icon {
+                width: 35px;
+                height: 35px;
+                font-size: 16px;
+            }
+
+            .research-icon {
+                width: 50px;
+                height: 50px;
+                font-size: 20px;
+            }
+
+            .pub-item h3 {
+                font-size: 14px;
+            }
+
+            .pub-item p {
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="main-container">
+        <nav class="navbar">
+            <a href="index.html" class="logo">
+                <img src="./assets/Name.webp" alt="">
+            </a>
+
+            <div class="hamburger-menu" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="projects.html">Projects</a>
+                <a href="tech.html" class="active">Tech Stack</a>
+                <a href="certificates.html">Certificates</a>
+                <a href="resume.html">Resume</a>
+                <a href="profile.html">Profile</a>
+            </div>
+
+            <div class="profile-icon">
+                <a href="profile.html">
+                    <img src="./assets/profile.webp" alt="Profile">
+                </a>
+            </div>
+        </nav>
+
+        <a href="javascript:history.back()" class="back-btn">
+            <i class="fa-solid fa-arrow-left"></i> Go Back
+        </a>
+
+        <div class="page-header">
+            <h1>TECHNOLOGY STACK</h1>
+            <p>Comprehensive collection of technologies, tools, and frameworks I specialize in for building robust
+                software solutions.</p>
+        </div>
+
+        <div class="tech-grid">
+            <div class="tech-category">
+                <h3>BACKEND DEVELOPMENT</h3>
+                <div class="tech-list">
+                    <div class="tech-item">
+                        <div class="tech-icon"><i class="fa-brands fa-java"></i></div>
+                        <div class="tech-info">
+                            <h4>Java & Spring Boot</h4>
+                            <p>Primary Backend Framework</p>
+                            <div class="skill-meter">
+                                <div class="meter-dots">
+                                    <div class="meter-dot filled"></div>
+                                    <div class="meter-dot filled"></div>
+                                    <div class="meter-dot filled"></div>
+                                    <div class="meter-dot filled"></div>
+                                    <div class="meter-dot filled"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tech-item">
+                        <div class="tech-icon"><i class="fa-brands fa-python"></i></div>
+                        <div class="tech-info">
+                            <h4>Python & Flask</h4>
+                            <p>AI/ML & IoT Development</p>
+                            <div class="skill-meter">
+                                <div class="meter-dots">
+                                    <div class="meter-dot filled"></div>
+                                    <div class="meter-dot filled"></div>
+                                    <div class="meter-dot filled"></div>
+                                    <div class="meter-dot filled"></div>
+                                    <div class="meter-dot"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tech-item">
+                        <div class="tech-icon"><i class="fa-brands fa-node-js"></i></div>
+                        <div class="tech-info">
+                            <h4>Node.js & Express</h4>
+                            <p>JavaScript Backend</p>
+                            <div class="skill-meter">
+                                <div class="meter-dots">
+                                    <div class="meter-dot filled"></div>
+                                    <div class="meter-dot filled"></div>
+                                    <div class="meter-dot filled"></div>
+                                    <div class="meter-dot filled"></div>
+                                    <div class="meter-dot"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tech-item">
+                        <div class="tech-icon"><i class="fa-brands fa-php"></i></div>
+                        <div class="tech-info">
+                            <h4>PHP</h4>
+                            <p>Web Development</p>
+                            <div class="skill-meter">
+                                <div class="meter-dots">
+                                    <div class="meter-dot filled"></div>
+                                    <div class="meter-dot filled"></div>
+                                    <div class="meter-dot filled"></div>
+                                    <div class="meter-dot"></div>
+                                    <div class="meter-dot"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tech-category">
+                <h3>FRONTEND & MOBILE</h3>
+                <div class="tech-list">
+                    <div class="tech-item">
+                        <div class="tech-icon"><i class="fa-brands fa-react"></i></div>
+                        <div class="tech-info">
+                            <h4>React.js</h4>
+                            <p>Frontend Framework</p>
+                            <div class="skill-meter">
+                                <div class="meter-dots">
+                                    <div class="meter-dot filled"></div>
+                                    <div class="meter-dot filled"></div>
+                                    <div class="meter-dot filled"></div>
+                                    <div class="meter-dot filled"></div>
+                                    <div class="meter-dot"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tech-item">
+                        <div class="tech-icon"><i class="fa-brands fa-html5"></i></div>
+                        <div class="tech-info">
+                            <h4>JavaScript/HTML/CSS</h4>
+                            <p>Web Fundamentals</p>
+                            <div class="skill-meter">
+                                <div class="meter-dots">
+                                    <div class="meter-dot filled"></div>
+                                    <div class="meter-dot filled"></div>
+                                    <div class="meter-dot filled"></div>
+                                    <div class="meter-dot filled"></div>
+                                    <div class="meter-dot filled"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tech-item">
+                        <div class="tech-icon"><i class="fa-brands fa-android"></i></div>
+                        <div class="tech-info">
+                            <h4>Android (XML/Java)</h4>
+                            <p>Mobile Development</p>
+                            <div class="skill-meter">
+                                <div class="meter-dots">
+                                    <div class="meter-dot filled"></div>
+                                    <div class="meter-dot filled"></div>
+                                    <div class="meter-dot filled"></div>
+                                    <div class="meter-dot filled"></div>
+                                    <div class="meter-dot"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tech-item">
+                        <div class="tech-icon"><i class="fa-solid fa-c"></i></div>
+                        <div class="tech-info">
+                            <h4>C/C++</h4>
+                            <p>System Programming</p>
+                            <div class="skill-meter">
+                                <div class="meter-dots">
+                                    <div class="meter-dot filled"></div>
+                                    <div class="meter-dot filled"></div>
+                                    <div class="meter-dot filled"></div>
+                                    <div class="meter-dot"></div>
+                                    <div class="meter-dot"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tech-category">
+                <h3>DATABASES & TOOLS</h3>
+                <div class="tech-list">
+                    <div class="tech-item">
+                        <div class="tech-icon"><i class="fa-solid fa-database"></i></div>
+                        <div class="tech-info">
+                            <h4>MySQL & Oracle</h4>
+                            <p>Relational Databases</p>
+                            <div class="skill-meter">
+                                <div class="meter-dots">
+                                    <div class="meter-dot filled"></div>
+                                    <div class="meter-dot filled"></div>
+                                    <div class="meter-dot filled"></div>
+                                    <div class="meter-dot filled"></div>
+                                    <div class="meter-dot"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tech-item">
+                        <div class="tech-icon"><i class="fa-brands fa-mdb"></i></div>
+                        <div class="tech-info">
+                            <h4>MongoDB</h4>
+                            <p>NoSQL Database</p>
+                            <div class="skill-meter">
+                                <div class="meter-dots">
+                                    <div class="meter-dot filled"></div>
+                                    <div class="meter-dot filled"></div>
+                                    <div class="meter-dot filled"></div>
+                                    <div class="meter-dot"></div>
+                                    <div class="meter-dot"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tech-item">
+                        <div class="tech-icon"><i class="fa-brands fa-docker"></i></div>
+                        <div class="tech-info">
+                            <h4>Docker</h4>
+                            <p>Containerization</p>
+                            <div class="skill-meter">
+                                <div class="meter-dots">
+                                    <div class="meter-dot filled"></div>
+                                    <div class="meter-dot filled"></div>
+                                    <div class="meter-dot filled"></div>
+                                    <div class="meter-dot"></div>
+                                    <div class="meter-dot"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tech-item">
+                        <div class="tech-icon"><i class="fa-brands fa-github"></i></div>
+                        <div class="tech-info">
+                            <h4>Git & GitHub</h4>
+                            <p>Version Control</p>
+                            <div class="skill-meter">
+                                <div class="meter-dots">
+                                    <div class="meter-dot filled"></div>
+                                    <div class="meter-dot filled"></div>
+                                    <div class="meter-dot filled"></div>
+                                    <div class="meter-dot filled"></div>
+                                    <div class="meter-dot filled"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tech-category">
+                <h3>CYBER SECURITY</h3>
+                <div class="tech-list">
+                    <div class="tech-item">
+                        <div class="tech-icon"><img src="./assets/cyber-security.webp" alt=""
+                                style="width: 20px; height: 20px;"></div>
+                        <div class="tech-info">
+                            <h4>Cryptography</h4>
+                            <p>Crypto Aligorithms</p>
+                            <div class="skill-meter">
+                                <div class="meter-dots">
+                                    <div class="meter-dot filled"></div>
+                                    <div class="meter-dot filled"></div>
+                                    <div class="meter-dot filled"></div>
+                                    <div class="meter-dot filled"></div>
+                                    <div class="meter-dot"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tech-item">
+                        <div class="tech-icon">OSI</div>
+                        <div class="tech-info">
+                            <h4>OSINT</h4>
+                            <p>Open-Source Intelligence</p>
+                            <div class="skill-meter">
+                                <div class="meter-dots">
+                                    <div class="meter-dot filled"></div>
+                                    <div class="meter-dot filled"></div>
+                                    <div class="meter-dot"></div>
+                                    <div class="meter-dot"></div>
+                                    <div class="meter-dot"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tech-item">
+                        <div class="tech-icon">MIS</div>
+                        <div class="tech-info">
+                            <h4>MISC</h4>
+                            <p>Miscellaneous</p>
+                            <div class="skill-meter">
+                                <div class="meter-dots">
+                                    <div class="meter-dot filled"></div>
+                                    <div class="meter-dot filled"></div>
+                                    <div class="meter-dot filled"></div>
+                                    <div class="meter-dot"></div>
+                                    <div class="meter-dot"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tech-item">
+                        <div class="tech-icon">RE</div>
+                        <div class="tech-info">
+                            <h4>Reverse Engineering</h4>
+                            <p>Vulnerability Research</p>
+                            <div class="skill-meter">
+                                <div class="meter-dots">
+                                    <div class="meter-dot filled"></div>
+                                    <div class="meter-dot filled"></div>
+                                    <div class="meter-dot"></div>
+                                    <div class="meter-dot"></div>
+                                    <div class="meter-dot"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="page-header">
+            <h2>SPECIALIZED SKILLS</h2>
+        </div>
+
+        <div class="research-grid">
+            <div class="research-card">
+                <div class="research-icon">
+                    <i class="fa-solid fa-vial"></i>
+                </div>
+                <h3>Software Testing & QA</h3>
+                <p>Comprehensive testing expertise including JUnit unit testing, Selenium automated testing, API
+                    testing, and end-to-end testing strategies for robust software delivery.</p>
+                <div class="research-tags">
+                    <span class="research-tag">JUnit</span>
+                    <span class="research-tag">Selenium</span>
+                    <span class="research-tag">API Testing</span>
+                    <span class="research-tag">Test Plans</span>
+                </div>
+            </div>
+
+            <div class="research-card">
+                <div class="research-icon">
+                    <i class="fa-solid fa-brain"></i>
+                </div>
+                <h3>AI & Machine Learning</h3>
+                <p>Experience in deep learning models (ConvNeXt, ResNeXt, DenseNet), computer vision, and practical AI
+                    implementations for real-world problem solving.</p>
+                <div class="research-tags">
+                    <span class="research-tag">Deep Learning</span>
+                    <span class="research-tag">Computer Vision</span>
+                    <span class="research-tag">TensorFlow</span>
+                    <span class="research-tag">Python</span>
+                </div>
+            </div>
+
+            <div class="research-card">
+                <div class="research-icon">
+                    <i class="fa-solid fa-shield-halved"></i>
+                </div>
+                <h3>Cybersecurity</h3>
+                <p>Active CTF player specializing in cryptography, OSINT, and security challenges. Experience in secure
+                    coding practices and network security principles.</p>
+                <div class="research-tags">
+                    <span class="research-tag">CTF</span>
+                    <span class="research-tag">Cryptography</span>
+                    <span class="research-tag">OSINT</span>
+                    <span class="research-tag">Network Security</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="page-header">
+            <h2>TECHNOLOGY PROGRESSION</h2>
+        </div>
+
+        <div class="timeline-container">
+            <div class="timeline-item">
+                <div class="timeline-year">2025</div>
+                <div class="timeline-content">
+                    <h4>Advanced Full-Stack & IoT</h4>
+                    <p>Comprehensive testing (JUnit, Selenium), advanced Spring Boot, and IoT integration with Python
+                        Flask.</p>
+                </div>
+                <div class="timeline-dot"></div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-year">2024</div>
+                <div class="timeline-content">
+                    <h4>Professional Development</h4>
+                    <p>MERN stack, database design (MySQL, Oracle), Deep learning implementations and Android mobile
+                        development.</p>
+                </div>
+                <div class="timeline-dot"></div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-year">2023</div>
+                <div class="timeline-content">
+                    <h4>Web & Network Systems</h4>
+                    <p>PHP web development, Cisco network simulations, algorithms implementation, and system design.</p>
+                </div>
+                <div class="timeline-dot"></div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-year">2022</div>
+                <div class="timeline-content">
+                    <h4>Fundamentals</h4>
+                    <p>Core programming in Java, C/C++, data structures, algorithms, and basic web technologies.</p>
+                </div>
+                <div class="timeline-dot"></div>
+            </div>
+        </div>
+
+        <div class="page-header">
+            <h2>CERTIFICATIONS & ACHIEVEMENTS</h2>
+        </div>
+
+        <div class="pub-list">
+            <div class="pub-item">
+                <h3>CTF Competition Finalist</h3>
+                <div class="pub-meta">
+                    <span>Multiple Cybersecurity Events</span>
+                    <span>2024-2025</span>
+                </div>
+                <p>Qualified for onsite CTF events as finalist in multiple competitions, specializing in cryptography
+                    and OSINT challenges.</p>
+            </div>
+
+            <div class="pub-item">
+                <h3>Academic Project Excellence</h3>
+                <div class="pub-meta">
+                    <span>East West University</span>
+                    <span>2021-2025</span>
+                </div>
+                <p>15+ comprehensive academic projects with 100% test pass rates and production-ready implementations.
+                </p>
+            </div>
+
+            <div class="pub-item">
+                <h3>Technical Skills Validation</h3>
+                <div class="pub-meta">
+                    <span>Course Certifications</span>
+                    <span>Ongoing</span>
+                </div>
+                <p>Validated expertise through successful completion of courses in Software Testing, Database Systems,
+                    Networks, and Mobile Development.</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="back-button.js"></script>
+    <script>
+        // Animation Script - FIXED VERSION
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        let particleCount;
+
+        // Define Particle class FIRST before it's used
+        class Particle {
+            constructor() {
+                this.reset();
+            }
+            reset() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2.5 + 1;
+                this.speedX = Math.random() * 0.4 - 0.2;
+                this.speedY = Math.random() * 0.4 - 0.2;
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) {
+                    this.reset();
+                }
+            }
+            draw() {
+                ctx.fillStyle = 'rgba(0,0,0,1)';
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+            // Update particle count based on screen size
+            particleCount = window.innerWidth < 768 ? 30 : 100;
+
+            // Recreate particles to fit new canvas size
+            particles = [];
+            for (let i = 0; i < particleCount; i++) {
+                particles.push(new Particle());
+            }
+        }
+
+        canvas.style.position = 'fixed';
+        canvas.style.top = '0';
+        canvas.style.left = '0';
+        canvas.style.zIndex = '-1';
+        canvas.style.pointerEvents = 'none';
+        document.body.appendChild(canvas);
+
+        // Debounced resize handler
+        let resizeTimeout;
+        window.addEventListener('resize', function () {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(function () {
+                requestAnimationFrame(resizeCanvas);
+            }, 100);
+        });
+
+        window.addEventListener('orientationchange', function () {
+            setTimeout(function () {
+                requestAnimationFrame(resizeCanvas);
+            }, 150);
+        });
+
+        // Initial resize
+        resizeCanvas();
+
+        function connect() {
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const dist = Math.hypot(dx, dy);
+                    if (dist < 100) {
+                        ctx.strokeStyle = `rgba(0,0,0,${1 - dist / 300})`;
+                        ctx.lineWidth = 0.5;
+                        ctx.beginPath();
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => { p.update(); p.draw(); });
+            connect();
+            requestAnimationFrame(animate);
+        }
+        animate();
+
+        // Force a resize after a short delay
+        setTimeout(function () {
+            requestAnimationFrame(resizeCanvas);
+        }, 500);
+
+        // Periodic check for canvas size (every 2 seconds)
+        setInterval(function () {
+            if (canvas.width !== window.innerWidth || canvas.height !== window.innerHeight) {
+                requestAnimationFrame(resizeCanvas);
+            }
+        }, 2000);
+
+        // Navigation
+        function toggleMenu() {
+            const navLinks = document.querySelector('.nav-links');
+            navLinks.classList.toggle('active');
+            const hamburger = document.querySelector('.hamburger-menu');
+            hamburger.classList.toggle('active');
+        }
+
+        document.addEventListener('click', (e) => {
+            const navLinks = document.querySelector('.nav-links');
+            const hamburger = document.querySelector('.hamburger-menu');
+            if (!e.target.closest('.nav-links') && !e.target.closest('.hamburger-menu')) {
+                navLinks.classList.remove('active');
+                hamburger.classList.remove('active');
+            }
+        });
+    </script>
+    <script>
+        const techItems = document.querySelectorAll('.tech-item');
+        techItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const techName = item.querySelector('h4').textContent;
+                console.log(`Selected: ${techName}`);
+            });
+        });
+
+        function toggleMenu() {
+            const navLinks = document.querySelector('.nav-links');
+            navLinks.classList.toggle('active');
+            const hamburger = document.querySelector('.hamburger-menu');
+            hamburger.classList.toggle('active');
+        }
+
+        document.addEventListener('click', (e) => {
+            const navLinks = document.querySelector('.nav-links');
+            const hamburger = document.querySelector('.hamburger-menu');
+            if (!e.target.closest('.nav-links') && !e.target.closest('.hamburger-menu')) {
+                navLinks.classList.remove('active');
+                hamburger.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+
+</html>
