@@ -1,70 +1,45 @@
 // ==================== LOAD NAVBAR ====================
 document.addEventListener('DOMContentLoaded', function () {
-    // Try to load navbar from file (for when deployed on server)
-    fetch('navbar.html')
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.text();
-        })
-        .then(data => {
-            // Insert navbar at the beginning of main-container
-            const mainContainer = document.querySelector('.main-container');
-            const tempDiv = document.createElement('div');
-            tempDiv.innerHTML = data;
-            const navbar = tempDiv.firstElementChild;
+    // Create navbar directly (no fetch attempt)
+    const mainContainer = document.querySelector('.main-container');
 
-            // Insert navbar at the beginning
-            mainContainer.insertBefore(navbar, mainContainer.firstChild);
+    // Create navbar element
+    const navbar = document.createElement('nav');
+    navbar.className = 'navbar';
 
-            // Set active class based on current page with page mapping
-            setActiveNavLink();
-        })
-        .catch(error => {
-            console.log('Could not load navbar from file, using embedded fallback');
+    // Set navbar HTML
+    navbar.innerHTML = `
+        <a href="index.html" class="logo">
+            <img src="./assets/name.webp" alt="" class="name">
+        </a>
 
-            // FALLBACK: Create navbar manually (this runs when you're testing locally)
-            const mainContainer = document.querySelector('.main-container');
+        <div class="hamburger-menu" onclick="toggleMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
 
-            // Create navbar element
-            const navbar = document.createElement('nav');
-            navbar.className = 'navbar';
+        <div class="nav-links">
+            <a href="index.html" class="nav-link" data-page="index">Home</a>
+            <a href="projects.html" class="nav-link" data-page="projects">Projects</a>
+            <a href="tech.html" class="nav-link" data-page="tech">Tech Stack</a>
+            <a href="certificates.html" class="nav-link" data-page="certificates">Certificates</a>
+            <a href="resume.html" class="nav-link" data-page="resume">Resume</a>
+            <a href="profile.html" class="nav-link" data-page="profile">Profile</a>
+        </div>
 
-            // Set navbar HTML
-            navbar.innerHTML = `
-                <a href="index.html" class="logo">
-                    <img src="./assets/name.webp" alt="" class="name">
-                </a>
+        <div class="profile-icon">
+            <a href="profile.html">
+                <img src="./assets/profile.webp" alt="Profile">
+            </a>
+        </div>
+    `;
 
-                <div class="hamburger-menu" onclick="toggleMenu()">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </div>
+    // Insert navbar at the beginning
+    mainContainer.insertBefore(navbar, mainContainer.firstChild);
 
-                <div class="nav-links">
-                    <a href="index.html" class="nav-link" data-page="index">Home</a>
-                    <a href="projects.html" class="nav-link" data-page="projects">Projects</a>
-                    <a href="tech.html" class="nav-link" data-page="tech">Tech Stack</a>
-                    <a href="certificates.html" class="nav-link" data-page="certificates">Certificates</a>
-                    <a href="resume.html" class="nav-link" data-page="resume">Resume</a>
-                    <a href="profile.html" class="nav-link" data-page="profile">Profile</a>
-                </div>
-
-                <div class="profile-icon">
-                    <a href="profile.html">
-                        <img src="./assets/profile.webp" alt="Profile">
-                    </a>
-                </div>
-            `;
-
-            // Insert navbar at the beginning
-            mainContainer.insertBefore(navbar, mainContainer.firstChild);
-
-            // Set active class based on current page with page mapping
-            setActiveNavLink();
-        });
+    // Set active class based on current page with page mapping
+    setActiveNavLink();
 });
 
 // ==================== SET ACTIVE NAV LINK ====================
