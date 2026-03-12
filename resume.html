@@ -66,7 +66,7 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     </noscript>
 
-    <!-- JSON-LD Structured Data - Resume -->
+    <!-- JSON-LD Structured Data -->
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
@@ -100,505 +100,13 @@
         ]
     }
     </script>
-
-    <style>
-        .cv-layout {
-            display: grid;
-            grid-template-columns: 1fr 2fr;
-            gap: 40px;
-            margin-bottom: 60px;
-        }
-
-        .cv-sidebar {
-            background: white;
-            border-radius: 30px;
-            padding: 40px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.9);
-        }
-
-        .cv-avatar {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-
-        .cv-avatar img {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 3px solid black;
-            filter: grayscale(100%);
-            margin-bottom: 20px;
-        }
-
-        .cv-avatar h2 {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: var(--text-primary);
-            margin-bottom: 5px;
-        }
-
-        .cv-avatar .title {
-            font-size: 14px;
-            color: var(--text-secondary);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 20px;
-        }
-
-        .contact-info {
-            margin-bottom: 40px;
-        }
-
-        .contact-info h3 {
-            font-size: 16px;
-            font-weight: 700;
-            color: var(--text-primary);
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid black;
-        }
-
-        .contact-item {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-
-        .contact-icon {
-            width: 40px;
-            height: 40px;
-            background: black;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 14px;
-        }
-
-        .contact-details h4 {
-            font-size: 12px;
-            font-weight: 700;
-            color: var(--text-primary);
-            margin-bottom: 3px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .contact-details p {
-            font-size: 12px;
-            color: var(--text-secondary);
-        }
-
-        .contact-details a {
-            color: var(--text-primary);
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-
-        .contact-details a:hover {
-            color: var(--accent-red);
-        }
-
-        .skills-section {
-            margin-bottom: 40px;
-        }
-
-        .skills-section h3 {
-            font-size: 16px;
-            font-weight: 700;
-            color: var(--text-primary);
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid black;
-        }
-
-        .skill-item {
-            margin-bottom: 15px;
-        }
-
-        .skill-name {
-            font-size: 12px;
-            font-weight: 700;
-            color: var(--text-primary);
-            margin-bottom: 5px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .skill-level {
-            height: 6px;
-            background: #f0f0f0;
-            border-radius: 3px;
-            overflow: hidden;
-        }
-
-        .skill-progress {
-            height: 100%;
-            background: black;
-            border-radius: 3px;
-            transition: width 1s ease-in-out;
-        }
-
-        .cv-content {
-            background: white;
-            border-radius: 30px;
-            padding: 40px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.9);
-        }
-
-        .cv-section {
-            margin-bottom: 40px;
-        }
-
-        .cv-section h2 {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--text-primary);
-            margin-bottom: 25px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid black;
-        }
-
-        .experience-item {
-            margin-bottom: 30px;
-        }
-
-        .experience-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 10px;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-
-        .experience-title h3 {
-            font-size: 16px;
-            font-weight: 700;
-            color: var(--text-primary);
-            margin-bottom: 5px;
-        }
-
-        .experience-company {
-            font-size: 14px;
-            color: var(--text-secondary);
-            font-weight: 500;
-        }
-
-        .experience-date {
-            background: black;
-            color: white;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 10px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            font-weight: 700;
-        }
-
-        .experience-description {
-            font-size: 13px;
-            color: var(--text-secondary);
-            line-height: 1.6;
-            margin-top: 10px;
-        }
-
-        .education-item {
-            margin-bottom: 25px;
-        }
-
-        .education-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 10px;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-
-        .education-title h3 {
-            font-size: 16px;
-            font-weight: 700;
-            color: var(--text-primary);
-            margin-bottom: 5px;
-        }
-
-        .education-institution {
-            font-size: 14px;
-            color: var(--text-secondary);
-            font-weight: 500;
-        }
-
-        .education-date {
-            background: black;
-            color: white;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 10px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            font-weight: 700;
-        }
-
-        .education-details {
-            font-size: 13px;
-            color: var(--text-secondary);
-            line-height: 1.6;
-        }
-
-        .achievements-list {
-            list-style: none;
-        }
-
-        .achievements-list li {
-            position: relative;
-            padding-left: 20px;
-            margin-bottom: 15px;
-            font-size: 13px;
-            color: var(--text-secondary);
-            line-height: 1.6;
-        }
-
-        .achievements-list li:before {
-            content: "•";
-            position: absolute;
-            left: 0;
-            color: var(--accent-red);
-            font-size: 20px;
-            line-height: 1;
-        }
-
-        .download-section {
-            text-align: center;
-            margin-top: 40px;
-            padding-top: 40px;
-            border-top: 2px solid #f0f0f0;
-        }
-
-        .download-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            padding: 12px 30px;
-            background: black;
-            color: white;
-            border: none;
-            border-radius: 30px;
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-        }
-
-        .download-btn:hover {
-            background: var(--accent-red);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(255, 42, 42, 0.3);
-        }
-
-        .social-section {
-            margin-bottom: 40px;
-        }
-
-        .social-section h3 {
-            font-size: 16px;
-            font-weight: 700;
-            color: var(--text-primary);
-            margin-bottom: 15px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid black;
-        }
-
-        .social-links {
-            display: flex;
-            gap: 15px;
-            flex-wrap: wrap;
-        }
-
-        .social-link {
-            width: 45px;
-            height: 45px;
-            background: black;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 18px;
-            transition: all 0.3s ease;
-            text-decoration: none;
-        }
-
-        .social-link:hover {
-            background: var(--accent-red);
-            transform: translateY(-3px);
-        }
-
-        /* Location Card Styles */
-        .location-card {
-            background: white;
-            border-radius: 30px;
-            padding: 40px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.9);
-            margin-top: 30px;
-        }
-
-        .location-card h3 {
-            font-size: 16px;
-            font-weight: 700;
-            color: var(--text-primary);
-            margin-bottom: 15px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid black;
-        }
-
-        .map-container {
-            width: 100%;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            filter: grayscale(100%);
-            transition: filter 0.3s ease;
-        }
-
-        .map-container:hover {
-            filter: grayscale(0%);
-        }
-
-        .map-container iframe {
-            width: 100%;
-            height: 300px;
-            display: block;
-            border: 1px solid black;
-            border-radius: 15px;
-        }
-
-        .location-info {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-top: 15px;
-            font-size: 12px;
-            color: var(--text-secondary);
-        }
-
-        .location-info i {
-            color: var(--accent-red);
-            font-size: 14px;
-        }
-
-        @media (max-width: 1024px) {
-            .cv-layout {
-                grid-template-columns: 1fr;
-                gap: 30px;
-            }
-
-            .map-container iframe {
-                height: 275px;
-            }
-        }
-
-        @media (max-width: 768px) {
-
-            .cv-sidebar,
-            .cv-content,
-            .location-card {
-                padding: 30px;
-            }
-
-            .cv-avatar img {
-                width: 120px;
-                height: 120px;
-            }
-
-            .cv-avatar h2 {
-                font-size: 1.5rem;
-            }
-
-            .contact-item {
-                gap: 12px;
-            }
-
-            .contact-icon {
-                width: 35px;
-                height: 35px;
-                font-size: 12px;
-            }
-
-            .map-container iframe {
-                height: 250px;
-            }
-        }
-
-        @media (max-width: 480px) {
-
-            .cv-sidebar,
-            .cv-content,
-            .location-card {
-                padding: 20px;
-                border-radius: 20px;
-            }
-
-            .cv-avatar img {
-                width: 100px;
-                height: 100px;
-            }
-
-            .cv-avatar h2 {
-                font-size: 1.3rem;
-            }
-
-            .contact-item {
-                gap: 10px;
-            }
-
-            .contact-icon {
-                width: 30px;
-                height: 30px;
-                font-size: 10px;
-            }
-
-            .cv-section h2 {
-                font-size: 1.3rem;
-            }
-
-            .experience-header,
-            .education-header {
-                flex-direction: column;
-                gap: 10px;
-            }
-
-            .experience-date,
-            .education-date {
-                align-self: flex-start;
-            }
-
-            .social-link {
-                width: 40px;
-                height: 40px;
-                font-size: 16px;
-            }
-
-            .map-container iframe {
-                height: 225px;
-            }
-        }
-    </style>
 </head>
 
 <body>
     <div class="main-container">
         <nav class="navbar">
             <a href="index.html" class="logo">
-                <img src="./assets/Name.webp" alt="">
+                <img src="./assets/name.webp" alt="">
             </a>
 
             <div class="hamburger-menu" onclick="toggleMenu()">
@@ -673,58 +181,58 @@
                         </div>
                     </div>
 
-                    <div class="skills-section">
+                    <div class="cv-skills-section">
                         <h3>TECHNICAL SKILLS</h3>
-                        <div class="skill-item">
-                            <div class="skill-name">Java & Spring Boot</div>
-                            <div class="skill-level">
-                                <div class="skill-progress" style="width: 95%"></div>
+                        <div class="cv-skill-item">
+                            <div class="cv-skill-name">Java & Spring Boot</div>
+                            <div class="cv-skill-level">
+                                <div class="cv-skill-progress" style="width: 95%"></div>
                             </div>
                         </div>
-                        <div class="skill-item">
-                            <div class="skill-name">React & Node.js</div>
-                            <div class="skill-level">
-                                <div class="skill-progress" style="width: 90%"></div>
+                        <div class="cv-skill-item">
+                            <div class="cv-skill-name">React & Node.js</div>
+                            <div class="cv-skill-level">
+                                <div class="cv-skill-progress" style="width: 90%"></div>
                             </div>
                         </div>
-                        <div class="skill-item">
-                            <div class="skill-name">Python & AI/ML</div>
-                            <div class="skill-level">
-                                <div class="skill-progress" style="width: 85%"></div>
+                        <div class="cv-skill-item">
+                            <div class="cv-skill-name">Python & AI/ML</div>
+                            <div class="cv-skill-level">
+                                <div class="cv-skill-progress" style="width: 85%"></div>
                             </div>
                         </div>
-                        <div class="skill-item">
-                            <div class="skill-name">Android Development</div>
-                            <div class="skill-level">
-                                <div class="skill-progress" style="width: 88%"></div>
+                        <div class="cv-skill-item">
+                            <div class="cv-skill-name">Android Development</div>
+                            <div class="cv-skill-level">
+                                <div class="cv-skill-progress" style="width: 88%"></div>
                             </div>
                         </div>
-                        <div class="skill-item">
-                            <div class="skill-name">Database Design</div>
-                            <div class="skill-level">
-                                <div class="skill-progress" style="width: 80%"></div>
+                        <div class="cv-skill-item">
+                            <div class="cv-skill-name">Database Design</div>
+                            <div class="cv-skill-level">
+                                <div class="cv-skill-progress" style="width: 80%"></div>
                             </div>
                         </div>
-                        <div class="skill-item">
-                            <div class="skill-name">Testing & QA</div>
-                            <div class="skill-level">
-                                <div class="skill-progress" style="width: 92%"></div>
+                        <div class="cv-skill-item">
+                            <div class="cv-skill-name">Testing & QA</div>
+                            <div class="cv-skill-level">
+                                <div class="cv-skill-progress" style="width: 92%"></div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="skills-section">
+                    <div class="cv-skills-section">
                         <h3>LANGUAGES</h3>
-                        <div class="skill-item">
-                            <div class="skill-name">Bengali</div>
-                            <div class="skill-level">
-                                <div class="skill-progress" style="width: 100%"></div>
+                        <div class="cv-skill-item">
+                            <div class="cv-skill-name">Bengali</div>
+                            <div class="cv-skill-level">
+                                <div class="cv-skill-progress" style="width: 100%"></div>
                             </div>
                         </div>
-                        <div class="skill-item">
-                            <div class="skill-name">English</div>
-                            <div class="skill-level">
-                                <div class="skill-progress" style="width: 90%"></div>
+                        <div class="cv-skill-item">
+                            <div class="cv-skill-name">English</div>
+                            <div class="cv-skill-level">
+                                <div class="cv-skill-progress" style="width: 90%"></div>
                             </div>
                         </div>
                     </div>
@@ -742,7 +250,6 @@
                     </div>
                 </aside>
 
-                <!-- Separate Location Card -->
                 <div class="location-card">
                     <h3>LOCATION</h3>
                     <div class="map-container">
@@ -761,7 +268,7 @@
             <main class="cv-content">
                 <section class="cv-section">
                     <h2>PROFESSIONAL SUMMARY</h2>
-                    <div class="experience-description">
+                    <div class="cv-experience-description">
                         Software Engineering graduate with 4 years of academic experience in full-stack development,
                         AI integration, and comprehensive software testing. Proven ability to design and implement
                         robust systems using modern technologies. Specialized in building scalable applications with
@@ -773,15 +280,15 @@
                 <section class="cv-section">
                     <h2>EDUCATION</h2>
 
-                    <div class="education-item">
-                        <div class="education-header">
-                            <div class="education-title">
+                    <div class="cv-education-item">
+                        <div class="cv-education-header">
+                            <div class="cv-education-title">
                                 <h3>Bachelor of Science in Computer Science & Engineering</h3>
-                                <div class="education-institution">East West University, Dhaka, Bangladesh</div>
+                                <div class="cv-education-institution">East West University, Dhaka, Bangladesh</div>
                             </div>
-                            <div class="education-date">2021 - 2025</div>
+                            <div class="cv-education-date">2021 - 2025</div>
                         </div>
-                        <div class="education-details">
+                        <div class="cv-education-details">
                             Major: Software Engineering | GPA: 3.37/4.0<br>
                             Relevant Coursework: Software Engineering, Database Systems, Computer Networks,
                             Algorithms, Artificial Intelligence, Software Testing & Assurance, Mobile Application
@@ -793,15 +300,15 @@
                 <section class="cv-section">
                     <h2>PROJECT EXPERIENCE</h2>
 
-                    <div class="experience-item">
-                        <div class="experience-header">
-                            <div class="experience-title">
+                    <div class="cv-experience-item">
+                        <div class="cv-experience-header">
+                            <div class="cv-experience-title">
                                 <h3>Nexus E-commerce Platform</h3>
-                                <div class="experience-company">Software Testing & Assurance Course Project</div>
+                                <div class="cv-experience-company">Software Testing & Assurance Course Project</div>
                             </div>
-                            <div class="experience-date">Spring 2024</div>
+                            <div class="cv-experience-date">Spring 2024</div>
                         </div>
-                        <div class="experience-description">
+                        <div class="cv-experience-description">
                             Developed a hybrid e-commerce platform with comprehensive testing suite. Implemented
                             300+ unit and integration tests achieving 100% pass rate. Utilized Spring Boot, JUnit,
                             Selenium, and Docker for deployment. Features included user authentication, product
@@ -809,30 +316,30 @@
                         </div>
                     </div>
 
-                    <div class="experience-item">
-                        <div class="experience-header">
-                            <div class="experience-title">
+                    <div class="cv-experience-item">
+                        <div class="cv-experience-header">
+                            <div class="cv-experience-title">
                                 <h3>Lost & Found Android Application</h3>
-                                <div class="experience-company">Mobile Application Development Course Project</div>
+                                <div class="cv-experience-company">Mobile Application Development Course Project</div>
                             </div>
-                            <div class="experience-date">Spring 2025</div>
+                            <div class="cv-experience-date">Spring 2025</div>
                         </div>
-                        <div class="experience-description">
+                        <div class="cv-experience-description">
                             Built a community-based mobile application for reporting lost and found items. Implemented
                             Firebase authentication, real-time Firestore database, image upload to Storage, and
                             category-based filtering. Responsible for profile management module and UI/UX design.
                         </div>
                     </div>
 
-                    <div class="experience-item">
-                        <div class="experience-header">
-                            <div class="experience-title">
+                    <div class="cv-experience-item">
+                        <div class="cv-experience-header">
+                            <div class="cv-experience-title">
                                 <h3>Hog Plum Leaf Disease Classification</h3>
-                                <div class="experience-company">AI/ML Research Project</div>
+                                <div class="cv-experience-company">AI/ML Research Project</div>
                             </div>
-                            <div class="experience-date">2024</div>
+                            <div class="cv-experience-date">2024</div>
                         </div>
-                        <div class="experience-description">
+                        <div class="cv-experience-description">
                             Developed deep learning framework for classifying leaf diseases using ConvNeXt, ResNeXt,
                             DenseNet, and NASNet-Large models. Achieved 96.74% accuracy with comprehensive evaluation
                             metrics including precision, recall, F1-score, and ROC-AUC analysis.
@@ -842,7 +349,7 @@
 
                 <section class="cv-section">
                     <h2>TECHNICAL ACHIEVEMENTS</h2>
-                    <ul class="achievements-list">
+                    <ul class="cv-achievements-list">
                         <li>15+ comprehensive academic projects with production-ready implementations</li>
                         <li>100% test pass rate in software testing projects with comprehensive test suites</li>
                         <li>CTF competition finalist with onsite event qualifications in cybersecurity</li>
@@ -856,7 +363,7 @@
 
                 <section class="cv-section">
                     <h2>CERTIFICATIONS & ACTIVITIES</h2>
-                    <ul class="achievements-list">
+                    <ul class="cv-achievements-list">
                         <li>Active CTF Player - Regular participation in cybersecurity competitions (2022-Present)</li>
                         <li>Academic Project Excellence - Multiple course projects with highest evaluations</li>
                         <li>Technical Skills Validation - Successful completion of advanced CS coursework</li>
@@ -875,136 +382,10 @@
         </div>
     </div>
 
-    <script src="back-button.js"></script>
+    <script src="script.js"></script>
     <script>
-        // Animation Script - FIXED VERSION
-        const canvas = document.createElement('canvas');
-        const ctx = canvas.getContext('2d');
-        let particles = [];
-        let particleCount;
-
-        // Define Particle class FIRST before it's used
-        class Particle {
-            constructor() {
-                this.reset();
-            }
-            reset() {
-                this.x = Math.random() * canvas.width;
-                this.y = Math.random() * canvas.height;
-                this.size = Math.random() * 2.5 + 1;
-                this.speedX = Math.random() * 0.4 - 0.2;
-                this.speedY = Math.random() * 0.4 - 0.2;
-            }
-            update() {
-                this.x += this.speedX;
-                this.y += this.speedY;
-                if (this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) {
-                    this.reset();
-                }
-            }
-            draw() {
-                ctx.fillStyle = 'rgba(0,0,0,1)';
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fill();
-            }
-        }
-
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-
-            // Update particle count based on screen size
-            particleCount = window.innerWidth < 768 ? 30 : 100;
-
-            // Recreate particles to fit new canvas size
-            particles = [];
-            for (let i = 0; i < particleCount; i++) {
-                particles.push(new Particle());
-            }
-        }
-
-        canvas.style.position = 'fixed';
-        canvas.style.top = '0';
-        canvas.style.left = '0';
-        canvas.style.zIndex = '-1';
-        canvas.style.pointerEvents = 'none';
-        document.body.appendChild(canvas);
-
-        // Debounced resize handler
-        let resizeTimeout;
-        window.addEventListener('resize', function () {
-            clearTimeout(resizeTimeout);
-            resizeTimeout = setTimeout(function () {
-                requestAnimationFrame(resizeCanvas);
-            }, 100);
-        });
-
-        window.addEventListener('orientationchange', function () {
-            setTimeout(function () {
-                requestAnimationFrame(resizeCanvas);
-            }, 150);
-        });
-
-        // Initial resize
-        resizeCanvas();
-
-        function connect() {
-            for (let i = 0; i < particles.length; i++) {
-                for (let j = i + 1; j < particles.length; j++) {
-                    const dx = particles[i].x - particles[j].x;
-                    const dy = particles[i].y - particles[j].y;
-                    const dist = Math.hypot(dx, dy);
-                    if (dist < 100) {
-                        ctx.strokeStyle = `rgba(0,0,0,${1 - dist / 300})`;
-                        ctx.lineWidth = 0.5;
-                        ctx.beginPath();
-                        ctx.moveTo(particles[i].x, particles[i].y);
-                        ctx.lineTo(particles[j].x, particles[j].y);
-                        ctx.stroke();
-                    }
-                }
-            }
-        }
-
-        function animate() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            particles.forEach(p => { p.update(); p.draw(); });
-            connect();
-            requestAnimationFrame(animate);
-        }
-        animate();
-
-        // Force a resize after a short delay
-        setTimeout(function () {
-            requestAnimationFrame(resizeCanvas);
-        }, 500);
-
-        // Periodic check for canvas size (every 2 seconds)
-        setInterval(function () {
-            if (canvas.width !== window.innerWidth || canvas.height !== window.innerHeight) {
-                requestAnimationFrame(resizeCanvas);
-            }
-        }, 2000);
-
-        function toggleMenu() {
-            const navLinks = document.querySelector('.nav-links');
-            navLinks.classList.toggle('active');
-            const hamburger = document.querySelector('.hamburger-menu');
-            hamburger.classList.toggle('active');
-        }
-
-        document.addEventListener('click', (e) => {
-            const navLinks = document.querySelector('.nav-links');
-            const hamburger = document.querySelector('.hamburger-menu');
-            if (!e.target.closest('.nav-links') && !e.target.closest('.hamburger-menu')) {
-                navLinks.classList.remove('active');
-                hamburger.classList.remove('active');
-            }
-        });
-
         document.addEventListener('DOMContentLoaded', () => {
-            const skillBars = document.querySelectorAll('.skill-progress');
+            const skillBars = document.querySelectorAll('.cv-skill-progress');
             skillBars.forEach(bar => {
                 const width = bar.style.width;
                 bar.style.width = '0';

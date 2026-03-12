@@ -49,14 +49,9 @@
     <!-- LinkedIn Specific -->
     <meta property="linkedin:owner" content="asifxasif">
 
-    <!-- Verification for Search Consoles -->
-    <meta name="google-site-verification" content="your-google-verification-code">
-    <meta name="msvalidate.01" content="your-bing-verification-code">
-
     <!-- Theme Color -->
     <meta name="theme-color" content="#ff2a2a">
     <meta name="msapplication-TileColor" content="#ff2a2a">
-    <meta name="msapplication-TileImage" content="/assets/ms-icon-144x144.png">
 
     <!-- Icons & Favicon -->
     <link rel="icon" type="image/x-icon" href="/Portfolio/assets/favicon.ico">
@@ -74,7 +69,7 @@
     <link rel="preload" as="image" href="./assets/profile.webp" fetchpriority="high">
     <link rel="preload" as="style" href="style.css">
 
-    <!-- Stylesheets with Media Queries -->
+    <!-- Stylesheets -->
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&display=swap" media="print"
         onload="this.media='all'">
@@ -82,14 +77,13 @@
         media="print" onload="this.media='all'">
     <link rel="stylesheet" href="style.css">
 
-    <!-- Fallback for no-JS -->
     <noscript>
         <link rel="stylesheet"
             href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&display=swap">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     </noscript>
 
-    <!-- JSON-LD Structured Data - Person -->
+    <!-- JSON-LD Structured Data -->
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
@@ -129,504 +123,13 @@
         }
     }
     </script>
-
-    <style>
-        /* Hero Section Styles */
-        .hero-section {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 40px;
-            align-items: center;
-            justify-content: center;
-            min-height: calc(100vh - 180px);
-            margin: 0 auto;
-        }
-
-        .hero-content {
-            background: white;
-            border-radius: 30px;
-            padding: 30px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.9);
-            height: auto;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            width: 100%;
-            box-sizing: border-box;
-        }
-
-        .hero-image {
-            background: black;
-            border-radius: 30px;
-            height: 80%;
-            min-height: 500px;
-            overflow: hidden;
-            position: relative;
-            display: flex;
-            align-items: stretch;
-        }
-
-        .hero-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            filter: grayscale(100%);
-            transition: filter 0.5s ease;
-        }
-
-        .hero-image:hover img {
-            filter: grayscale(0%);
-        }
-
-        .title-section h1 {
-            font-size: 3rem;
-            font-weight: 700;
-            color: var(--text-primary);
-            margin-bottom: 5px;
-            line-height: 1.1;
-        }
-
-        .title-section h2 {
-            font-size: 1.5rem;
-            font-weight: 400;
-            color: var(--text-secondary);
-            margin-bottom: 15px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
-        .highlight {
-            color: var(--accent-red);
-            font-weight: 700;
-        }
-
-        .hero-content p {
-            font-size: 14px;
-            color: var(--text-secondary);
-            line-height: 1.5;
-            margin-bottom: 15px;
-        }
-
-        .quick-stats {
-            display: grid;
-            /* Use repeat(auto-fit) to allow wrapping if the screen is tiny */
-            grid-template-columns: repeat(2, 1fr);
-            gap: 10px;
-            margin: 20px 0;
-            width: 100%;
-            /* Ensure it stays within parent */
-        }
-
-        .stat-card {
-            min-width: 0;
-            background: #f8f9fa;
-            padding: 12px 5px;
-            border-radius: 16px;
-            text-align: center;
-            border: 1px solid rgba(0, 0, 0, 0.05);
-            transition: all 0.3s ease;
-        }
-
-        .stat-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
-        }
-
-        .stat-card .number {
-            font-size: 1.6rem;
-            font-weight: 700;
-            color: var(--text-primary);
-            margin-bottom: 3px;
-        }
-
-        .stat-card .label {
-            font-size: 10px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: var(--text-secondary);
-        }
-
-        .featured-tech {
-            margin: 20px 0;
-        }
-
-        .tech-tags {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-            margin-top: 10px;
-        }
-
-        .tech-tag {
-            padding: 6px 16px;
-            background: black;
-            color: white;
-            border-radius: 20px;
-            font-size: 10px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            font-weight: 700;
-            transition: all 0.3s ease;
-        }
-
-        .tech-tag:hover {
-            background: var(--accent-red);
-            transform: translateY(-2px);
-        }
-
-        .cta-section {
-            margin-top: 20px;
-            display: flex;
-            gap: 10px;
-        }
-
-        .cta-btn {
-            padding: 10px 24px;
-            border-radius: 25px;
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            font-weight: 700;
-            text-decoration: none;
-            transition: all 0.3s ease;
-        }
-
-        .cta-btn.primary {
-            background: black;
-            color: white;
-        }
-
-        .cta-btn.primary:hover {
-            background: var(--accent-red);
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(255, 42, 42, 0.3);
-        }
-
-        .cta-btn.secondary {
-            background: transparent;
-            color: var(--text-primary);
-            border: 1.5px solid black;
-        }
-
-        .cta-btn.secondary:hover {
-            background: black;
-            color: white;
-            transform: translateY(-3px);
-        }
-
-        /* HUD Elements */
-        .hud-elements {
-            position: absolute;
-            inset: 0;
-            pointer-events: none;
-            color: rgba(255, 255, 255, 0.7);
-            padding: 20px;
-        }
-
-        .vertical-code {
-            position: absolute;
-            left: 20px;
-            top: 35%;
-            writing-mode: vertical-rl;
-            transform: rotate(180deg);
-            font-size: 9px;
-            letter-spacing: 2px;
-            border-left: 1px solid rgba(255, 255, 255, 0.3);
-            padding-left: 10px;
-            font-family: monospace;
-            color: var(--accent-red);
-        }
-
-        .scrolling-numbers {
-            position: absolute;
-            left: 40px;
-            top: 60%;
-            font-family: monospace;
-            font-size: 8px;
-            height: 180px;
-            width: 60px;
-            overflow: hidden;
-            opacity: 0.6;
-            writing-mode: vertical-rl;
-            transform: rotate(180deg);
-            white-space: nowrap;
-            mask-image: linear-gradient(to bottom, transparent 0%, black 15px, black calc(100% - 15px), transparent 100%);
-        }
-
-        .scrolling-numbers-track {
-            display: block;
-            animation: newsTicker 10s linear infinite;
-        }
-
-        .scrolling-numbers-track span {
-            display: block;
-            margin-bottom: 15px;
-            opacity: 0.8;
-            line-height: 1.2;
-            padding: 2px 0;
-        }
-
-        .circle-graphic {
-            position: absolute;
-            top: 25%;
-            right: 50px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            font-size: 9px;
-            font-family: monospace;
-        }
-
-        .status-dot {
-            width: 5px;
-            height: 5px;
-            background: var(--accent-red);
-            border-radius: 50%;
-            margin-top: 5px;
-            animation: blink 0.8s infinite;
-        }
-
-        .red-box-label {
-            position: absolute;
-            bottom: 40px;
-            right: 25%;
-            background: rgba(0, 0, 0, 0.5);
-            color: var(--accent-red);
-            padding: 10px 20px;
-            font-family: monospace;
-            display: flex;
-            flex-direction: column;
-            border: 1px solid var(--accent-red);
-            backdrop-filter: blur(5px);
-            pointer-events: auto;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .red-box-label:hover {
-            background: rgba(0, 0, 0, 0.7);
-            transform: translateY(-2px);
-        }
-
-        .red-box-label small {
-            font-size: 8px;
-            opacity: 0.8;
-            letter-spacing: 1px;
-        }
-
-        /* Animations */
-        @keyframes newsTicker {
-            0% {
-                transform: translateY(100%);
-            }
-
-            100% {
-                transform: translateY(-100%);
-            }
-        }
-
-        @keyframes blink {
-
-            0%,
-            100% {
-                opacity: 1;
-            }
-
-            50% {
-                opacity: 0;
-            }
-        }
-
-        /* Projects Section */
-        .featured-projects {
-            margin-top: 60px;
-        }
-
-        .project-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 25px;
-            margin-top: 30px;
-        }
-
-        .project-card {
-            background: white;
-            border-radius: 20px;
-            padding: 25px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.9);
-            transition: all 0.3s ease;
-        }
-
-        .project-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
-        }
-
-        .project-category {
-            display: inline-block;
-            padding: 6px 15px;
-            background: black;
-            color: white;
-            border-radius: 15px;
-            font-size: 9px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 15px;
-        }
-
-        .project-card h3 {
-            font-size: 18px;
-            font-weight: 700;
-            color: var(--text-primary);
-            margin-bottom: 10px;
-        }
-
-        .project-card p {
-            font-size: 13px;
-            color: var(--text-secondary);
-            line-height: 1.6;
-            margin-bottom: 15px;
-        }
-
-        .project-tech {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-            margin-top: 15px;
-        }
-
-        .project-tech span {
-            padding: 4px 10px;
-            background: #f0f0f0;
-            border-radius: 15px;
-            font-size: 9px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            color: var(--text-secondary);
-        }
-
-        /* Responsive Design */
-        @media (max-width: 1024px) {
-            .hero-section {
-                grid-template-columns: minmax(0, 1fr);
-                min-height: auto;
-                gap: 20px;
-                padding-top: 20px;
-            }
-
-            .hero-image {
-                order: 1;
-                height: 400px;
-                min-height: 400px;
-            }
-
-            .hero-content {
-                order: 2;
-                height: auto;
-                padding: 40px 20px;
-            }
-
-            .quick-stats {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .title-section h1 {
-                font-size: 2.5rem;
-            }
-
-            .title-section h2 {
-                font-size: 1.2rem;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .hero-content {
-                padding: 25px;
-            }
-
-            .hero-image {
-                height: 350px;
-                min-height: 350px;
-            }
-
-            .project-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .cta-section {
-                flex-direction: column;
-            }
-
-            .scrolling-numbers {
-                display: none;
-            }
-
-            .circle-graphic {
-                right: 20px;
-            }
-
-            .red-box-label {
-                right: 20px;
-                bottom: 20px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .hero-content {
-                padding: 20px;
-                border-radius: 20px;
-            }
-
-            .hero-image {
-                height: 300px;
-                min-height: 300px;
-                border-radius: 20px;
-            }
-
-            .title-section h1 {
-                font-size: 2rem;
-            }
-
-            .title-section h2 {
-                font-size: 1rem;
-            }
-
-            .quick-stats {
-                grid-template-columns: 1fr;
-                gap: 12px;
-            }
-
-            .stat-card .number {
-                font-size: 1.4rem;
-            }
-
-            .tech-tag {
-                padding: 5px 12px;
-                font-size: 9px;
-            }
-
-            .project-card {
-                padding: 20px;
-            }
-
-            .project-card h3 {
-                font-size: 16px;
-            }
-
-            .cta-btn {
-                padding: 9px 20px;
-            }
-        }
-    </style>
 </head>
 
 <body>
     <div class="main-container">
         <nav class="navbar">
             <a href="index.html" class="logo">
-                <img src="./assets/Name.webp" alt="" class="name">
+                <img src="./assets/name.webp" alt="" class="name">
             </a>
 
             <div class="hamburger-menu" onclick="toggleMenu()">
@@ -720,13 +223,13 @@
         </div>
     </div>
 
+    <script src="script.js"></script>
     <script>
-        // Matrix Text Change Effect - SOFTWARE ENGINEER <-> CYBERSECURITY ENTHUSIAST
+        // Page-specific JavaScript for index page only
         const titleElement = document.getElementById('dynamicTitle');
         const phrases = ['SOFTWARE ENGINEER', 'CYBERSECURITY ENTHUSIAST'];
         let currentPhraseIndex = 0;
 
-        // Character set for matrix effect
         const matrixChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*';
 
         function getRandomChar() {
@@ -787,124 +290,6 @@
 
         setInterval(rotatePhrase, 3000);
 
-        // Animation Script - FIXED ORDER (Particle class defined first)
-        const canvas = document.createElement('canvas');
-        const ctx = canvas.getContext('2d');
-        let particles = [];
-        let particleCount = window.innerWidth < 768 ? 30 : 100;
-
-        // Define Particle class FIRST before it's used
-        class Particle {
-            constructor() {
-                this.reset();
-            }
-            reset() {
-                this.x = Math.random() * canvas.width;
-                this.y = Math.random() * canvas.height;
-                this.size = Math.random() * 2.5 + 1;
-                this.speedX = Math.random() * 0.4 - 0.2;
-                this.speedY = Math.random() * 0.4 - 0.2;
-            }
-            update() {
-                this.x += this.speedX;
-                this.y += this.speedY;
-                if (this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) {
-                    this.reset();
-                }
-            }
-            draw() {
-                ctx.fillStyle = 'rgba(0,0,0,1)';
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fill();
-            }
-        }
-
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-
-            // Update particle count based on screen size
-            particleCount = window.innerWidth < 768 ? 30 : 100;
-
-            // Recreate particles to fit new canvas size
-            particles = [];
-            for (let i = 0; i < particleCount; i++) {
-                particles.push(new Particle());
-            }
-        }
-
-        canvas.style.position = 'fixed';
-        canvas.style.top = '0';
-        canvas.style.left = '0';
-        canvas.style.zIndex = '-1';
-        canvas.style.pointerEvents = 'none';
-        document.body.appendChild(canvas);
-
-        // Debounced resize handler
-        let resizeTimeout;
-        window.addEventListener('resize', function () {
-            clearTimeout(resizeTimeout);
-            resizeTimeout = setTimeout(function () {
-                requestAnimationFrame(resizeCanvas);
-            }, 100);
-        });
-
-        window.addEventListener('orientationchange', function () {
-            setTimeout(function () {
-                requestAnimationFrame(resizeCanvas);
-            }, 150);
-        });
-
-        // Initial resize and particle creation
-        resizeCanvas();
-
-        function connect() {
-            for (let i = 0; i < particles.length; i++) {
-                for (let j = i + 1; j < particles.length; j++) {
-                    const dx = particles[i].x - particles[j].x;
-                    const dy = particles[i].y - particles[j].y;
-                    const dist = Math.hypot(dx, dy);
-                    if (dist < 100) {
-                        ctx.strokeStyle = `rgba(0,0,0,${1 - dist / 300})`;
-                        ctx.lineWidth = 0.5;
-                        ctx.beginPath();
-                        ctx.moveTo(particles[i].x, particles[i].y);
-                        ctx.lineTo(particles[j].x, particles[j].y);
-                        ctx.stroke();
-                    }
-                }
-            }
-        }
-
-        function animate() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            particles.forEach(p => { p.update(); p.draw(); });
-            connect();
-            requestAnimationFrame(animate);
-        }
-        animate();
-
-        // Navigation
-        function toggleMenu() {
-            const navLinks = document.querySelector('.nav-links');
-            navLinks.classList.toggle('active');
-
-            const hamburger = document.querySelector('.hamburger-menu');
-            hamburger.classList.toggle('active');
-        }
-
-        document.addEventListener('click', (e) => {
-            const navLinks = document.querySelector('.nav-links');
-            const hamburger = document.querySelector('.hamburger-menu');
-
-            if (!e.target.closest('.nav-links') && !e.target.closest('.hamburger-menu')) {
-                navLinks.classList.remove('active');
-                hamburger.classList.remove('active');
-            }
-        });
-
-        // Scrolling numbers
         function initScrollingNumbers() {
             const numbersContainer = document.getElementById('scrollingNumbers');
             if (!numbersContainer) return;
@@ -934,7 +319,6 @@
             numbersContainer.appendChild(track);
         }
 
-        // Update real-time date
         function updateCurrentDate() {
             const dateElement = document.getElementById('currentDate');
             if (!dateElement) return;
@@ -949,7 +333,6 @@
 
         setInterval(updateCurrentDate, 60000);
 
-        // System status toggle
         let isSystemActive = true;
         function toggleSystemStatus() {
             const statusText = document.querySelector('.red-box-label small');
@@ -974,7 +357,6 @@
             }, 150);
         }
 
-        // Initialize on load
         document.addEventListener('DOMContentLoaded', () => {
             initScrollingNumbers();
             updateCurrentDate();
@@ -1002,19 +384,7 @@
                     heroImage.style.transform = 'translateY(0)';
                 }, 300);
             }
-
-            // Force a resize after a short delay
-            setTimeout(function () {
-                requestAnimationFrame(resizeCanvas);
-            }, 500);
         });
-
-        // Periodic check for canvas size
-        setInterval(function () {
-            if (canvas.width !== window.innerWidth || canvas.height !== window.innerHeight) {
-                requestAnimationFrame(resizeCanvas);
-            }
-        }, 2000);
     </script>
 </body>
 

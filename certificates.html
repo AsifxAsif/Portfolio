@@ -92,666 +92,13 @@
         }
     }
     </script>
-
-    <style>
-        .certificates-container {
-            display: flex;
-            flex-direction: column;
-            gap: 60px;
-            margin-bottom: 60px;
-        }
-
-        .certificate-item {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 40px;
-            align-items: center;
-            padding: 40px;
-            background: white;
-            border-radius: 30px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.9);
-            transition: all 0.3s ease;
-        }
-
-        .certificate-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 40px rgba(40, 40, 40, 0.1);
-        }
-
-        .certificate-item:nth-child(even) {
-            grid-template-columns: 1fr 1fr;
-        }
-
-        .certificate-item:nth-child(even) .certificate-image-container {
-            order: 2;
-        }
-
-        .certificate-item:nth-child(even) .certificate-details {
-            order: 1;
-        }
-
-        .certificate-image-container {
-            position: relative;
-            overflow: hidden;
-            border-radius: 20px;
-            height: 400px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: #f8f9fa;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-            cursor: pointer;
-        }
-
-        .certificate-image {
-            max-width: 100%;
-            max-height: 100%;
-            width: auto;
-            height: auto;
-            object-fit: contain;
-            transition: transform 0.5s ease;
-            padding: 10px;
-        }
-
-        .certificate-item:hover .certificate-image {
-            transform: scale(1.02);
-        }
-
-        .image-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.7);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            border-radius: 20px;
-        }
-
-        .certificate-image-container:hover .image-overlay {
-            opacity: 1;
-        }
-
-        .view-btn {
-            padding: 12px 25px;
-            background: var(--accent-red);
-            color: white;
-            border: none;
-            border-radius: 25px;
-            font-size: 12px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-weight: 700;
-        }
-
-        .view-btn:hover {
-            background: black;
-            box-shadow: 0 5px 15px rgba(255, 255, 255, 0.2);
-        }
-
-        .certificate-details {
-            padding: 20px;
-        }
-
-        .certificate-category {
-            display: inline-block;
-            padding: 8px 20px;
-            background: var(--accent-red);
-            color: white;
-            border-radius: 20px;
-            font-size: 10px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 20px;
-            font-weight: 700;
-        }
-
-        .certificate-details h3 {
-            font-size: 24px;
-            font-weight: 700;
-            color: var(--text-primary);
-            margin-bottom: 15px;
-            line-height: 1.3;
-        }
-
-        .certificate-meta {
-            display: flex;
-            gap: 25px;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-        }
-
-        .meta-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 12px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            color: var(--text-secondary);
-        }
-
-        .meta-item i {
-            color: var(--accent-red);
-            font-size: 14px;
-        }
-
-        .certificate-description {
-            font-size: 14px;
-            color: var(--text-secondary);
-            line-height: 1.6;
-            margin-bottom: 25px;
-        }
-
-        .certificate-stats {
-            display: flex;
-            gap: 20px;
-            flex-wrap: wrap;
-            margin-top: 20px;
-        }
-
-        .stat-item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 10px 20px;
-            background: #f8f9fa;
-            border-radius: 15px;
-            border: 1px solid rgba(0, 0, 0, 0.05);
-        }
-
-        .stat-icon {
-            width: 40px;
-            height: 40px;
-            background: black;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 16px;
-        }
-
-        .stat-content h4 {
-            font-size: 18px;
-            font-weight: 700;
-            color: var(--text-primary);
-            margin-bottom: 3px;
-        }
-
-        .stat-content p {
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            color: var(--text-secondary);
-        }
-
-        .achievement-tags {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-            margin-top: 20px;
-        }
-
-        .achievement-tag {
-            padding: 8px 16px;
-            background: #f0f0f0;
-            border-radius: 15px;
-            font-size: 10px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            color: var(--text-secondary);
-            font-weight: 700;
-        }
-
-        .achievement-tag.highlight {
-            background: var(--accent-red);
-            color: white;
-        }
-
-        .certificate-summary {
-            background: white;
-            border-radius: 30px;
-            padding: 40px;
-            margin-bottom: 40px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.9);
-        }
-
-        .summary-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 30px;
-            margin-top: 30px;
-        }
-
-        .summary-item {
-            text-align: center;
-            padding: 25px;
-            background: #f8f9fa;
-            border-radius: 20px;
-            border: 1px solid rgba(0, 0, 0, 0.05);
-        }
-
-        .summary-item .number {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: var(--text-primary);
-            margin-bottom: 10px;
-        }
-
-        .summary-item .label {
-            font-size: 12px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: var(--text-secondary);
-            font-weight: 700;
-        }
-
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 15px;
-            margin-top: 20px;
-        }
-
-        .skill-tag {
-            padding: 10px 20px;
-            background: black;
-            color: white;
-            border-radius: 20px;
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            text-align: center;
-            font-weight: 700;
-        }
-
-        .certificate-filter {
-            background: white;
-            border-radius: 30px;
-            padding: 25px 40px;
-            margin-bottom: 40px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.9);
-        }
-
-        .filter-buttons {
-            display: flex;
-            gap: 20px;
-            margin-bottom: 15px;
-            flex-wrap: wrap;
-        }
-
-        .filter-btn {
-            padding: 12px 25px;
-            background: #f8f9fa;
-            border: 2px solid #e9ecef;
-            border-radius: 25px;
-            font-size: 12px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: var(--text-secondary);
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-weight: 700;
-        }
-
-        .filter-btn:hover {
-            background: var(--accent-red);
-            color: white;
-            border-color: var(--accent-red);
-            transform: translateY(-2px);
-        }
-
-        .filter-btn.active {
-            background: var(--accent-red);
-            color: white;
-            border-color: var(--accent-red);
-            box-shadow: 0 5px 15px rgba(255, 42, 42, 0.2);
-        }
-
-        .filter-info {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding-top: 15px;
-            border-top: 1px solid #f0f0f0;
-        }
-
-        .filter-info p {
-            font-size: 12px;
-            color: var(--text-secondary);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            font-weight: 700;
-        }
-
-        /* Lightbox Modal Styles */
-        .lightbox-modal {
-            display: none;
-            position: fixed;
-            z-index: 2000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.95);
-            overflow: hidden;
-        }
-
-        .lightbox-content {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .lightbox-close {
-            position: absolute;
-            top: 30px;
-            right: 40px;
-            color: #f1f1f1;
-            font-size: 40px;
-            font-weight: bold;
-            cursor: pointer;
-            z-index: 2001;
-            transition: color 0.3s ease;
-        }
-
-        .lightbox-close:hover {
-            color: var(--accent-red);
-        }
-
-        .lightbox-image-container {
-            max-width: 90%;
-            max-height: 85%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .lightbox-image-container img {
-            max-width: 100%;
-            max-height: 75vh;
-            object-fit: contain;
-            border-radius: 10px;
-            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.3);
-        }
-
-        .lightbox-caption {
-            color: white;
-            font-size: 14px;
-            margin-top: 20px;
-            text-align: center;
-            padding: 10px 20px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 30px;
-            letter-spacing: 0.5px;
-        }
-
-        .lightbox-nav {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-            border: none;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            font-size: 30px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-            z-index: 2001;
-        }
-
-        .lightbox-nav:hover {
-            background: var(--accent-red);
-            color: white;
-        }
-
-        .lightbox-nav.prev {
-            left: 30px;
-        }
-
-        .lightbox-nav.next {
-            right: 30px;
-        }
-
-        .lightbox-nav i {
-            font-size: 30px;
-        }
-
-        .image-counter {
-            position: absolute;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            color: white;
-            font-size: 14px;
-            background: rgba(0, 0, 0, 0.6);
-            padding: 8px 16px;
-            border-radius: 20px;
-            letter-spacing: 1px;
-            z-index: 2001;
-        }
-
-        @media (max-width: 1024px) {
-            .certificate-item {
-                gap: 30px;
-                padding: 30px;
-            }
-
-            .certificate-details h3 {
-                font-size: 20px;
-            }
-
-            .certificate-image-container {
-                height: 350px;
-            }
-
-            .lightbox-nav {
-                width: 50px;
-                height: 50px;
-                font-size: 24px;
-            }
-
-            .lightbox-close {
-                font-size: 35px;
-                top: 25px;
-                right: 30px;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .certificate-item {
-                grid-template-columns: 1fr;
-                gap: 30px;
-                padding: 25px;
-            }
-
-            .certificate-item:nth-child(even) {
-                grid-template-columns: 1fr;
-            }
-
-            .certificate-item:nth-child(even) .certificate-image-container {
-                order: 1;
-            }
-
-            .certificate-item:nth-child(even) .certificate-details {
-                order: 2;
-            }
-
-            .certificate-image-container {
-                height: 300px;
-            }
-
-            .certificate-details h3 {
-                font-size: 18px;
-            }
-
-            .certificate-description {
-                font-size: 13px;
-            }
-
-            .stat-content h4 {
-                font-size: 16px;
-            }
-
-            .certificate-summary {
-                padding: 30px;
-            }
-
-            .summary-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .certificate-filter {
-                padding: 20px;
-            }
-
-            .filter-buttons {
-                flex-direction: column;
-            }
-
-            .filter-btn {
-                width: 100%;
-                justify-content: center;
-            }
-
-            .lightbox-nav {
-                width: 45px;
-                height: 45px;
-                font-size: 20px;
-            }
-
-            .lightbox-nav.prev {
-                left: 15px;
-            }
-
-            .lightbox-nav.next {
-                right: 15px;
-            }
-
-            .lightbox-close {
-                top: 20px;
-                right: 25px;
-                font-size: 30px;
-            }
-
-            .image-counter {
-                bottom: 20px;
-                font-size: 12px;
-                padding: 6px 12px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .certificate-item {
-                padding: 20px;
-                border-radius: 20px;
-            }
-
-            .certificate-image-container {
-                height: 250px;
-                border-radius: 15px;
-            }
-
-            .certificate-details {
-                padding: 10px 0;
-            }
-
-            .certificate-details h3 {
-                font-size: 16px;
-            }
-
-            .certificate-meta {
-                flex-direction: column;
-                gap: 10px;
-            }
-
-            .certificate-stats {
-                flex-direction: column;
-                gap: 10px;
-            }
-
-            .stat-item {
-                width: 100%;
-            }
-
-            .certificate-summary {
-                padding: 20px;
-                border-radius: 20px;
-            }
-
-            .summary-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .summary-item {
-                padding: 20px;
-            }
-
-            .summary-item .number {
-                font-size: 2rem;
-            }
-
-            .skills-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .lightbox-nav {
-                width: 35px;
-                height: 35px;
-                font-size: 16px;
-            }
-
-            .lightbox-nav.prev {
-                left: 10px;
-            }
-
-            .lightbox-nav.next {
-                right: 10px;
-            }
-
-            .lightbox-close {
-                top: 15px;
-                right: 20px;
-                font-size: 25px;
-            }
-
-            .lightbox-caption {
-                font-size: 12px;
-                padding: 8px 16px;
-            }
-        }
-    </style>
 </head>
 
 <body>
     <div class="main-container">
         <nav class="navbar">
             <a href="index.html" class="logo">
-                <img src="./assets/Name.webp" alt="" class="name">
+                <img src="./assets/name.webp" alt="" class="name">
             </a>
 
             <div class="hamburger-menu" onclick="toggleMenu()">
@@ -872,20 +219,20 @@
                         cryptography, and web exploitation as part of Team Hidden Investigations.
                     </p>
                     <div class="certificate-stats">
-                        <div class="stat-item">
-                            <div class="stat-icon">
+                        <div class="certificate-stat-item">
+                            <div class="certificate-stat-icon">
                                 <i class="fa-solid fa-trophy"></i>
                             </div>
-                            <div class="stat-content">
+                            <div class="certificate-stat-content">
                                 <h4>#7</h4>
                                 <p>Team Ranking</p>
                             </div>
                         </div>
-                        <div class="stat-item">
-                            <div class="stat-icon">
+                        <div class="certificate-stat-item">
+                            <div class="certificate-stat-icon">
                                 <i class="fa-solid fa-percent"></i>
                             </div>
-                            <div class="stat-content">
+                            <div class="certificate-stat-content">
                                 <h4>75%</h4>
                                 <p>Challenges Solved</p>
                             </div>
@@ -932,20 +279,20 @@
                         recognition of enthusiasm and commitment to cybersecurity learning and competition.
                     </p>
                     <div class="certificate-stats">
-                        <div class="stat-item">
-                            <div class="stat-icon">
+                        <div class="certificate-stat-item">
+                            <div class="certificate-stat-icon">
                                 <i class="fa-solid fa-clock"></i>
                             </div>
-                            <div class="stat-content">
+                            <div class="certificate-stat-content">
                                 <h4>72 Hours</h4>
                                 <p>Competition Duration</p>
                             </div>
                         </div>
-                        <div class="stat-item">
-                            <div class="stat-icon">
+                        <div class="certificate-stat-item">
+                            <div class="certificate-stat-icon">
                                 <i class="fa-solid fa-globe"></i>
                             </div>
-                            <div class="stat-content">
+                            <div class="certificate-stat-content">
                                 <h4>International</h4>
                                 <p>CTF Event</p>
                             </div>
@@ -992,20 +339,20 @@
                         projects with contributions to cybersecurity advancements.
                     </p>
                     <div class="certificate-stats">
-                        <div class="stat-item">
-                            <div class="stat-icon">
+                        <div class="certificate-stat-item">
+                            <div class="certificate-stat-icon">
                                 <i class="fa-solid fa-shield-halved"></i>
                             </div>
-                            <div class="stat-content">
+                            <div class="certificate-stat-content">
                                 <h4>CTF</h4>
                                 <p>Category</p>
                             </div>
                         </div>
-                        <div class="stat-item">
-                            <div class="stat-icon">
+                        <div class="certificate-stat-item">
+                            <div class="certificate-stat-icon">
                                 <i class="fa-solid fa-users"></i>
                             </div>
-                            <div class="stat-content">
+                            <div class="certificate-stat-content">
                                 <h4>National</h4>
                                 <p>Level Event</p>
                             </div>
@@ -1052,20 +399,20 @@
                         cybersecurity domains including web exploitation, cryptography, and reverse engineering.
                     </p>
                     <div class="certificate-stats">
-                        <div class="stat-item">
-                            <div class="stat-icon">
+                        <div class="certificate-stat-item">
+                            <div class="certificate-stat-icon">
                                 <i class="fa-solid fa-trophy"></i>
                             </div>
-                            <div class="stat-content">
+                            <div class="certificate-stat-content">
                                 <h4>Top 3%</h4>
                                 <p>Global Ranking</p>
                             </div>
                         </div>
-                        <div class="stat-item">
-                            <div class="stat-icon">
+                        <div class="certificate-stat-item">
+                            <div class="certificate-stat-icon">
                                 <i class="fa-solid fa-code"></i>
                             </div>
-                            <div class="stat-content">
+                            <div class="certificate-stat-content">
                                 <h4>62%</h4>
                                 <p>Challenges Solved</p>
                             </div>
@@ -1111,20 +458,20 @@
                         dedication to exploring advanced cybersecurity concepts and techniques.
                     </p>
                     <div class="certificate-stats">
-                        <div class="stat-item">
-                            <div class="stat-icon">
+                        <div class="certificate-stat-item">
+                            <div class="certificate-stat-icon">
                                 <i class="fa-solid fa-chess-knight"></i>
                             </div>
-                            <div class="stat-content">
+                            <div class="certificate-stat-content">
                                 <h4>Strategy</h4>
                                 <p>Based Competition</p>
                             </div>
                         </div>
-                        <div class="stat-item">
-                            <div class="stat-icon">
+                        <div class="certificate-stat-item">
+                            <div class="certificate-stat-icon">
                                 <i class="fa-solid fa-filter"></i>
                             </div>
-                            <div class="stat-content">
+                            <div class="certificate-stat-content">
                                 <h4>Selection</h4>
                                 <p>Round</p>
                             </div>
@@ -1171,20 +518,20 @@
                         emerging technologies, demonstrating engagement with cutting-edge AI developments.
                     </p>
                     <div class="certificate-stats">
-                        <div class="stat-item">
-                            <div class="stat-icon">
+                        <div class="certificate-stat-item">
+                            <div class="certificate-stat-icon">
                                 <i class="fa-solid fa-microchip"></i>
                             </div>
-                            <div class="stat-content">
+                            <div class="certificate-stat-content">
                                 <h4>AI/ML</h4>
                                 <p>Focus Area</p>
                             </div>
                         </div>
-                        <div class="stat-item">
-                            <div class="stat-icon">
+                        <div class="certificate-stat-item">
+                            <div class="certificate-stat-icon">
                                 <i class="fa-solid fa-briefcase"></i>
                             </div>
-                            <div class="stat-content">
+                            <div class="certificate-stat-content">
                                 <h4>Business</h4>
                                 <p>Applications</p>
                             </div>
@@ -1231,20 +578,20 @@
                         demonstrating dedication and commitment to mastering web development fundamentals.
                     </p>
                     <div class="certificate-stats">
-                        <div class="stat-item">
-                            <div class="stat-icon">
+                        <div class="certificate-stat-item">
+                            <div class="certificate-stat-icon">
                                 <i class="fa-solid fa-laptop-code"></i>
                             </div>
-                            <div class="stat-content">
+                            <div class="certificate-stat-content">
                                 <h4>Web Dev</h4>
                                 <p>Specialization</p>
                             </div>
                         </div>
-                        <div class="stat-item">
-                            <div class="stat-icon">
+                        <div class="certificate-stat-item">
+                            <div class="certificate-stat-icon">
                                 <i class="fa-solid fa-fire"></i>
                             </div>
-                            <div class="stat-content">
+                            <div class="certificate-stat-content">
                                 <h4>Intensive</h4>
                                 <p>21-Day Program</p>
                             </div>
@@ -1291,20 +638,20 @@
                         challenges and practical exercises, demonstrating strong problem-solving capabilities.
                     </p>
                     <div class="certificate-stats">
-                        <div class="stat-item">
-                            <div class="stat-icon">
+                        <div class="certificate-stat-item">
+                            <div class="certificate-stat-icon">
                                 <i class="fa-solid fa-lightbulb"></i>
                             </div>
-                            <div class="stat-content">
+                            <div class="certificate-stat-content">
                                 <h4>Algorithmic</h4>
                                 <p>Thinking Skills</p>
                             </div>
                         </div>
-                        <div class="stat-item">
-                            <div class="stat-icon">
+                        <div class="certificate-stat-item">
+                            <div class="certificate-stat-icon">
                                 <i class="fa-solid fa-puzzle-piece"></i>
                             </div>
-                            <div class="stat-content">
+                            <div class="certificate-stat-content">
                                 <h4>Daily</h4>
                                 <p>Coding Challenges</p>
                             </div>
@@ -1352,20 +699,20 @@
                         problem-solving skills.
                     </p>
                     <div class="certificate-stats">
-                        <div class="stat-item">
-                            <div class="stat-icon">
+                        <div class="certificate-stat-item">
+                            <div class="certificate-stat-icon">
                                 <i class="fa-solid fa-robot"></i>
                             </div>
-                            <div class="stat-content">
+                            <div class="certificate-stat-content">
                                 <h4>University</h4>
                                 <p>Organized Event</p>
                             </div>
                         </div>
-                        <div class="stat-item">
-                            <div class="stat-icon">
+                        <div class="certificate-stat-item">
+                            <div class="certificate-stat-icon">
                                 <i class="fa-solid fa-brain"></i>
                             </div>
-                            <div class="stat-content">
+                            <div class="certificate-stat-content">
                                 <h4>Fundamentals</h4>
                                 <p>Cybersecurity Training</p>
                             </div>
@@ -1412,20 +759,20 @@
                         points. Demonstrates consistent engagement and skill improvement on the platform.
                     </p>
                     <div class="certificate-stats">
-                        <div class="stat-item">
-                            <div class="stat-icon">
+                        <div class="certificate-stat-item">
+                            <div class="certificate-stat-icon">
                                 <i class="fa-solid fa-people-group"></i>
                             </div>
-                            <div class="stat-content">
+                            <div class="certificate-stat-content">
                                 <h4>Team</h4>
                                 <p>Hidden_Investigations</p>
                             </div>
                         </div>
-                        <div class="stat-item">
-                            <div class="stat-icon">
+                        <div class="certificate-stat-item">
+                            <div class="certificate-stat-icon">
                                 <i class="fa-solid fa-chart-simple"></i>
                             </div>
-                            <div class="stat-content">
+                            <div class="certificate-stat-content">
                                 <h4>Top 6.5%</h4>
                                 <p>Global Ranking</p>
                             </div>
@@ -1458,134 +805,9 @@
         </div>
     </div>
 
-    <script src="back-button.js"></script>
+    <script src="script.js"></script>
     <script>
-        // Animation Script - FIXED VERSION
-        const canvas = document.createElement('canvas');
-        const ctx = canvas.getContext('2d');
-        let particles = [];
-        let particleCount;
-
-        // Define Particle class FIRST before it's used
-        class Particle {
-            constructor() {
-                this.reset();
-            }
-            reset() {
-                this.x = Math.random() * canvas.width;
-                this.y = Math.random() * canvas.height;
-                this.size = Math.random() * 2.5 + 1;
-                this.speedX = Math.random() * 0.4 - 0.2;
-                this.speedY = Math.random() * 0.4 - 0.2;
-            }
-            update() {
-                this.x += this.speedX;
-                this.y += this.speedY;
-                if (this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) {
-                    this.reset();
-                }
-            }
-            draw() {
-                ctx.fillStyle = 'rgba(0,0,0,1)';
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fill();
-            }
-        }
-
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-
-            // Update particle count based on screen size
-            particleCount = window.innerWidth < 768 ? 30 : 100;
-
-            // Recreate particles to fit new canvas size
-            particles = [];
-            for (let i = 0; i < particleCount; i++) {
-                particles.push(new Particle());
-            }
-        }
-
-        canvas.style.position = 'fixed';
-        canvas.style.top = '0';
-        canvas.style.left = '0';
-        canvas.style.zIndex = '-1';
-        canvas.style.pointerEvents = 'none';
-        document.body.appendChild(canvas);
-
-        // Debounced resize handler
-        let resizeTimeout;
-        window.addEventListener('resize', function () {
-            clearTimeout(resizeTimeout);
-            resizeTimeout = setTimeout(function () {
-                requestAnimationFrame(resizeCanvas);
-            }, 100);
-        });
-
-        window.addEventListener('orientationchange', function () {
-            setTimeout(function () {
-                requestAnimationFrame(resizeCanvas);
-            }, 150);
-        });
-
-        // Initial resize
-        resizeCanvas();
-
-        function connect() {
-            for (let i = 0; i < particles.length; i++) {
-                for (let j = i + 1; j < particles.length; j++) {
-                    const dx = particles[i].x - particles[j].x;
-                    const dy = particles[i].y - particles[j].y;
-                    const dist = Math.hypot(dx, dy);
-                    if (dist < 100) {
-                        ctx.strokeStyle = `rgba(0,0,0,${1 - dist / 300})`;
-                        ctx.lineWidth = 0.5;
-                        ctx.beginPath();
-                        ctx.moveTo(particles[i].x, particles[i].y);
-                        ctx.lineTo(particles[j].x, particles[j].y);
-                        ctx.stroke();
-                    }
-                }
-            }
-        }
-
-        function animate() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            particles.forEach(p => { p.update(); p.draw(); });
-            connect();
-            requestAnimationFrame(animate);
-        }
-        animate();
-
-        // Force a resize after a short delay
-        setTimeout(function () {
-            requestAnimationFrame(resizeCanvas);
-        }, 500);
-
-        // Periodic check for canvas size (every 2 seconds)
-        setInterval(function () {
-            if (canvas.width !== window.innerWidth || canvas.height !== window.innerHeight) {
-                requestAnimationFrame(resizeCanvas);
-            }
-        }, 2000);
-
-        function toggleMenu() {
-            const navLinks = document.querySelector('.nav-links');
-            navLinks.classList.toggle('active');
-            const hamburger = document.querySelector('.hamburger-menu');
-            hamburger.classList.toggle('active');
-        }
-
-        document.addEventListener('click', (e) => {
-            const navLinks = document.querySelector('.nav-links');
-            const hamburger = document.querySelector('.hamburger-menu');
-            if (!e.target.closest('.nav-links') && !e.target.closest('.hamburger-menu')) {
-                navLinks.classList.remove('active');
-                hamburger.classList.remove('active');
-            }
-        });
-
+        // Page-specific JavaScript for certificates page only
         const certificates = [
             { id: 'phoenix-ctf-2025', image: './assets/certificates/Phoenix CTF 2025.webp', title: 'Phoenix Summit CTF 2025', subtitle: 'Team Rank #7 | 18/24 Challenges Solved | 720 Points' },
             { id: 'vishwactf-2025', image: './assets/certificates/VishwaCTF.webp', title: 'VishwaCTF 2025 Participation', subtitle: '3-5 March 2025 | VIIT University & HackerOne' },
