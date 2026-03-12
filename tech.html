@@ -107,33 +107,6 @@
 
 <body>
     <div class="main-container">
-        <nav class="navbar">
-            <a href="index.html" class="logo">
-                <img src="./assets/name.webp" alt="">
-            </a>
-
-            <div class="hamburger-menu" onclick="toggleMenu()">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-
-            <div class="nav-links">
-                <a href="index.html">Home</a>
-                <a href="projects.html">Projects</a>
-                <a href="tech.html" class="active">Tech Stack</a>
-                <a href="certificates.html">Certificates</a>
-                <a href="resume.html">Resume</a>
-                <a href="profile.html">Profile</a>
-            </div>
-
-            <div class="profile-icon">
-                <a href="profile.html">
-                    <img src="./assets/profile.webp" alt="Profile">
-                </a>
-            </div>
-        </nav>
-
         <a href="javascript:history.back()" class="back-btn">
             <i class="fa-solid fa-arrow-left"></i> Go Back
         </a>
@@ -557,15 +530,6 @@
     </div>
 
     <script src="script.js"></script>
-    <script>
-        const techItems = document.querySelectorAll('.tech-item');
-        techItems.forEach(item => {
-            item.addEventListener('click', () => {
-                const techName = item.querySelector('h4').textContent;
-                console.log(`Selected: ${techName}`);
-            });
-        });
-    </script>
 </body>
 
 </html>

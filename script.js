@@ -1,24 +1,118 @@
+// ==================== LOAD NAVBAR ====================
+document.addEventListener('DOMContentLoaded', function () {
+    // Try to load navbar from file (for when deployed on server)
+    fetch('navbar.html')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.text();
+        })
+        .then(data => {
+            // Insert navbar at the beginning of main-container
+            const mainContainer = document.querySelector('.main-container');
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = data;
+            const navbar = tempDiv.firstElementChild;
+
+            // Insert navbar at the beginning
+            mainContainer.insertBefore(navbar, mainContainer.firstChild);
+
+            // Set active class based on current page with page mapping
+            setActiveNavLink();
+        })
+        .catch(error => {
+            console.log('Could not load navbar from file, using embedded fallback');
+
+            // FALLBACK: Create navbar manually (this runs when you're testing locally)
+            const mainContainer = document.querySelector('.main-container');
+
+            // Create navbar element
+            const navbar = document.createElement('nav');
+            navbar.className = 'navbar';
+
+            // Set navbar HTML
+            navbar.innerHTML = `
+                <a href="index.html" class="logo">
+                    <img src="./assets/name.webp" alt="" class="name">
+                </a>
+
+                <div class="hamburger-menu" onclick="toggleMenu()">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+
+                <div class="nav-links">
+                    <a href="index.html" class="nav-link" data-page="index">Home</a>
+                    <a href="projects.html" class="nav-link" data-page="projects">Projects</a>
+                    <a href="tech.html" class="nav-link" data-page="tech">Tech Stack</a>
+                    <a href="certificates.html" class="nav-link" data-page="certificates">Certificates</a>
+                    <a href="resume.html" class="nav-link" data-page="resume">Resume</a>
+                    <a href="profile.html" class="nav-link" data-page="profile">Profile</a>
+                </div>
+
+                <div class="profile-icon">
+                    <a href="profile.html">
+                        <img src="./assets/profile.webp" alt="Profile">
+                    </a>
+                </div>
+            `;
+
+            // Insert navbar at the beginning
+            mainContainer.insertBefore(navbar, mainContainer.firstChild);
+
+            // Set active class based on current page with page mapping
+            setActiveNavLink();
+        });
+});
+
+// ==================== SET ACTIVE NAV LINK ====================
+function setActiveNavLink() {
+    // Get current page filename
+    const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+
+    // Map pages to navbar data-page attributes
+    const pageMap = {
+        'index.html': 'index',
+        '': 'index',
+        'projects.html': 'projects',
+        'project-details.html': 'projects',
+        'tech.html': 'tech',
+        'certificates.html': 'certificates',
+        'profile.html': 'profile',
+        'resume.html': 'resume'
+    };
+
+    // Get the corresponding navbar page identifier
+    const activePage = pageMap[currentPage] || 'index';
+
+    // Remove active class from all nav links
+    document.querySelectorAll('.nav-link').forEach(link => {
+        link.classList.remove('active');
+    });
+
+    // Add active class to the matching nav link
+    document.querySelectorAll('.nav-link').forEach(link => {
+        if (link.dataset.page === activePage) {
+            link.classList.add('active');
+        }
+    });
+}
+
 // ==================== BACK BUTTON FUNCTIONALITY ====================
 document.addEventListener('DOMContentLoaded', function () {
     const backBtn = document.querySelector('.back-btn');
     if (backBtn) {
-        // Remove any existing href
         backBtn.removeAttribute('href');
-
-        // Add click event
         backBtn.addEventListener('click', function (e) {
             e.preventDefault();
-
-            // If there's history, go back
             if (window.history.length > 1) {
                 window.history.back();
             } else {
-                // If no history, go to home
                 window.location.href = 'index.html';
             }
         });
-
-        // Update button text
         const icon = '<i class="fa-solid fa-arrow-left"></i> ';
         backBtn.innerHTML = window.history.length > 1 ?
             icon + 'Go Back' :
@@ -679,7 +773,6 @@ if (typeof module !== 'undefined' && module.exports) {
     let particles = [];
     let particleCount;
 
-    // Define Particle class
     class Particle {
         constructor() {
             this.reset();
@@ -709,11 +802,7 @@ if (typeof module !== 'undefined' && module.exports) {
     function resizeCanvas() {
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
-
-        // Update particle count based on screen size
         particleCount = window.innerWidth < 768 ? 30 : 100;
-
-        // Recreate particles to fit new canvas size
         particles = [];
         for (let i = 0; i < particleCount; i++) {
             particles.push(new Particle());
@@ -727,7 +816,6 @@ if (typeof module !== 'undefined' && module.exports) {
     canvas.style.pointerEvents = 'none';
     document.body.appendChild(canvas);
 
-    // Debounced resize handler
     let resizeTimeout;
     window.addEventListener('resize', function () {
         clearTimeout(resizeTimeout);
@@ -742,7 +830,6 @@ if (typeof module !== 'undefined' && module.exports) {
         }, 150);
     });
 
-    // Initial resize
     resizeCanvas();
 
     function connect() {
@@ -771,12 +858,10 @@ if (typeof module !== 'undefined' && module.exports) {
     }
     animate();
 
-    // Force a resize after a short delay
     setTimeout(function () {
         requestAnimationFrame(resizeCanvas);
     }, 500);
 
-    // Periodic check for canvas size (every 2 seconds)
     setInterval(function () {
         if (canvas.width !== window.innerWidth || canvas.height !== window.innerHeight) {
             requestAnimationFrame(resizeCanvas);
@@ -786,7 +871,6 @@ if (typeof module !== 'undefined' && module.exports) {
 
 // ==================== NAVIGATION MENU ====================
 (function initNavigation() {
-    // Function to toggle mobile menu
     window.toggleMenu = function () {
         const navLinks = document.querySelector('.nav-links');
         const hamburger = document.querySelector('.hamburger-menu');
@@ -796,7 +880,6 @@ if (typeof module !== 'undefined' && module.exports) {
         }
     };
 
-    // Close menu when clicking outside
     document.addEventListener('click', function (e) {
         const navLinks = document.querySelector('.nav-links');
         const hamburger = document.querySelector('.hamburger-menu');
@@ -808,3 +891,950 @@ if (typeof module !== 'undefined' && module.exports) {
         }
     });
 })();
+
+// ==================== PAGE-SPECIFIC FUNCTIONS ====================
+
+// Determine current page
+const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+
+// ==================== INDEX.HTML FUNCTIONS ====================
+if (currentPage === 'index.html' || currentPage === '') {
+    document.addEventListener('DOMContentLoaded', function () {
+        // Matrix Text Effect
+        const titleElement = document.getElementById('dynamicTitle');
+        if (titleElement) {
+            const phrases = ['SOFTWARE ENGINEER', 'CYBERSECURITY ENTHUSIAST'];
+            let currentPhraseIndex = 0;
+            const matrixChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*';
+
+            function getRandomChar() {
+                return matrixChars[Math.floor(Math.random() * matrixChars.length)];
+            }
+
+            function matrixTextChange(targetText) {
+                if (!titleElement) return;
+
+                const originalText = titleElement.textContent;
+                const targetLength = targetText.length;
+                const currentLength = originalText.length;
+                const maxLength = Math.max(currentLength, targetLength);
+
+                let steps = 0;
+                const totalSteps = 15;
+
+                const padText = (text, length) => {
+                    return text.padEnd(length, ' ');
+                };
+
+                let paddedOriginal = padText(originalText, maxLength);
+                let paddedTarget = padText(targetText, maxLength);
+
+                const interval = setInterval(() => {
+                    steps++;
+
+                    let result = '';
+                    for (let i = 0; i < maxLength; i++) {
+                        const revealThreshold = Math.floor((steps / totalSteps) * maxLength);
+
+                        if (i <= revealThreshold && steps > totalSteps / 2) {
+                            result += paddedTarget[i];
+                        } else if (i > revealThreshold && steps < totalSteps * 0.7) {
+                            result += getRandomChar();
+                        } else {
+                            if (Math.random() > steps / totalSteps) {
+                                result += getRandomChar();
+                            } else {
+                                result += paddedTarget[i];
+                            }
+                        }
+                    }
+
+                    titleElement.textContent = result;
+
+                    if (steps >= totalSteps) {
+                        clearInterval(interval);
+                        titleElement.textContent = targetText;
+                    }
+                }, 60);
+            }
+
+            function rotatePhrase() {
+                currentPhraseIndex = (currentPhraseIndex + 1) % phrases.length;
+                matrixTextChange(phrases[currentPhraseIndex]);
+            }
+
+            setInterval(rotatePhrase, 3000);
+        }
+
+        // Scrolling numbers
+        function initScrollingNumbers() {
+            const numbersContainer = document.getElementById('scrollingNumbers');
+            if (!numbersContainer) return;
+
+            const numbers = [
+                '45.21.99.01',
+                '88.21.45.22',
+                '10.00.59.99',
+                '72.34.18.66',
+                '29.88.11.77'
+            ];
+
+            numbersContainer.innerHTML = '';
+            const track = document.createElement('div');
+            track.className = 'scrolling-numbers-track';
+
+            const allNumbers = [...numbers, ...numbers, ...numbers];
+            allNumbers.forEach(num => {
+                const span = document.createElement('span');
+                span.textContent = num;
+                span.style.display = 'block';
+                span.style.marginBottom = '15px';
+                span.style.opacity = '0.8';
+                track.appendChild(span);
+            });
+
+            numbersContainer.appendChild(track);
+        }
+
+        // Update real-time date
+        function updateCurrentDate() {
+            const dateElement = document.getElementById('currentDate');
+            if (!dateElement) return;
+
+            const now = new Date();
+            const day = now.getDate();
+            const month = now.getMonth() + 1;
+            const year = String(now.getFullYear()).slice(-2);
+
+            dateElement.textContent = `${day}/${month}/${year}`;
+        }
+
+        setInterval(updateCurrentDate, 60000);
+
+        // System status toggle
+        let isSystemActive = true;
+        window.toggleSystemStatus = function () {
+            const statusText = document.querySelector('.red-box-label small');
+            const statusDot = document.querySelector('.status-dot');
+            isSystemActive = !isSystemActive;
+
+            if (isSystemActive) {
+                statusText.textContent = 'SYSTEM ACTIVE';
+                statusText.style.color = '';
+                statusDot.style.animation = 'blink 0.8s infinite';
+            } else {
+                statusText.textContent = 'SYSTEM STANDBY';
+                statusText.style.color = '#888';
+                statusDot.style.animation = 'none';
+                statusDot.style.opacity = '0.3';
+            }
+
+            const box = document.querySelector('.red-box-label');
+            box.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+                box.style.transform = 'scale(1)';
+            }, 150);
+        };
+
+        // Initialize
+        initScrollingNumbers();
+        updateCurrentDate();
+
+        const heroContent = document.querySelector('.hero-content');
+        if (heroContent) {
+            heroContent.style.opacity = '0';
+            heroContent.style.transform = 'translateY(20px)';
+            heroContent.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+
+            setTimeout(() => {
+                heroContent.style.opacity = '1';
+                heroContent.style.transform = 'translateY(0)';
+            }, 300);
+        }
+
+        const heroImage = document.querySelector('.hero-image');
+        if (heroImage) {
+            heroImage.style.opacity = '0';
+            heroImage.style.transform = 'translateY(20px)';
+            heroImage.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+
+            setTimeout(() => {
+                heroImage.style.opacity = '1';
+                heroImage.style.transform = 'translateY(0)';
+            }, 300);
+        }
+    });
+}
+
+// ==================== PROJECTS.HTML FUNCTIONS ====================
+if (currentPage === 'projects.html') {
+    document.addEventListener('DOMContentLoaded', function () {
+        let allProjects = [];
+
+        function filterProjects(category) {
+            const filters = document.querySelectorAll('.category-filter');
+            filters.forEach(filter => {
+                filter.classList.remove('active');
+                if (filter.dataset.category === category) {
+                    filter.classList.add('active');
+                }
+            });
+
+            const container = document.getElementById('projectsContainer');
+            const scrollPosition = window.scrollY;
+
+            container.innerHTML = '';
+
+            const filteredProjects = category === 'all'
+                ? allProjects
+                : allProjects.filter(project => project.categories.includes(category));
+
+            if (filteredProjects.length === 0) {
+                const noProjectsMessage = document.createElement('div');
+                noProjectsMessage.className = 'no-projects-message';
+                noProjectsMessage.innerHTML = '<p>No projects found in this category</p>';
+                container.appendChild(noProjectsMessage);
+            } else {
+                filteredProjects.forEach(project => {
+                    const projectCard = createProjectCard(project);
+                    container.appendChild(projectCard);
+                });
+            }
+
+            window.scrollTo(0, scrollPosition);
+        }
+
+        function loadProjects() {
+            const container = document.getElementById('projectsContainer');
+            allProjects = projectsData;
+
+            container.innerHTML = '';
+
+            allProjects.forEach(project => {
+                const projectCard = createProjectCard(project);
+                container.appendChild(projectCard);
+            });
+
+            const filterButtons = document.querySelectorAll('.category-filter');
+            filterButtons.forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const category = e.target.dataset.category;
+                    filterProjects(category);
+                });
+            });
+        }
+
+        function createProjectCard(project) {
+            const card = document.createElement('div');
+            card.className = 'project-card-detailed';
+
+            const categoryColors = {
+                'web': 'var(--accent-red)',
+                'mobile': '#00a86b',
+                'ai': '#8e2de2',
+                'system': '#f46b45',
+                'network': '#4a00e0',
+                'testing': '#000428'
+            };
+
+            const categoryColor = categoryColors[project.categories[0]] || 'black';
+
+            const statKeys = Object.keys(project.stats || {});
+
+            function getStatValue(index) {
+                if (!project.stats || !statKeys[index]) return '';
+                const key = statKeys[index];
+                return project.stats[key] || '';
+            }
+
+            function getStatLabel(index) {
+                if (!statKeys[index]) return '';
+                return statKeys[index]
+                    .replace(/([A-Z])/g, ' $1')
+                    .replace(/[0-9]/g, '')
+                    .trim()
+                    .toUpperCase() || statKeys[index].toUpperCase();
+            }
+
+            function getCodeSampleLink(project) {
+                const codeLinks = {
+                    1: "https://github.com/AsifxAsif/Nexus_backend",
+                    2: "https://github.com/Nayma-Amin/Lost-and-Found",
+                    3: "https://github.com/AsifxAsif/Hog_plum_disease",
+                    4: "https://github.com/AsifxAsif/Smart-Energy-Monitoring",
+                    5: "https://github.com/AsifxAsif/Campus-Network-Design",
+                    6: "https://github.com/yourusername/restaurant-management",
+                    7: "https://github.com/AsifxAsif/CSE412_Group2",
+                    8: "https://github.com/yourusername/edmond-karp-algorithm",
+                    9: "https://github.com/AsifxAsif/XTry-Visual-TryOn"
+                };
+
+                return codeLinks[project.id] || "https://github.com/yourusername";
+            }
+
+            card.innerHTML = `
+                <div class="project-header">
+                    <span class="project-category" style="background: ${categoryColor};">${project.category}</span>
+                    <h3>${project.title}</h3>
+                    <div class="project-meta">
+                        <span><i class="fa-solid fa-calendar"></i> ${project.date}</span>
+                        <span><i class="fa-solid fa-code"></i> ${project.tech[0]}</span>
+                        <span><i class="fa-solid fa-users"></i> ${project.team}</span>
+                    </div>
+                </div>
+                <div class="project-content">
+                    <p class="project-description">${project.description}</p>
+                    
+                    <div class="tech-stack">
+                        ${project.tech.map(tag => `<span class="tech-tag">${tag}</span>`).join('')}
+                    </div>
+
+                    <div class="project-features">
+                        <div class="features-title">Key Features</div>
+                        <ul class="features-list">
+                            ${project.features.map(feature => `<li>${feature}</li>`).join('')}
+                        </ul>
+                    </div>
+
+                    <div class="project-links">
+                        <a href="project-details.html?id=${project.id}" class="project-link primary">View Details</a>
+                        <a href="${getCodeSampleLink(project)}" class="project-link secondary" target="_blank" rel="noopener noreferrer">Code Samples</a>
+                    </div>
+                </div>
+                <div class="project-stats">
+                    <div class="project-stat">
+                        <span class="number">${getStatValue(0)}</span>
+                        <span>${getStatLabel(0)}</span>
+                    </div>
+                    <div class="project-stat">
+                        <span class="number">${getStatValue(1)}</span>
+                        <span>${getStatLabel(1)}</span>
+                    </div>
+                    <div class="project-stat">
+                        <span class="number">${getStatValue(2)}</span>
+                        <span>${getStatLabel(2)}</span>
+                    </div>
+                </div>
+            `;
+
+            return card;
+        }
+
+        loadProjects();
+    });
+}
+
+// ==================== PROJECT-DETAILS.HTML FUNCTIONS ====================
+if (currentPage === 'project-details.html') {
+    document.addEventListener('DOMContentLoaded', function () {
+        let currentImages = [];
+        let currentImageIndex = 0;
+
+        window.openLightbox = function (images, index) {
+            const modal = document.getElementById('lightboxModal');
+            const lightboxImg = document.getElementById('lightboxImage');
+            const lightboxCaption = document.getElementById('lightboxCaption');
+            const imageCounter = document.getElementById('imageCounter');
+
+            modal.style.display = 'block';
+            currentImageIndex = index;
+            currentImages = images;
+
+            updateLightboxImage();
+        };
+
+        function updateLightboxImage() {
+            const lightboxImg = document.getElementById('lightboxImage');
+            const lightboxCaption = document.getElementById('lightboxCaption');
+            const imageCounter = document.getElementById('imageCounter');
+
+            if (currentImages && currentImages[currentImageIndex]) {
+                lightboxImg.src = currentImages[currentImageIndex].url;
+                lightboxCaption.textContent = currentImages[currentImageIndex].caption;
+                imageCounter.textContent = `${currentImageIndex + 1} / ${currentImages.length}`;
+            }
+        }
+
+        window.closeLightbox = function () {
+            document.getElementById('lightboxModal').style.display = 'none';
+        };
+
+        window.navigateLightbox = function (direction) {
+            if (!currentImages) return;
+
+            currentImageIndex += direction;
+
+            if (currentImageIndex < 0) {
+                currentImageIndex = currentImages.length - 1;
+            } else if (currentImageIndex >= currentImages.length) {
+                currentImageIndex = 0;
+            }
+
+            updateLightboxImage();
+        };
+
+        function getProjectIdFromURL() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return parseInt(urlParams.get('id'));
+        }
+
+        function findProjectById(projectId) {
+            return projectsData.find(project => project.id === projectId);
+        }
+
+        function renderProjectDetails(project) {
+            if (!project) {
+                return '<div class="loading-container"><div class="loading-spinner"></div><p>Project not found</p></div>';
+            }
+
+            const categoryColors = {
+                'web': 'var(--accent-red)',
+                'mobile': '#00a86b',
+                'ai': '#8e2de2',
+                'system': '#f46b45',
+                'network': '#4a00e0',
+                'testing': '#000428',
+                'algorithms': '#4a90e2'
+            };
+
+            const categoryColor = categoryColors[project.categories[0]] || 'black';
+
+            let teamMembersHTML = '';
+            if (project.details && project.details.team) {
+                const team = project.details.team;
+                if (typeof team === 'object') {
+                    Object.keys(team).forEach(role => {
+                        teamMembersHTML += `
+                            <div class="team-member">
+                                <div class="member-avatar">${role.charAt(0)}</div>
+                                <div class="member-info">
+                                    <h4>${team[role]}</h4>
+                                    <p>${role}</p>
+                                </div>
+                            </div>
+                        `;
+                    });
+                } else if (typeof team === 'string') {
+                    const teamArray = team.split(', ');
+                    teamArray.forEach(member => {
+                        const initials = member.split(' ').map(n => n.charAt(0)).join('');
+                        teamMembersHTML += `
+                            <div class="team-member">
+                                <div class="member-avatar">${initials}</div>
+                                <div class="member-info">
+                                    <h4>${member}</h4>
+                                    <p>Team Member</p>
+                                </div>
+                            </div>
+                        `;
+                    });
+                }
+            }
+
+            let featuresHTML = '';
+            if (project.features && Array.isArray(project.features)) {
+                project.features.forEach(feature => {
+                    featuresHTML += `<li>${feature}</li>`;
+                });
+            }
+
+            let technologiesHTML = '';
+            if (project.tech && Array.isArray(project.tech)) {
+                project.tech.forEach(tech => {
+                    technologiesHTML += `<span class="tech-tag-detailed">${tech}</span>`;
+                });
+            }
+
+            let statsHTML = '';
+            if (project.stats) {
+                Object.keys(project.stats).forEach((key, index) => {
+                    if (index < 3) {
+                        statsHTML += `
+                            <div class="project-detail-stat-card">
+                                <div class="number">${project.stats[key]}</div>
+                                <div class="label">${key.replace(/([A-Z])/g, ' $1').toUpperCase()}</div>
+                            </div>
+                        `;
+                    }
+                });
+            }
+
+            let imagesHTML = '';
+            if (project.images && project.images.length > 0) {
+                imagesHTML = `
+                    <div class="project-section">
+                        <h2>PROJECT GALLERY</h2>
+                        <div class="project-images-section">
+                            <div class="image-gallery">
+                `;
+
+                project.images.forEach((image, index) => {
+                    if (image.url) {
+                        imagesHTML += `
+                            <div class="gallery-item" onclick='openLightbox(${JSON.stringify(project.images).replace(/'/g, "\\'")}, ${index})'>
+                                <div class="image-container">
+                                    <img src="${image.url}" alt="${image.caption}" loading="lazy">
+                                </div>
+                                <div class="image-caption">${image.caption}</div>
+                            </div>
+                        `;
+                    } else {
+                        imagesHTML += `
+                            <div class="gallery-item">
+                                <div class="image-container">
+                                    <div class="image-placeholder">
+                                        <i class="fa-solid fa-image"></i>
+                                        <span>${image.caption || 'Image'}</span>
+                                    </div>
+                                </div>
+                                <div class="image-caption">${image.caption || 'Image'}</div>
+                            </div>
+                        `;
+                    }
+                });
+
+                imagesHTML += `
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            let detailsSections = '';
+            if (project.details) {
+                Object.keys(project.details).forEach(sectionKey => {
+                    if (sectionKey !== 'team' && sectionKey !== 'id') {
+                        let sectionContent = '';
+                        const sectionData = project.details[sectionKey];
+
+                        if (typeof sectionData === 'string') {
+                            sectionContent = `<p>${sectionData}</p>`;
+                        } else if (Array.isArray(sectionData)) {
+                            sectionContent = '<ul class="detail-list">';
+                            sectionData.forEach(item => {
+                                if (typeof item === 'string') {
+                                    sectionContent += `<li>${item}</li>`;
+                                } else if (typeof item === 'object') {
+                                    sectionContent += `<li><strong>${Object.keys(item)[0]}:</strong> ${Object.values(item)[0]}</li>`;
+                                }
+                            });
+                            sectionContent += '</ul>';
+                        } else if (typeof sectionData === 'object') {
+                            sectionContent = '<ul class="detail-list">';
+                            Object.keys(sectionData).forEach(subKey => {
+                                sectionContent += `<li><strong>${subKey.replace(/_/g, ' ').toUpperCase()}:</strong> ${sectionData[subKey]}</li>`;
+                            });
+                            sectionContent += '</ul>';
+                        }
+
+                        if (sectionContent) {
+                            detailsSections += `
+                                <div class="project-section">
+                                    <h2>${sectionKey.replace(/([A-Z])/g, ' $1').toUpperCase()}</h2>
+                                    <div class="section-content">
+                                        ${sectionContent}
+                                    </div>
+                                </div>
+                            `;
+                        }
+                    }
+                });
+            }
+
+            const sourceCodeLink = project.links?.sourceCode || '#';
+            const liveDemoLink = project.links?.liveDemo;
+            const documentationLink = project.links?.documentation || '#';
+
+            let liveDemoButton = '';
+            if (liveDemoLink) {
+                liveDemoButton = `
+                    <a href="${liveDemoLink}" class="project-link-btn secondary" target="_blank" rel="noopener noreferrer">
+                        <i class="fa-solid fa-external-link-alt"></i>
+                        <span>Live Demo</span>
+                    </a>
+                `;
+            }
+
+            return `
+                <div class="project-header-section">
+                    <span class="project-category-tag" style="background: ${categoryColor};">${project.category}</span>
+                    <h1>${project.title}</h1>
+                    
+                    <div class="project-meta-info">
+                        <div class="meta-item">
+                            <i class="fa-solid fa-calendar"></i>
+                            <span>${project.date}</span>
+                        </div>
+                        <div class="meta-item">
+                            <i class="fa-solid fa-users"></i>
+                            <span>Team: ${project.team}</span>
+                        </div>
+                        <div class="meta-item">
+                            <i class="fa-solid fa-code"></i>
+                            <span>${project.tech.length} Technologies</span>
+                        </div>
+                    </div>
+                    
+                    <p class="project-overview">${project.description}</p>
+                    
+                    <div class="tech-stack-details">
+                        ${technologiesHTML}
+                    </div>
+                </div>
+                
+                <div class="project-content-grid">
+                    <div class="main-content">
+                        ${detailsSections || `
+                            <div class="project-section">
+                                <h2>PROJECT OVERVIEW</h2>
+                                <div class="section-content">
+                                    <p>${project.description}</p>
+                                </div>
+                            </div>
+                            
+                            <div class="project-section">
+                                <h2>KEY FEATURES</h2>
+                                <div class="section-content">
+                                    <ul class="feature-list">
+                                        ${featuresHTML}
+                                    </ul>
+                                </div>
+                            </div>
+                        `}
+                        
+                        ${statsHTML ? `
+                            <div class="project-section">
+                                <h2>PROJECT STATISTICS</h2>
+                                <div class="section-content">
+                                    <div class="stats-grid">
+                                        ${statsHTML}
+                                    </div>
+                                </div>
+                            </div>
+                        ` : ''}
+                    </div>
+                    
+                    <div class="sidebar-content">
+                        <div class="project-section">
+                            <h2>PROJECT LINKS</h2>
+                            <div class="project-links-section">
+                                <a href="${sourceCodeLink}" class="project-link-btn primary" ${sourceCodeLink !== '#' ? 'target="_blank" rel="noopener noreferrer"' : ''}>
+                                    <i class="fa-brands fa-github"></i>
+                                    <span>View Source Code</span>
+                                </a>
+                                ${liveDemoButton}
+                                <a href="${documentationLink}" class="project-link-btn secondary" ${documentationLink !== '#' ? 'target="_blank" rel="noopener noreferrer"' : ''}>
+                                    <i class="fa-solid fa-file-pdf"></i>
+                                    <span>Documentation</span>
+                                </a>
+                            </div>
+                        </div>
+                        
+                        ${teamMembersHTML ? `
+                            <div class="project-section">
+                                <h2>PROJECT TEAM</h2>
+                                <div class="project-team-section">
+                                    ${teamMembersHTML}
+                                </div>
+                            </div>
+                        ` : ''}
+                        
+                        <div class="project-section">
+                            <h2>PROJECT INFO</h2>
+                            <div class="section-content">
+                                <div class="meta-item">
+                                    <i class="fa-solid fa-layer-group"></i>
+                                    <span>Category: ${project.category}</span>
+                                </div>
+                                <div class="meta-item">
+                                    <i class="fa-solid fa-tags"></i>
+                                    <span>Tags: ${project.categories.join(', ')}</span>
+                                </div>
+                                <div class="meta-item">
+                                    <i class="fa-solid fa-calendar-check"></i>
+                                    <span>Completed: ${project.date}</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        ${imagesHTML}
+                    </div>
+                </div>
+                
+                <div style="text-align: center; margin-top: 40px;">
+                    <a href="projects.html" class="back-to-projects">
+                        <i class="fa-solid fa-arrow-left"></i>
+                        Back to All Projects
+                    </a>
+                </div>
+
+                <div id="lightboxModal" class="lightbox-modal">
+                    <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
+                    <button class="lightbox-nav prev" onclick="navigateLightbox(-1)">
+                        <i class="fa-solid fa-chevron-left"></i>
+                    </button>
+                    <button class="lightbox-nav next" onclick="navigateLightbox(1)">
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </button>
+                    <div class="lightbox-content">
+                        <div class="lightbox-image-container">
+                            <img id="lightboxImage" src="" alt="">
+                            <div id="lightboxCaption" class="lightbox-caption"></div>
+                        </div>
+                    </div>
+                    <div id="imageCounter" class="image-counter"></div>
+                </div>
+            `;
+        }
+
+        const projectId = getProjectIdFromURL();
+        const project = findProjectById(projectId);
+        const container = document.getElementById('projectDetailsContainer');
+
+        container.innerHTML = '<div class="loading-container"><div class="loading-spinner"></div><p>Loading project details...</p></div>';
+
+        setTimeout(() => {
+            container.innerHTML = renderProjectDetails(project);
+            if (project) {
+                document.title = `${project.title} - Project Details | Md. Asifuzzaman`;
+            }
+        }, 500);
+
+        document.addEventListener('keydown', (e) => {
+            if (document.getElementById('lightboxModal') && document.getElementById('lightboxModal').style.display === 'block') {
+                if (e.key === 'Escape') {
+                    closeLightbox();
+                } else if (e.key === 'ArrowLeft') {
+                    navigateLightbox(-1);
+                } else if (e.key === 'ArrowRight') {
+                    navigateLightbox(1);
+                }
+            }
+        });
+    });
+}
+
+// ==================== CERTIFICATES.HTML FUNCTIONS ====================
+if (currentPage === 'certificates.html') {
+    document.addEventListener('DOMContentLoaded', function () {
+        const certificates = [
+            { id: 'phoenix-ctf-2025', image: './assets/certificates/Phoenix CTF 2025.webp', title: 'Phoenix Summit CTF 2025', subtitle: 'Team Rank #7 | 18/24 Challenges Solved | 720 Points' },
+            { id: 'vishwactf-2025', image: './assets/certificates/VishwaCTF.webp', title: 'VishwaCTF 2025 Participation', subtitle: '3-5 March 2025 | VIIT University & HackerOne' },
+            { id: 'bcs-ict-fest-2025', image: './assets/certificates/BCS ICT FEST.webp', title: 'BCS ICT FEST 2025 - CTF Category', subtitle: 'Participation Certificate | Bangladesh Computer Society' },
+            { id: 'nahamcon-2025', image: './assets/certificates/NahamCon 2025.webp', title: 'NahamCon 2025 CTF Competition', subtitle: 'Rank 88/2968 Teams | 34/55 Challenges Solved' },
+            { id: 'smp-ctf-2024', image: './assets/certificates/SMP CTF.webp', title: 'SMP CTF 2024 - Selection Round', subtitle: 'SMP Cyber Security | 30 December 2024' },
+            { id: 'ai-academy-2024', image: './assets/certificates/Ai Academy.webp', title: 'AI For Bangladesh Summit 2024', subtitle: 'AI Academy of Bangladesh | Business & Innovation' },
+            { id: 'web-dev-bootcamp-2024', image: './assets/certificates/Web Development.webp', title: '21 Days of Code - Web Development', subtitle: 'Bootcamp Completion | Programming Hero' },
+            { id: 'problem-solving-bootcamp-2024', image: './assets/certificates/Problem Solving.webp', title: '21 Days of Code - Problem Solving', subtitle: 'Bootcamp Completion | Programming Hero' },
+            { id: 'beginner-ctf-training-2024', image: './assets/certificates/Beginner CTF Training.webp', title: 'Beginner CTF Training - East West University', subtitle: 'Training Completion | Cyber Bangla Collaboration' },
+            { id: 'htb-certificate-2024', image: './assets/certificates/HTB Certificate.webp', title: 'HackTheBox Team Ranking', subtitle: 'Team Rank 525th | 40/77 Challenges Solved' }
+        ];
+
+        let currentImageIndex = 0;
+
+        window.openLightbox = function (certId) {
+            const index = certificates.findIndex(cert => cert.id === certId);
+            if (index !== -1) {
+                currentImageIndex = index;
+                updateLightboxImage();
+                document.getElementById('lightboxModal').style.display = 'block';
+                document.body.style.overflow = 'hidden';
+            }
+        };
+
+        function updateLightboxImage() {
+            const cert = certificates[currentImageIndex];
+            if (cert) {
+                document.getElementById('lightboxImage').src = cert.image;
+                document.getElementById('lightboxImage').alt = cert.title;
+                document.getElementById('lightboxCaption').innerHTML = `<strong>${cert.title}</strong><br>${cert.subtitle}`;
+                document.getElementById('imageCounter').textContent = `${currentImageIndex + 1} / ${certificates.length}`;
+            }
+        }
+
+        window.closeLightbox = function () {
+            document.getElementById('lightboxModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        };
+
+        window.navigateLightbox = function (direction) {
+            currentImageIndex += direction;
+            if (currentImageIndex < 0) {
+                currentImageIndex = certificates.length - 1;
+            } else if (currentImageIndex >= certificates.length) {
+                currentImageIndex = 0;
+            }
+            updateLightboxImage();
+        };
+
+        document.addEventListener('keydown', (e) => {
+            const modal = document.getElementById('lightboxModal');
+            if (modal.style.display === 'block') {
+                if (e.key === 'Escape') {
+                    closeLightbox();
+                } else if (e.key === 'ArrowLeft') {
+                    navigateLightbox(-1);
+                } else if (e.key === 'ArrowRight') {
+                    navigateLightbox(1);
+                }
+            }
+        });
+
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const certificateItems = document.querySelectorAll('.certificate-item');
+        const filterCount = document.getElementById('filterCount');
+
+        certificateItems.forEach(item => {
+            const categorySpan = item.querySelector('.certificate-category');
+            if (categorySpan) {
+                const category = categorySpan.textContent.toLowerCase();
+                if (category.includes('ctf') || category.includes('competition') ||
+                    category.includes('international') || category.includes('platform')) {
+                    item.dataset.category = 'ctf';
+                } else if (category.includes('training') || category.includes('bootcamp') ||
+                    category.includes('development') || category.includes('technical') ||
+                    category.includes('conference') || category.includes('ai')) {
+                    item.dataset.category = 'development';
+                } else {
+                    item.dataset.category = 'other';
+                }
+            }
+        });
+
+        function countCertificates() {
+            const ctfCount = document.querySelectorAll('.certificate-item[data-category="ctf"]').length;
+            const devCount = document.querySelectorAll('.certificate-item[data-category="development"]').length;
+            const otherCount = document.querySelectorAll('.certificate-item[data-category="other"]').length;
+            return { ctfCount, devCount, otherCount, total: ctfCount + devCount + otherCount };
+        }
+
+        function updateSummaryCounts() {
+            const counts = countCertificates();
+            document.getElementById('totalCertificates').textContent = counts.total;
+            document.getElementById('ctfCertificates').textContent = counts.ctfCount;
+            document.getElementById('devCertificates').textContent = counts.devCount;
+        }
+
+        function filterCertificates(category) {
+            const counts = countCertificates();
+            certificateItems.forEach(item => {
+                if (category === 'all' || item.dataset.category === category) {
+                    item.style.display = 'grid';
+                    setTimeout(() => {
+                        item.style.opacity = '1';
+                        item.style.transform = 'translateY(0)';
+                    }, 50);
+                } else {
+                    item.style.opacity = '0';
+                    item.style.transform = 'translateY(20px)';
+                    setTimeout(() => {
+                        item.style.display = 'none';
+                    }, 300);
+                }
+            });
+            if (category === 'all') {
+                filterCount.textContent = `Showing all ${counts.total} certificates`;
+            } else if (category === 'ctf') {
+                filterCount.textContent = `Showing ${counts.ctfCount} CTF competition certificates`;
+            } else if (category === 'development') {
+                filterCount.textContent = `Showing ${counts.devCount} development & training certificates`;
+            }
+        }
+
+        filterButtons.forEach(button => {
+            button.addEventListener('click', function () {
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                this.classList.add('active');
+                filterCertificates(this.dataset.filter);
+            });
+        });
+
+        updateSummaryCounts();
+        const counts = countCertificates();
+        filterCount.textContent = `Showing all ${counts.total} certificates`;
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.1 });
+
+        certificateItems.forEach((item, index) => {
+            item.style.opacity = '0.2';
+            item.style.transform = 'translateY(20px)';
+            item.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+            item.style.transitionDelay = `${index * 0.01}s`;
+            observer.observe(item);
+        });
+    });
+}
+
+// ==================== PROFILE.HTML FUNCTIONS ====================
+if (currentPage === 'profile.html') {
+    document.addEventListener('DOMContentLoaded', function () {
+        const revealLayer = document.querySelector('.reveal-container');
+        const revealWrapper = document.querySelector('.reveal-wrapper');
+        let isActive = false;
+
+        revealWrapper.addEventListener('mouseenter', () => {
+            isActive = true;
+            revealLayer.classList.add('active');
+        });
+
+        revealWrapper.addEventListener('mouseleave', () => {
+            isActive = false;
+            revealLayer.classList.remove('active');
+        });
+
+        // Check if jQuery and GSAP are loaded
+        if (typeof $ !== 'undefined' && typeof gsap !== 'undefined') {
+            $(document).mousemove((e) => {
+                if (!isActive) return;
+
+                const wrapperRect = revealWrapper.getBoundingClientRect();
+                const x = e.clientX - wrapperRect.left;
+                const y = e.clientY - wrapperRect.top;
+
+                if (x >= 0 && x <= wrapperRect.width && y >= 0 && y <= wrapperRect.height) {
+                    gsap.to(revealLayer, {
+                        '--x': `${x}px`,
+                        '--y': `${y}px`,
+                        duration: 0.3,
+                        ease: 'power2.out'
+                    });
+                }
+            });
+        }
+    });
+}
+
+// ==================== RESUME.HTML FUNCTIONS ====================
+if (currentPage === 'resume.html') {
+    document.addEventListener('DOMContentLoaded', () => {
+        const skillBars = document.querySelectorAll('.cv-skill-progress');
+        skillBars.forEach(bar => {
+            const width = bar.style.width;
+            bar.style.width = '0';
+            setTimeout(() => {
+                bar.style.transition = 'width 1s ease-in-out';
+                bar.style.width = width;
+            }, 500);
+        });
+    });
+}
+
+// ==================== TECH.HTML FUNCTIONS ====================
+if (currentPage === 'tech.html') {
+    document.addEventListener('DOMContentLoaded', function () {
+        const techItems = document.querySelectorAll('.tech-item');
+        techItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const techName = item.querySelector('h4').textContent;
+                console.log(`Selected: ${techName}`);
+            });
+        });
+    });
+}

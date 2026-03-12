@@ -121,33 +121,6 @@
 
 <body>
     <div class="main-container">
-        <nav class="navbar">
-            <a href="index.html" class="logo">
-                <img src="./assets/name.webp" alt="">
-            </a>
-
-            <div class="hamburger-menu" onclick="toggleMenu()">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-
-            <div class="nav-links">
-                <a href="index.html">Home</a>
-                <a href="projects.html">Projects</a>
-                <a href="tech.html">Tech Stack</a>
-                <a href="certificates.html">Certificates</a>
-                <a href="resume.html">Resume</a>
-                <a href="profile.html" class="active">Profile</a>
-            </div>
-
-            <div class="profile-icon">
-                <a href="profile.html">
-                    <img src="./assets/profile.webp" alt="Profile">
-                </a>
-            </div>
-        </nav>
-
         <a href="javascript:history.back()" class="back-btn">
             <i class="fa-solid fa-arrow-left"></i> Go Back
         </a>
@@ -311,40 +284,6 @@
     <script src="script.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.3/gsap.min.js"></script>
-
-    <script>
-        // Page-specific JavaScript for profile page only
-        const revealLayer = document.querySelector('.reveal-container');
-        const revealWrapper = document.querySelector('.reveal-wrapper');
-        let isActive = false;
-
-        revealWrapper.addEventListener('mouseenter', () => {
-            isActive = true;
-            revealLayer.classList.add('active');
-        });
-
-        revealWrapper.addEventListener('mouseleave', () => {
-            isActive = false;
-            revealLayer.classList.remove('active');
-        });
-
-        $(document).mousemove((e) => {
-            if (!isActive) return;
-
-            const wrapperRect = revealWrapper.getBoundingClientRect();
-            const x = e.clientX - wrapperRect.left;
-            const y = e.clientY - wrapperRect.top;
-
-            if (x >= 0 && x <= wrapperRect.width && y >= 0 && y <= wrapperRect.height) {
-                gsap.to(revealLayer, {
-                    '--x': `${x}px`,
-                    '--y': `${y}px`,
-                    duration: 0.3,
-                    ease: 'power2.out'
-                });
-            }
-        });
-    </script>
 </body>
 
 </html>

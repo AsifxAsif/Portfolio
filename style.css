@@ -1,6 +1,6 @@
+/* ==================== GLOBAL STYLES ==================== */
 :root {
     --bg-color: #e0e5ec;
-    --card-bg: #ffffff;
     --text-primary: #111111;
     --text-secondary: #666666;
     --accent-red: #ff2a2a;
@@ -2490,7 +2490,7 @@ body {
     border: 1px solid rgba(255, 255, 255, 0.9);
 }
 
-.timeline-content p{
+.timeline-content p {
     color: var(--text-secondary);
 }
 
