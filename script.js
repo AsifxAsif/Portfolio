@@ -1046,6 +1046,37 @@ if (currentPage === 'projects.html') {
     document.addEventListener('DOMContentLoaded', function () {
         let allProjects = [];
 
+        // Create count badge element
+        function createCountBadge() {
+            const filterSection = document.querySelector('.filter-section');
+            if (filterSection && !document.getElementById('projectCountBadge')) {
+                const badge = document.createElement('div');
+                badge.id = 'projectCountBadge';
+                badge.className = 'project-count-badge';
+                badge.innerHTML = 'Showing <span id="visibleCount">0</span> of <span id="totalCount">0</span> projects';
+                filterSection.appendChild(badge);
+            }
+        }
+
+        // Update count badge
+        function updateCountBadge(visible, total) {
+            const visibleSpan = document.getElementById('visibleCount');
+            const totalSpan = document.getElementById('totalCount');
+            const badge = document.getElementById('projectCountBadge');
+
+            if (visibleSpan) visibleSpan.textContent = visible;
+            if (totalSpan) totalSpan.textContent = total;
+
+            if (badge) {
+                if (visible === 0) {
+                    badge.innerHTML = 'No projects match your filter <span>😕</span>';
+                    badge.classList.add('no-results');
+                } else {
+                    badge.classList.remove('no-results');
+                }
+            }
+        }
+
         function filterProjects(category) {
             const filters = document.querySelectorAll('.category-filter');
             filters.forEach(filter => {
@@ -1076,6 +1107,9 @@ if (currentPage === 'projects.html') {
                 });
             }
 
+            // Update count badge
+            updateCountBadge(filteredProjects.length, allProjects.length);
+
             window.scrollTo(0, scrollPosition);
         }
 
@@ -1097,6 +1131,10 @@ if (currentPage === 'projects.html') {
                     filterProjects(category);
                 });
             });
+
+            // Create and update count badge
+            createCountBadge();
+            updateCountBadge(allProjects.length, allProjects.length);
         }
 
         function createProjectCard(project) {
@@ -1572,6 +1610,7 @@ if (currentPage === 'project-details.html') {
             container.innerHTML = renderProjectDetails(project);
             if (project) {
                 document.title = `${project.title} - Project Details | Md. Asifuzzaman`;
+                updateProjectMetaTags(project);
             }
         }, 500);
 
@@ -1813,3 +1852,35 @@ if (currentPage === 'tech.html') {
         });
     });
 }
+
+// ==================== BACK TO TOP BUTTON ====================
+(function initBackToTop() {
+    // Create button if it doesn't exist (as fallback)
+    if (!document.getElementById('backToTop')) {
+        const btn = document.createElement('button');
+        btn.id = 'backToTop';
+        btn.className = 'back-to-top';
+        btn.setAttribute('aria-label', 'Back to top');
+        btn.innerHTML = '<i class="fa-solid fa-arrow-up"></i>';
+        document.body.appendChild(btn);
+    }
+
+    const backToTop = document.getElementById('backToTop');
+
+    if (backToTop) {
+        window.addEventListener('scroll', function () {
+            if (window.scrollY > 500) {
+                backToTop.classList.add('visible');
+            } else {
+                backToTop.classList.remove('visible');
+            }
+        });
+
+        backToTop.addEventListener('click', function () {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    }
+})();
