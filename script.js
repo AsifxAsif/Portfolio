@@ -1886,140 +1886,239 @@ if (currentPage === 'tech.html') {
 
 // ==================== SCROLL ANIMATION INDICATOR ====================
 (function initScrollAnimation() {
-    function initialize() {
-        const scrollAnimation = document.getElementById('scrollAnimation');
-        const animationImg = document.getElementById('scrollAnimationImg');
+    let scrollAnimation = null;
+    let animationImg = null;
+    let isInitialized = false;
+    let scrollHandlersSetup = false;
 
-        if (!scrollAnimation || !animationImg) {
+    function getElements() {
+        scrollAnimation = document.getElementById('scrollAnimation');
+        animationImg = document.getElementById('scrollAnimationImg');
+        return scrollAnimation && animationImg;
+    }
+
+    // Wait for ALL content to be fully loaded and rendered
+    function waitForEverythingReady(callback) {
+        // Check if document is fully loaded
+        if (document.readyState !== 'complete') {
+            window.addEventListener('load', () => waitForEverythingReady(callback));
+            return;
+        }
+
+        // Wait for all images on the page to load
+        const allImages = document.querySelectorAll('img');
+        const pendingImages = Array.from(allImages).filter(img => !img.complete && img !== animationImg);
+
+        if (pendingImages.length === 0) {
+            // No images to wait for, give a small delay for layout
+            setTimeout(callback, 300);
+            return;
+        }
+
+        let loadedCount = 0;
+        pendingImages.forEach(img => {
+            img.addEventListener('load', () => {
+                loadedCount++;
+                if (loadedCount === pendingImages.length) {
+                    // Extra delay to ensure layout is stable after images load
+                    setTimeout(callback, 300);
+                }
+            });
+            img.addEventListener('error', () => {
+                loadedCount++;
+                if (loadedCount === pendingImages.length) {
+                    setTimeout(callback, 300);
+                }
+            });
+        });
+
+        // Fallback timeout
+        setTimeout(callback, 3000);
+    }
+
+    // Calculate accurate scrollbar thumb position
+    function getAccurateThumbPosition() {
+        if (!scrollAnimation) return 20;
+
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+
+        if (scrollHeight <= 0) return 20;
+
+        const scrollPercentage = scrollTop / scrollHeight;
+        const viewportHeight = window.innerHeight;
+        const totalScrollableHeight = document.documentElement.scrollHeight;
+
+        // Calculate thumb height
+        const thumbHeight = Math.max(30, (viewportHeight / totalScrollableHeight) * viewportHeight);
+        const maxThumbTop = viewportHeight - thumbHeight;
+        const thumbTop = scrollPercentage * maxThumbTop;
+
+        // Center animation on thumb
+        const animationHeight = scrollAnimation.offsetHeight || 70;
+        const centeredPosition = thumbTop + (thumbHeight / 2) - (animationHeight / 2);
+
+        // Keep within bounds
+        const minPosition = 10;
+        const maxPosition = viewportHeight - animationHeight - 10;
+
+        return Math.max(minPosition, Math.min(maxPosition, centeredPosition));
+    }
+
+    function initialize() {
+        if (!getElements()) {
             setTimeout(initialize, 100);
             return;
         }
 
+        if (isInitialized) return;
+
+        console.log('Scroll animation: Waiting for all content to load...');
+
+        // Keep animation hidden initially
+        scrollAnimation.style.display = 'none';
+
+        waitForEverythingReady(() => {
+            console.log('Scroll animation: All content loaded, loading animation images...');
+
+            // Now load the animation images
+            const pausedImg = new Image();
+            const forwardImg = new Image();
+            const reversedImg = new Image();
+
+            let imagesLoaded = 0;
+
+            function imageLoaded() {
+                imagesLoaded++;
+                if (imagesLoaded === 3) {
+                    console.log('Scroll animation: All animation images loaded, positioning and showing...');
+
+                    // Calculate correct position
+                    const correctTop = getAccurateThumbPosition();
+                    scrollAnimation.style.top = correctTop + 'px';
+
+                    // Set the image source
+                    animationImg.src = pausedImg.src;
+
+                    // Show the animation
+                    scrollAnimation.style.display = 'block';
+
+                    // Double-check position after display
+                    requestAnimationFrame(() => {
+                        const finalTop = getAccurateThumbPosition();
+                        scrollAnimation.style.top = finalTop + 'px';
+                    });
+
+                    // Store image sources for later use
+                    window._scrollAnimationImages = {
+                        paused: pausedImg.src,
+                        forward: forwardImg.src,
+                        reversed: reversedImg.src
+                    };
+
+                    isInitialized = true;
+
+                    // Now setup scroll handling
+                    setupScrollHandling();
+                }
+            }
+
+            pausedImg.onload = imageLoaded;
+            forwardImg.onload = imageLoaded;
+            reversedImg.onload = imageLoaded;
+
+            pausedImg.src = './assets/scroll-animation-paused.webp';
+            forwardImg.src = './assets/scroll-animation-forward.gif';
+            reversedImg.src = './assets/scroll-animation-reversed.gif';
+
+            // Fallback timeout
+            setTimeout(() => {
+                if (imagesLoaded < 3) {
+                    console.log('Scroll animation: Timeout, showing anyway...');
+                    const correctTop = getAccurateThumbPosition();
+                    scrollAnimation.style.top = correctTop + 'px';
+                    animationImg.src = './assets/scroll-animation-paused.webp';
+                    scrollAnimation.style.display = 'block';
+
+                    window._scrollAnimationImages = {
+                        paused: './assets/scroll-animation-paused.webp',
+                        forward: './assets/scroll-animation-forward.gif',
+                        reversed: './assets/scroll-animation-reversed.gif'
+                    };
+
+                    isInitialized = true;
+                    setupScrollHandling();
+                }
+            }, 5000);
+        });
+    }
+
+    function setupScrollHandling() {
+        if (scrollHandlersSetup) return;
+        scrollHandlersSetup = true;
+
+        const scrollAnimationElem = scrollAnimation;
+        const animationImgElem = animationImg;
+
+        if (!scrollAnimationElem || !animationImgElem) return;
+
+        const preloadImages = window._scrollAnimationImages;
+
         let scrollTimeout = null;
         let lastScrollTop = window.pageYOffset || document.documentElement.scrollTop;
-        let currentState = 'paused'; // paused, forward, reversed
-        let isLoading = false;
-
-        // Preload all images to avoid flickering
-        const preloadImages = {
-            paused: new Image(),
-            forward: new Image(),
-            reversed: new Image()
-        };
-
-        preloadImages.paused.src = './assets/scroll-animation-paused.webp';
-        preloadImages.forward.src = './assets/scroll-animation-forward.gif';
-        preloadImages.reversed.src = './assets/scroll-animation-reversed.gif';
-
-        // Function to calculate scrollbar thumb position (centered)
-        function getScrollbarThumbPosition() {
-            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-            const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
-
-            if (scrollHeight <= 0) return 20;
-
-            const scrollPercentage = scrollTop / scrollHeight;
-            const viewportHeight = window.innerHeight;
-            const totalScrollableHeight = document.documentElement.scrollHeight;
-
-            const thumbHeight = Math.max(30, (viewportHeight / totalScrollableHeight) * viewportHeight);
-            const maxThumbTop = viewportHeight - thumbHeight;
-            const thumbTop = scrollPercentage * maxThumbTop;
-
-            const animationHeight = scrollAnimation.offsetHeight;
-            const centeredPosition = thumbTop + (thumbHeight / 2) - (animationHeight / 2);
-
-            const minPosition = 10;
-            const maxPosition = viewportHeight - animationHeight - 10;
-
-            return Math.max(minPosition, Math.min(maxPosition, centeredPosition));
-        }
+        let currentState = 'paused';
 
         // Function to update animation position
-        function updateAnimationPosition() {
-            if (!scrollAnimation) return;
-            const newTop = getScrollbarThumbPosition();
-            scrollAnimation.style.top = newTop + 'px';
+        function updatePosition() {
+            if (!scrollAnimationElem) return;
+            const newTop = getAccurateThumbPosition();
+            scrollAnimationElem.style.top = newTop + 'px';
         }
 
-        // Function to change animation state with debounce
-        function setAnimationState(state) {
-            if (currentState === state || isLoading) return;
-
+        // Function to change animation state
+        function setState(state) {
+            if (currentState === state) return;
             currentState = state;
 
-            switch (state) {
-                case 'forward':
-                    if (preloadImages.forward.complete) {
-                        animationImg.src = preloadImages.forward.src;
-                    } else {
-                        isLoading = true;
-                        preloadImages.forward.onload = () => {
-                            animationImg.src = preloadImages.forward.src;
-                            isLoading = false;
-                        };
-                    }
-                    break;
-                case 'reversed':
-                    if (preloadImages.reversed.complete) {
-                        animationImg.src = preloadImages.reversed.src;
-                    } else {
-                        isLoading = true;
-                        preloadImages.reversed.onload = () => {
-                            animationImg.src = preloadImages.reversed.src;
-                            isLoading = false;
-                        };
-                    }
-                    break;
-                case 'paused':
-                default:
-                    animationImg.src = preloadImages.paused.src;
-                    break;
+            if (state === 'forward') {
+                animationImgElem.src = preloadImages.forward;
+            } else if (state === 'reversed') {
+                animationImgElem.src = preloadImages.reversed;
+            } else {
+                animationImgElem.src = preloadImages.paused;
             }
         }
 
-        // Handle scroll event
+        // Handle scroll
         let ticking = false;
-        let scrollDirection = 0;
 
-        function handleScroll() {
+        function onScroll() {
             const currentScrollTop = window.pageYOffset || document.documentElement.scrollTop;
             const deltaY = currentScrollTop - lastScrollTop;
 
             if (!ticking) {
                 requestAnimationFrame(() => {
-                    // Update position
-                    updateAnimationPosition();
+                    updatePosition();
 
-                    // Handle animation based on scroll direction
                     if (Math.abs(deltaY) > 2) {
-                        // Clear existing timeout
-                        if (scrollTimeout) {
-                            clearTimeout(scrollTimeout);
-                            scrollTimeout = null;
-                        }
+                        if (scrollTimeout) clearTimeout(scrollTimeout);
 
-                        // Set animation based on direction
                         if (deltaY > 0 && currentState !== 'forward') {
-                            setAnimationState('forward');
-                            scrollDirection = 1;
+                            setState('forward');
                         } else if (deltaY < 0 && currentState !== 'reversed') {
-                            setAnimationState('reversed');
-                            scrollDirection = -1;
+                            setState('reversed');
                         }
 
-                        // Set timeout to revert to paused after scrolling stops
                         scrollTimeout = setTimeout(() => {
                             if (currentState !== 'paused') {
-                                setAnimationState('paused');
+                                setState('paused');
                             }
                             scrollTimeout = null;
                         }, 400);
                     } else {
-                        // If not scrolling and not paused, revert after delay
                         if (currentState !== 'paused' && !scrollTimeout) {
                             scrollTimeout = setTimeout(() => {
-                                setAnimationState('paused');
+                                setState('paused');
                                 scrollTimeout = null;
                             }, 200);
                         }
@@ -2032,29 +2131,32 @@ if (currentPage === 'tech.html') {
             }
         }
 
-        // Add scroll event listener with passive option for better performance
-        window.addEventListener('scroll', handleScroll, { passive: true });
+        window.addEventListener('scroll', onScroll, { passive: true });
+        setState('paused');
 
-        // Initial position update
-        updateAnimationPosition();
-
-        // Set initial state
-        setAnimationState('paused');
-
-        // Update position on resize
+        // Update on resize
         let resizeTimeout;
         window.addEventListener('resize', () => {
             clearTimeout(resizeTimeout);
-            resizeTimeout = setTimeout(() => {
-                updateAnimationPosition();
-            }, 100);
+            resizeTimeout = setTimeout(updatePosition, 100);
         });
 
-        // Update on load
-        window.addEventListener('load', () => {
-            setTimeout(updateAnimationPosition, 100);
+        // Update on DOM changes
+        const observer = new MutationObserver(updatePosition);
+        observer.observe(document.body, {
+            childList: true,
+            subtree: true,
+            attributes: true,
+            attributeFilter: ['style', 'class']
         });
+
+        console.log('Scroll animation: Scroll handling active');
     }
 
-    initialize();
+    // Start initialization
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initialize);
+    } else {
+        initialize();
+    }
 })();
