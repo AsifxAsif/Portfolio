@@ -1897,43 +1897,13 @@ if (currentPage === 'tech.html') {
         return scrollAnimation && animationImg;
     }
 
-    // Wait for ALL content to be fully loaded and rendered
-    function waitForEverythingReady(callback) {
-        // Check if document is fully loaded
-        if (document.readyState !== 'complete') {
-            window.addEventListener('load', () => waitForEverythingReady(callback));
-            return;
+    // Wait for DOM to be ready (not all images)
+    function waitForDOMReady(callback) {
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', () => setTimeout(callback, 50));
+        } else {
+            setTimeout(callback, 50);
         }
-
-        // Wait for all images on the page to load
-        const allImages = document.querySelectorAll('img');
-        const pendingImages = Array.from(allImages).filter(img => !img.complete && img !== animationImg);
-
-        if (pendingImages.length === 0) {
-            // No images to wait for, give a small delay for layout
-            setTimeout(callback, 300);
-            return;
-        }
-
-        let loadedCount = 0;
-        pendingImages.forEach(img => {
-            img.addEventListener('load', () => {
-                loadedCount++;
-                if (loadedCount === pendingImages.length) {
-                    // Extra delay to ensure layout is stable after images load
-                    setTimeout(callback, 300);
-                }
-            });
-            img.addEventListener('error', () => {
-                loadedCount++;
-                if (loadedCount === pendingImages.length) {
-                    setTimeout(callback, 300);
-                }
-            });
-        });
-
-        // Fallback timeout
-        setTimeout(callback, 3000);
     }
 
     // Calculate accurate scrollbar thumb position
@@ -1973,15 +1943,16 @@ if (currentPage === 'tech.html') {
 
         if (isInitialized) return;
 
-        console.log('Scroll animation: Waiting for all content to load...');
+        console.log('Scroll animation: Initializing...');
 
         // Keep animation hidden initially
         scrollAnimation.style.display = 'none';
 
-        waitForEverythingReady(() => {
-            console.log('Scroll animation: All content loaded, loading animation images...');
+        // Wait for DOM to be ready (quick)
+        waitForDOMReady(() => {
+            console.log('Scroll animation: DOM ready, loading images...');
 
-            // Now load the animation images
+            // Load animation images
             const pausedImg = new Image();
             const forwardImg = new Image();
             const reversedImg = new Image();
@@ -1991,7 +1962,7 @@ if (currentPage === 'tech.html') {
             function imageLoaded() {
                 imagesLoaded++;
                 if (imagesLoaded === 3) {
-                    console.log('Scroll animation: All animation images loaded, positioning and showing...');
+                    console.log('Scroll animation: Images loaded, positioning and showing...');
 
                     // Calculate correct position
                     const correctTop = getAccurateThumbPosition();
@@ -2003,7 +1974,7 @@ if (currentPage === 'tech.html') {
                     // Show the animation
                     scrollAnimation.style.display = 'block';
 
-                    // Double-check position after display
+                    // Quick position adjustment after showing
                     requestAnimationFrame(() => {
                         const finalTop = getAccurateThumbPosition();
                         scrollAnimation.style.top = finalTop + 'px';
@@ -2017,8 +1988,6 @@ if (currentPage === 'tech.html') {
                     };
 
                     isInitialized = true;
-
-                    // Now setup scroll handling
                     setupScrollHandling();
                 }
             }
@@ -2031,10 +2000,10 @@ if (currentPage === 'tech.html') {
             forwardImg.src = './assets/scroll-animation-forward.gif';
             reversedImg.src = './assets/scroll-animation-reversed.gif';
 
-            // Fallback timeout
+            // Fast fallback - if images take more than 1 second, show anyway
             setTimeout(() => {
                 if (imagesLoaded < 3) {
-                    console.log('Scroll animation: Timeout, showing anyway...');
+                    console.log('Scroll animation: Fast fallback, showing animation...');
                     const correctTop = getAccurateThumbPosition();
                     scrollAnimation.style.top = correctTop + 'px';
                     animationImg.src = './assets/scroll-animation-paused.webp';
@@ -2049,7 +2018,7 @@ if (currentPage === 'tech.html') {
                     isInitialized = true;
                     setupScrollHandling();
                 }
-            }, 5000);
+            }, 1000); // 1 second timeout instead of 5 seconds
         });
     }
 
@@ -2141,8 +2110,12 @@ if (currentPage === 'tech.html') {
             resizeTimeout = setTimeout(updatePosition, 100);
         });
 
-        // Update on DOM changes
-        const observer = new MutationObserver(updatePosition);
+        // Update on DOM changes (but not too frequently)
+        let updateTimeout;
+        const observer = new MutationObserver(() => {
+            if (updateTimeout) clearTimeout(updateTimeout);
+            updateTimeout = setTimeout(updatePosition, 150);
+        });
         observer.observe(document.body, {
             childList: true,
             subtree: true,
@@ -2153,10 +2126,6 @@ if (currentPage === 'tech.html') {
         console.log('Scroll animation: Scroll handling active');
     }
 
-    // Start initialization
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initialize);
-    } else {
-        initialize();
-    }
+    // Start initialization immediately
+    initialize();
 })();
