@@ -1887,7 +1887,6 @@ if (currentPage === 'tech.html') {
 
 // ==================== SCROLL ANIMATION INDICATOR ====================
 (function initScrollAnimation() {
-    // Wait for DOM to be fully loaded
     function initialize() {
         const scrollAnimation = document.getElementById('scrollAnimation');
         const animationImg = document.getElementById('scrollAnimationImg');
@@ -1897,40 +1896,42 @@ if (currentPage === 'tech.html') {
             return;
         }
 
-        let scrollTimeout;
+        console.log('Scroll animation found! Initializing...');
+
+        let scrollTimeout = null;
         let lastScrollTop = window.pageYOffset || document.documentElement.scrollTop;
-        let currentGif = 'paused'; // Track current GIF state
+        let currentState = 'paused'; // paused, forward, reversed
+        let isLoading = false;
+
+        // Preload all images to avoid flickering
+        const preloadImages = {
+            paused: new Image(),
+            forward: new Image(),
+            reversed: new Image()
+        };
+
+        preloadImages.paused.src = './assets/scroll-animation-paused.webp';
+        preloadImages.forward.src = './assets/scroll-animation-forward.gif';
+        preloadImages.reversed.src = './assets/scroll-animation-reversed.gif';
 
         // Function to calculate scrollbar thumb position (centered)
         function getScrollbarThumbPosition() {
             const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
             const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
 
-            if (scrollHeight <= 0) {
-                return 20;
-            }
+            if (scrollHeight <= 0) return 20;
 
             const scrollPercentage = scrollTop / scrollHeight;
-
-            // Calculate scrollbar thumb dimensions
             const viewportHeight = window.innerHeight;
             const totalScrollableHeight = document.documentElement.scrollHeight;
 
-            // Calculate thumb height (proportional to content)
             const thumbHeight = Math.max(30, (viewportHeight / totalScrollableHeight) * viewportHeight);
-
-            // Calculate maximum top position for the thumb
             const maxThumbTop = viewportHeight - thumbHeight;
-
-            // Calculate thumb top position based on scroll percentage
             const thumbTop = scrollPercentage * maxThumbTop;
 
-            // Center the animation on the thumb
-            // Subtract half of animation height to center it
             const animationHeight = scrollAnimation.offsetHeight;
             const centeredPosition = thumbTop + (thumbHeight / 2) - (animationHeight / 2);
 
-            // Add some padding from top and bottom edges
             const minPosition = 10;
             const maxPosition = viewportHeight - animationHeight - 10;
 
@@ -1944,88 +1945,87 @@ if (currentPage === 'tech.html') {
             scrollAnimation.style.top = newTop + 'px';
         }
 
-        // Function to set GIF with cache busting to force reload
-        function setGif(type) {
-            if (!animationImg) return;
+        // Function to change animation state with debounce
+        function setAnimationState(state) {
+            if (currentState === state || isLoading) return;
 
-            if (type === 'down' && currentGif !== 'down') {
-                currentGif = 'down';
-                animationImg.src = './assets/scroll-animation-forward.gif?' + Date.now();
-            } else if (type === 'up' && currentGif !== 'up') {
-                currentGif = 'up';
-                animationImg.src = './assets/scroll-animation-reversed.gif?' + Date.now();
-            } else if (type === 'paused' && currentGif !== 'paused') {
-                currentGif = 'paused';
-                animationImg.src = './assets/scroll-animation-paused.webp?' + Date.now();
+            currentState = state;
+
+            switch (state) {
+                case 'forward':
+                    if (preloadImages.forward.complete) {
+                        animationImg.src = preloadImages.forward.src;
+                    } else {
+                        isLoading = true;
+                        preloadImages.forward.onload = () => {
+                            animationImg.src = preloadImages.forward.src;
+                            isLoading = false;
+                        };
+                    }
+                    break;
+                case 'reversed':
+                    if (preloadImages.reversed.complete) {
+                        animationImg.src = preloadImages.reversed.src;
+                    } else {
+                        isLoading = true;
+                        preloadImages.reversed.onload = () => {
+                            animationImg.src = preloadImages.reversed.src;
+                            isLoading = false;
+                        };
+                    }
+                    break;
+                case 'paused':
+                default:
+                    animationImg.src = preloadImages.paused.src;
+                    break;
             }
-        }
-
-        // Function to start scroll animation
-        function startScrollAnimation(deltaY) {
-            // Clear any pending timeout
-            if (scrollTimeout) {
-                clearTimeout(scrollTimeout);
-                scrollTimeout = null;
-            }
-
-            // Set the appropriate GIF immediately
-            if (deltaY > 0) {
-                setGif('down');
-            } else if (deltaY < 0) {
-                setGif('up');
-            }
-        }
-
-        // Function to stop scroll animation (show paused)
-        function stopScrollAnimation() {
-            // Only change to paused if we're not in the middle of scrolling
-            if (scrollTimeout) {
-                clearTimeout(scrollTimeout);
-            }
-
-            scrollTimeout = setTimeout(() => {
-                setGif('paused');
-                scrollTimeout = null;
-            }, 200); // Increased delay to allow GIF to play fully
         }
 
         // Handle scroll event
         let ticking = false;
-        let currentDeltaY = 0;
-        let isScrolling = false;
+        let scrollDirection = 0;
 
         function handleScroll() {
             const currentScrollTop = window.pageYOffset || document.documentElement.scrollTop;
-            currentDeltaY = currentScrollTop - lastScrollTop;
+            const deltaY = currentScrollTop - lastScrollTop;
 
             if (!ticking) {
                 requestAnimationFrame(() => {
                     // Update position
                     updateAnimationPosition();
 
-                    // Handle scroll animation
-                    if (Math.abs(currentDeltaY) > 2) { // Small threshold to detect actual scrolling
-                        if (!isScrolling) {
-                            isScrolling = true;
-                            startScrollAnimation(currentDeltaY);
-                        } else {
-                            // If already scrolling, just ensure the GIF is playing
-                            if (currentDeltaY > 0 && currentGif !== 'down') {
-                                setGif('down');
-                            } else if (currentDeltaY < 0 && currentGif !== 'up') {
-                                setGif('up');
-                            }
-                        }
-
-                        // Reset the stop timer
+                    // Handle animation based on scroll direction
+                    if (Math.abs(deltaY) > 2) {
+                        // Clear existing timeout
                         if (scrollTimeout) {
                             clearTimeout(scrollTimeout);
-                        }
-                        scrollTimeout = setTimeout(() => {
-                            isScrolling = false;
-                            setGif('paused');
                             scrollTimeout = null;
-                        }, 300);
+                        }
+
+                        // Set animation based on direction
+                        if (deltaY > 0 && currentState !== 'forward') {
+                            setAnimationState('forward');
+                            scrollDirection = 1;
+                        } else if (deltaY < 0 && currentState !== 'reversed') {
+                            setAnimationState('reversed');
+                            scrollDirection = -1;
+                        }
+
+                        // Set timeout to revert to paused after scrolling stops
+                        scrollTimeout = setTimeout(() => {
+                            if (currentState !== 'paused') {
+                                setAnimationState('paused');
+                            }
+                            scrollTimeout = null;
+                        }, 400);
+                    } else {
+                        // If not scrolling and not paused, revert after delay
+                        if (currentState !== 'paused' && !scrollTimeout) {
+                            scrollTimeout = setTimeout(() => {
+                                setAnimationState('paused');
+                                scrollTimeout = null;
+                            }, 200);
+                        }
                     }
 
                     lastScrollTop = currentScrollTop;
@@ -2035,16 +2035,16 @@ if (currentPage === 'tech.html') {
             }
         }
 
-        // Add scroll event listener
-        window.addEventListener('scroll', handleScroll);
+        // Add scroll event listener with passive option for better performance
+        window.addEventListener('scroll', handleScroll, { passive: true });
 
-        // Force an initial position update
+        // Initial position update
         updateAnimationPosition();
 
-        // Ensure the paused image is shown initially
-        setGif('paused');
+        // Set initial state
+        setAnimationState('paused');
 
-        // Update position on window resize
+        // Update position on resize
         let resizeTimeout;
         window.addEventListener('resize', () => {
             clearTimeout(resizeTimeout);
@@ -2053,14 +2053,13 @@ if (currentPage === 'tech.html') {
             }, 100);
         });
 
-        // Update position on page load
+        // Update on load
         window.addEventListener('load', () => {
-            setTimeout(() => {
-                updateAnimationPosition();
-            }, 100);
+            setTimeout(updateAnimationPosition, 100);
         });
+
+        console.log('Scroll animation initialized successfully!');
     }
 
-    // Start initialization
     initialize();
 })();
