@@ -1886,21 +1886,43 @@ if (currentPage === 'tech.html') {
 
 // ==================== SCROLL ANIMATION INDICATOR ====================
 (function initScrollAnimation() {
-    // Check if mobile - don't initialize on mobile
-    if (window.innerWidth <= 768) {
-        console.log('Scroll animation: Mobile detected, skipping initialization');
-        return;
-    }
-
     let scrollAnimation = null;
     let animationImg = null;
     let isInitialized = false;
     let scrollHandlersSetup = false;
+    let isMobile = window.innerWidth <= 768;
 
     function getElements() {
         scrollAnimation = document.getElementById('scrollAnimation');
         animationImg = document.getElementById('scrollAnimationImg');
         return scrollAnimation && animationImg;
+    }
+
+    // Check if animation should be visible based on screen size
+    function shouldBeVisible() {
+        return window.innerWidth > 768;
+    }
+
+    // Update visibility based on screen size
+    function updateVisibility() {
+        const visible = shouldBeVisible();
+
+        if (visible && !isInitialized && getElements()) {
+            // Desktop - need to initialize
+            initialize();
+        } else if (!visible && scrollAnimation) {
+            // Mobile - hide and cleanup
+            if (scrollHandlersSetup) {
+                // Remove scroll handler if needed
+                window.removeEventListener('scroll', onScroll);
+                scrollHandlersSetup = false;
+            }
+            scrollAnimation.style.display = 'none';
+            isInitialized = false;
+        } else if (visible && scrollAnimation && !isInitialized) {
+            // Resized from mobile to desktop, reinitialize
+            initialize();
+        }
     }
 
     // Wait for DOM to be ready
@@ -1938,6 +1960,113 @@ if (currentPage === 'tech.html') {
         return Math.max(minPosition, Math.min(maxPosition, centeredPosition));
     }
 
+    // Update animation position
+    function updatePosition() {
+        if (!scrollAnimation || !shouldBeVisible()) return;
+        const newTop = getAccurateThumbPosition();
+        scrollAnimation.style.top = newTop + 'px';
+    }
+
+    // Scroll handler
+    let scrollTimeout = null;
+    let lastScrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    let currentState = 'paused';
+    let preloadImages = null;
+    let ticking = false;
+
+    function setState(state) {
+        if (!animationImg || !preloadImages) return;
+        if (currentState === state) return;
+        currentState = state;
+
+        if (state === 'forward') {
+            animationImg.src = preloadImages.forward;
+        } else if (state === 'reversed') {
+            animationImg.src = preloadImages.reversed;
+        } else {
+            animationImg.src = preloadImages.paused;
+        }
+    }
+
+    function onScroll() {
+        if (!shouldBeVisible()) return;
+
+        const currentScrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        const deltaY = currentScrollTop - lastScrollTop;
+
+        if (!ticking) {
+            requestAnimationFrame(() => {
+                updatePosition();
+
+                if (Math.abs(deltaY) > 2) {
+                    if (scrollTimeout) clearTimeout(scrollTimeout);
+
+                    if (deltaY > 0 && currentState !== 'forward') {
+                        setState('forward');
+                    } else if (deltaY < 0 && currentState !== 'reversed') {
+                        setState('reversed');
+                    }
+
+                    scrollTimeout = setTimeout(() => {
+                        if (currentState !== 'paused') {
+                            setState('paused');
+                        }
+                        scrollTimeout = null;
+                    }, 400);
+                } else {
+                    if (currentState !== 'paused' && !scrollTimeout) {
+                        scrollTimeout = setTimeout(() => {
+                            setState('paused');
+                            scrollTimeout = null;
+                        }, 200);
+                    }
+                }
+
+                lastScrollTop = currentScrollTop;
+                ticking = false;
+            });
+            ticking = true;
+        }
+    }
+
+    function setupScrollHandling() {
+        if (scrollHandlersSetup) return;
+        scrollHandlersSetup = true;
+
+        window.addEventListener('scroll', onScroll, { passive: true });
+
+        // Initial state
+        if (preloadImages) {
+            setState('paused');
+        }
+
+        // Update on resize
+        let resizeTimeout;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(() => {
+                if (shouldBeVisible()) {
+                    updatePosition();
+                }
+            }, 100);
+        });
+
+        // Update on DOM changes
+        let updateTimeout;
+        const observer = new MutationObserver(() => {
+            if (shouldBeVisible()) {
+                if (updateTimeout) clearTimeout(updateTimeout);
+                updateTimeout = setTimeout(updatePosition, 150);
+            }
+        });
+        observer.observe(document.body, {
+            childList: true,
+            subtree: true,
+            attributes: true,
+            attributeFilter: ['style', 'class']
+        });
+    }
+
     function initialize() {
         if (!getElements()) {
             setTimeout(initialize, 100);
@@ -1945,6 +2074,12 @@ if (currentPage === 'tech.html') {
         }
 
         if (isInitialized) return;
+
+        // Check if should be visible
+        if (!shouldBeVisible()) {
+            scrollAnimation.style.display = 'none';
+            return;
+        }
 
         // Keep animation hidden initially
         scrollAnimation.style.display = 'none';
@@ -1960,6 +2095,12 @@ if (currentPage === 'tech.html') {
             function imageLoaded() {
                 imagesLoaded++;
                 if (imagesLoaded === 3) {
+                    preloadImages = {
+                        paused: pausedImg.src,
+                        forward: forwardImg.src,
+                        reversed: reversedImg.src
+                    };
+
                     const correctTop = getAccurateThumbPosition();
                     scrollAnimation.style.top = correctTop + 'px';
                     animationImg.src = pausedImg.src;
@@ -1969,12 +2110,6 @@ if (currentPage === 'tech.html') {
                         const finalTop = getAccurateThumbPosition();
                         scrollAnimation.style.top = finalTop + 'px';
                     });
-
-                    window._scrollAnimationImages = {
-                        paused: pausedImg.src,
-                        forward: forwardImg.src,
-                        reversed: reversedImg.src
-                    };
 
                     isInitialized = true;
                     setupScrollHandling();
@@ -1992,16 +2127,16 @@ if (currentPage === 'tech.html') {
             // Fast fallback
             setTimeout(() => {
                 if (imagesLoaded < 3) {
-                    const correctTop = getAccurateThumbPosition();
-                    scrollAnimation.style.top = correctTop + 'px';
-                    animationImg.src = './assets/scroll-animation-paused.webp';
-                    scrollAnimation.style.display = 'block';
-
-                    window._scrollAnimationImages = {
+                    preloadImages = {
                         paused: './assets/scroll-animation-paused.webp',
                         forward: './assets/scroll-animation-forward.gif',
                         reversed: './assets/scroll-animation-reversed.gif'
                     };
+
+                    const correctTop = getAccurateThumbPosition();
+                    scrollAnimation.style.top = correctTop + 'px';
+                    animationImg.src = './assets/scroll-animation-paused.webp';
+                    scrollAnimation.style.display = 'block';
 
                     isInitialized = true;
                     setupScrollHandling();
@@ -2010,103 +2145,23 @@ if (currentPage === 'tech.html') {
         });
     }
 
-    function setupScrollHandling() {
-        if (scrollHandlersSetup) return;
-        scrollHandlersSetup = true;
+    // Listen for window resize to handle orientation/screen size changes
+    window.addEventListener('resize', function () {
+        const newIsMobile = window.innerWidth <= 768;
 
-        const scrollAnimationElem = scrollAnimation;
-        const animationImgElem = animationImg;
-
-        if (!scrollAnimationElem || !animationImgElem) return;
-
-        const preloadImages = window._scrollAnimationImages;
-
-        let scrollTimeout = null;
-        let lastScrollTop = window.pageYOffset || document.documentElement.scrollTop;
-        let currentState = 'paused';
-
-        function updatePosition() {
-            if (!scrollAnimationElem) return;
-            const newTop = getAccurateThumbPosition();
-            scrollAnimationElem.style.top = newTop + 'px';
+        // If mobile state changed
+        if (isMobile !== newIsMobile) {
+            isMobile = newIsMobile;
+            updateVisibility();
         }
+    });
 
-        function setState(state) {
-            if (currentState === state) return;
-            currentState = state;
-
-            if (state === 'forward') {
-                animationImgElem.src = preloadImages.forward;
-            } else if (state === 'reversed') {
-                animationImgElem.src = preloadImages.reversed;
-            } else {
-                animationImgElem.src = preloadImages.paused;
-            }
+    // Initial check and start
+    if (shouldBeVisible()) {
+        initialize();
+    } else {
+        if (getElements()) {
+            scrollAnimation.style.display = 'none';
         }
-
-        let ticking = false;
-
-        function onScroll() {
-            const currentScrollTop = window.pageYOffset || document.documentElement.scrollTop;
-            const deltaY = currentScrollTop - lastScrollTop;
-
-            if (!ticking) {
-                requestAnimationFrame(() => {
-                    updatePosition();
-
-                    if (Math.abs(deltaY) > 2) {
-                        if (scrollTimeout) clearTimeout(scrollTimeout);
-
-                        if (deltaY > 0 && currentState !== 'forward') {
-                            setState('forward');
-                        } else if (deltaY < 0 && currentState !== 'reversed') {
-                            setState('reversed');
-                        }
-
-                        scrollTimeout = setTimeout(() => {
-                            if (currentState !== 'paused') {
-                                setState('paused');
-                            }
-                            scrollTimeout = null;
-                        }, 400);
-                    } else {
-                        if (currentState !== 'paused' && !scrollTimeout) {
-                            scrollTimeout = setTimeout(() => {
-                                setState('paused');
-                                scrollTimeout = null;
-                            }, 200);
-                        }
-                    }
-
-                    lastScrollTop = currentScrollTop;
-                    ticking = false;
-                });
-                ticking = true;
-            }
-        }
-
-        window.addEventListener('scroll', onScroll, { passive: true });
-        setState('paused');
-
-        let resizeTimeout;
-        window.addEventListener('resize', () => {
-            clearTimeout(resizeTimeout);
-            resizeTimeout = setTimeout(updatePosition, 100);
-        });
-
-        let updateTimeout;
-        const observer = new MutationObserver(() => {
-            if (updateTimeout) clearTimeout(updateTimeout);
-            updateTimeout = setTimeout(updatePosition, 150);
-        });
-        observer.observe(document.body, {
-            childList: true,
-            subtree: true,
-            attributes: true,
-            attributeFilter: ['style', 'class']
-        });
     }
-
-    // Start initialization
-    initialize();
 })();

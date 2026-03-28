@@ -64,7 +64,7 @@ body {
     z-index: 9999;
     pointer-events: none;
     will-change: top;
-    display: none;
+    transition: top 0.05s linear;
 }
 
 .scroll-animation img {
@@ -74,17 +74,17 @@ body {
     display: block;
 }
 
-/* Desktop only */
+/* Desktop only - Show only on screens wider than 768px */
 @media (min-width: 769px) {
     .scroll-animation {
         display: block;
     }
 }
 
-/* Hide on mobile */
+/* Mobile - Hide on screens 768px and below */
 @media (max-width: 768px) {
     .scroll-animation {
-        display: none;
+        display: none !important;
     }
 }
 
