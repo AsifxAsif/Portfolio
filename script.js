@@ -1,7 +1,199 @@
+// ==================== PRELOADER SYSTEM ====================
+(function initPreloader() {
+    // Check if preloader already ran in this session
+    if (sessionStorage.getItem('portfolioPreloaded') === 'true') {
+        // Hide loading screen immediately if already preloaded
+        const loadingScreen = document.getElementById('loadingScreen');
+        if (loadingScreen) {
+            loadingScreen.style.display = 'none';
+            loadingScreen.classList.add('hide');
+        }
+        // Initialize page content immediately
+        initializePageContent();
+        return;
+    }
+
+    // List of all assets to preload
+    const assetsToPreload = {
+        images: [
+            // Profile images
+            './assets/profile.webp',
+            './assets/name.webp',
+            './assets/gray-pattern.webp',
+
+            // Scroll animation
+            './assets/scroll-animation-paused.webp',
+            './assets/scroll-animation-forward.gif',
+            './assets/scroll-animation-reversed.gif',
+
+            // Project images
+            './assets/images/nexus-products.webp',
+            './assets/images/nexus-dashboard.webp',
+            './assets/images/nexus-testing.webp',
+            './assets/images/lost-found-home.webp',
+            './assets/images/lost-found-posts.webp',
+            './assets/images/lost-found-profile.webp',
+            './assets/images/leaf-disease-samples.webp',
+            './assets/images/leaf-disease-gradcam.webp',
+            './assets/images/energy-dashboard.webp',
+            './assets/images/energy-graphs.webp',
+            './assets/images/network-topology.webp',
+            './assets/images/simulation-panel.webp',
+            './assets/images/pc-pc-ping.webp',
+            './assets/images/dropnova-dashboard.webp',
+            './assets/images/dropnova-sharing.webp',
+            './assets/images/dropnova-analytics.webp',
+            './assets/images/edmond-karp-graph.webp',
+            './assets/images/edmond-karp-residual.webp',
+            './assets/images/edmond-karp-output.webp',
+            './assets/images/xtry-login.webp',
+            './assets/images/xtry-home.webp',
+            './assets/images/xtry-tryon.webp',
+            './assets/images/xtry-products.webp',
+            './assets/images/xtry-profile.webp',
+
+            // Certificate images
+            './assets/certificates/Phoenix CTF 2025.webp',
+            './assets/certificates/VishwaCTF.webp',
+            './assets/certificates/BCS ICT FEST.webp',
+            './assets/certificates/NahamCon 2025.webp',
+            './assets/certificates/SMP CTF.webp',
+            './assets/certificates/Ai Academy.webp',
+            './assets/certificates/Web Development.webp',
+            './assets/certificates/Problem Solving.webp',
+            './assets/certificates/Beginner CTF Training.webp',
+            './assets/certificates/HTB Certificate.webp',
+
+            // Tech stack icons
+            './assets/c-programming.webp'
+        ],
+        pages: [
+            'index.html',
+            'projects.html',
+            'tech.html',
+            'certificates.html',
+            'resume.html',
+            'profile.html'
+        ]
+    };
+
+    let loadedCount = 0;
+    let totalAssets = assetsToPreload.images.length + assetsToPreload.pages.length;
+    let progressBar = document.getElementById('loadingProgressBar');
+    let percentDisplay = document.getElementById('loadingPercent');
+    let loadingScreen = document.getElementById('loadingScreen');
+
+    function updateProgress() {
+        const percent = Math.floor((loadedCount / totalAssets) * 100);
+        if (progressBar) {
+            progressBar.style.width = percent + '%';
+        }
+        if (percentDisplay) {
+            percentDisplay.textContent = percent + '%';
+        }
+
+        // When all assets are loaded
+        if (loadedCount >= totalAssets) {
+            setTimeout(() => {
+                if (loadingScreen) {
+                    loadingScreen.classList.add('hide');
+                    setTimeout(() => {
+                        loadingScreen.style.display = 'none';
+                    }, 500);
+                }
+                // Mark as preloaded in session storage
+                sessionStorage.setItem('portfolioPreloaded', 'true');
+
+                // Dispatch event that preloading is complete
+                window.dispatchEvent(new Event('preloadComplete'));
+
+                // Initialize page content after preload
+                initializePageContent();
+            }, 300);
+        }
+    }
+
+    // Preload images
+    function preloadImage(src) {
+        return new Promise((resolve) => {
+            const img = new Image();
+            img.onload = () => {
+                loadedCount++;
+                updateProgress();
+                resolve();
+            };
+            img.onerror = () => {
+                // Even if error, count it as loaded to avoid hanging
+                loadedCount++;
+                updateProgress();
+                resolve();
+            };
+            img.src = src;
+        });
+    }
+
+    // Prefetch pages (fetch HTML to cache)
+    function prefetchPage(url) {
+        return fetch(url)
+            .then(() => {
+                loadedCount++;
+                updateProgress();
+            })
+            .catch(() => {
+                loadedCount++;
+                updateProgress();
+            });
+    }
+
+    // Start preloading all assets
+    async function startPreload() {
+        // Preload all images
+        const imagePromises = assetsToPreload.images.map(src => preloadImage(src));
+
+        // Prefetch all pages
+        const pagePromises = assetsToPreload.pages.map(url => prefetchPage(url));
+
+        // Wait for everything
+        await Promise.all([...imagePromises, ...pagePromises]);
+    }
+
+    // Check if loading screen exists
+    if (loadingScreen) {
+        startPreload();
+    } else {
+        // If no loading screen, mark as preloaded and initialize
+        sessionStorage.setItem('portfolioPreloaded', 'true');
+        initializePageContent();
+    }
+})();
+
+// ==================== INITIALIZE PAGE CONTENT AFTER PRELOAD ====================
+function initializePageContent() {
+    const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+
+    if (currentPage === 'index.html' || currentPage === '') {
+        initializeIndexPage();
+    } else if (currentPage === 'projects.html') {
+        initializeProjectsPage();
+    } else if (currentPage === 'project-details.html') {
+        initializeProjectDetailsPage();
+    } else if (currentPage === 'certificates.html') {
+        initializeCertificatesPage();
+    } else if (currentPage === 'profile.html') {
+        initializeProfilePage();
+    } else if (currentPage === 'resume.html') {
+        initializeResumePage();
+    } else if (currentPage === 'tech.html') {
+        initializeTechPage();
+    }
+}
+
 // ==================== LOAD NAVBAR ====================
 document.addEventListener('DOMContentLoaded', function () {
     // Create navbar directly (no fetch attempt)
     const mainContainer = document.querySelector('.main-container');
+
+    if (!mainContainer) return;
 
     // Create navbar element
     const navbar = document.createElement('nav');
@@ -867,13 +1059,10 @@ if (typeof module !== 'undefined' && module.exports) {
     });
 })();
 
-// ==================== PAGE-SPECIFIC FUNCTIONS ====================
-
-// Determine current page
-const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+// ==================== PAGE INITIALIZATION FUNCTIONS ====================
 
 // ==================== INDEX.HTML FUNCTIONS ====================
-if (currentPage === 'index.html' || currentPage === '') {
+function initializeIndexPage() {
     document.addEventListener('DOMContentLoaded', function () {
         // Matrix Text Effect
         const titleElement = document.getElementById('dynamicTitle');
@@ -1042,7 +1231,7 @@ if (currentPage === 'index.html' || currentPage === '') {
 }
 
 // ==================== PROJECTS.HTML FUNCTIONS ====================
-if (currentPage === 'projects.html') {
+function initializeProjectsPage() {
     document.addEventListener('DOMContentLoaded', function () {
         let allProjects = [];
 
@@ -1238,7 +1427,7 @@ if (currentPage === 'projects.html') {
 }
 
 // ==================== PROJECT-DETAILS.HTML FUNCTIONS ====================
-if (currentPage === 'project-details.html') {
+function initializeProjectDetailsPage() {
     document.addEventListener('DOMContentLoaded', function () {
         let currentImages = [];
         let currentImageIndex = 0;
@@ -1629,7 +1818,7 @@ if (currentPage === 'project-details.html') {
 }
 
 // ==================== CERTIFICATES.HTML FUNCTIONS ====================
-if (currentPage === 'certificates.html') {
+function initializeCertificatesPage() {
     document.addEventListener('DOMContentLoaded', function () {
         const certificates = [
             { id: 'phoenix-ctf-2025', image: './assets/certificates/Phoenix CTF 2025.webp', title: 'Phoenix Summit CTF 2025', subtitle: 'Team Rank #7 | 18/24 Challenges Solved | 720 Points' },
@@ -1787,7 +1976,7 @@ if (currentPage === 'certificates.html') {
 }
 
 // ==================== PROFILE.HTML FUNCTIONS ====================
-if (currentPage === 'profile.html') {
+function initializeProfilePage() {
     document.addEventListener('DOMContentLoaded', function () {
         const revealLayer = document.querySelector('.reveal-container');
         const revealWrapper = document.querySelector('.reveal-wrapper');
@@ -1826,7 +2015,7 @@ if (currentPage === 'profile.html') {
 }
 
 // ==================== RESUME.HTML FUNCTIONS ====================
-if (currentPage === 'resume.html') {
+function initializeResumePage() {
     document.addEventListener('DOMContentLoaded', () => {
         const skillBars = document.querySelectorAll('.cv-skill-progress');
         skillBars.forEach(bar => {
@@ -1841,7 +2030,7 @@ if (currentPage === 'resume.html') {
 }
 
 // ==================== TECH.HTML FUNCTIONS ====================
-if (currentPage === 'tech.html') {
+function initializeTechPage() {
     document.addEventListener('DOMContentLoaded', function () {
         const techItems = document.querySelectorAll('.tech-item');
         techItems.forEach(item => {
