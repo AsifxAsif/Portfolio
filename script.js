@@ -1847,7 +1847,6 @@ if (currentPage === 'tech.html') {
         techItems.forEach(item => {
             item.addEventListener('click', () => {
                 const techName = item.querySelector('h4').textContent;
-                console.log(`Selected: ${techName}`);
             });
         });
     });
@@ -1895,8 +1894,6 @@ if (currentPage === 'tech.html') {
             setTimeout(initialize, 100);
             return;
         }
-
-        console.log('Scroll animation found! Initializing...');
 
         let scrollTimeout = null;
         let lastScrollTop = window.pageYOffset || document.documentElement.scrollTop;
@@ -2057,8 +2054,6 @@ if (currentPage === 'tech.html') {
         window.addEventListener('load', () => {
             setTimeout(updateAnimationPosition, 100);
         });
-
-        console.log('Scroll animation initialized successfully!');
     }
 
     initialize();
