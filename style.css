@@ -35,6 +35,26 @@ body {
     padding-top: 100px;
 }
 
+/* ==================== CUSTOM SCROLLBAR ==================== */
+::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: black;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--accent-red);
+}
+
 /* ==================== NAVBAR STYLES ==================== */
 .navbar {
     top: 20px;
@@ -2608,7 +2628,8 @@ body {
 }
 
 .back-to-top:hover {
-    background: var(--accent-red);
+    color: white;
+    background: black;
     transform: translateY(-5px);
     box-shadow: 0 8px 20px rgba(255, 42, 42, 0.4);
 }
