@@ -55,6 +55,38 @@ body {
     background: var(--accent-red);
 }
 
+/* ==================== SCROLL ANIMATION INDICATOR ==================== */
+.scroll-animation {
+    position: fixed;
+    right: -14px;
+    width: 100px;
+    height: 100px;
+    z-index: 9999;
+    pointer-events: none;
+    will-change: top;
+}
+
+.scroll-animation img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+}
+
+/* Desktop only */
+@media (min-width: 769px) {
+    .scroll-animation {
+        display: block;
+    }
+}
+
+/* Hide on mobile */
+@media (max-width: 768px) {
+    .scroll-animation {
+        display: none;
+    }
+}
+
 /* ==================== NAVBAR STYLES ==================== */
 .navbar {
     top: 20px;
@@ -525,8 +557,9 @@ body {
 }
 
 .tech-tag:hover {
-    background: var(--accent-red);
+    color: white;
     transform: translateY(-2px);
+    background: var(--accent-red);
 }
 
 .cta-section {
@@ -2445,16 +2478,6 @@ body {
     display: flex;
     gap: 8px;
     flex-wrap: wrap;
-}
-
-.research-tag {
-    padding: 5px 12px;
-    background: #f0f0f0;
-    border-radius: 15px;
-    font-size: 9px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    color: var(--text-secondary);
 }
 
 .timeline-container {
