@@ -1950,7 +1950,6 @@ if (currentPage === 'tech.html') {
 
             if (type === 'down' && currentGif !== 'down') {
                 currentGif = 'down';
-                // Add timestamp to force reload
                 animationImg.src = './assets/scroll-animation-forward.gif?' + Date.now();
             } else if (type === 'up' && currentGif !== 'up') {
                 currentGif = 'up';
