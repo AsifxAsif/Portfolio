@@ -1943,15 +1943,11 @@ if (currentPage === 'tech.html') {
 
         if (isInitialized) return;
 
-        console.log('Scroll animation: Initializing...');
-
         // Keep animation hidden initially
         scrollAnimation.style.display = 'none';
 
         // Wait for DOM to be ready (quick)
         waitForDOMReady(() => {
-            console.log('Scroll animation: DOM ready, loading images...');
-
             // Load animation images
             const pausedImg = new Image();
             const forwardImg = new Image();
@@ -1962,8 +1958,6 @@ if (currentPage === 'tech.html') {
             function imageLoaded() {
                 imagesLoaded++;
                 if (imagesLoaded === 3) {
-                    console.log('Scroll animation: Images loaded, positioning and showing...');
-
                     // Calculate correct position
                     const correctTop = getAccurateThumbPosition();
                     scrollAnimation.style.top = correctTop + 'px';
@@ -2003,7 +1997,6 @@ if (currentPage === 'tech.html') {
             // Fast fallback - if images take more than 1 second, show anyway
             setTimeout(() => {
                 if (imagesLoaded < 3) {
-                    console.log('Scroll animation: Fast fallback, showing animation...');
                     const correctTop = getAccurateThumbPosition();
                     scrollAnimation.style.top = correctTop + 'px';
                     animationImg.src = './assets/scroll-animation-paused.webp';
@@ -2122,8 +2115,6 @@ if (currentPage === 'tech.html') {
             attributes: true,
             attributeFilter: ['style', 'class']
         });
-
-        console.log('Scroll animation: Scroll handling active');
     }
 
     // Start initialization immediately
