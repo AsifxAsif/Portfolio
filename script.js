@@ -1886,6 +1886,12 @@ if (currentPage === 'tech.html') {
 
 // ==================== SCROLL ANIMATION INDICATOR ====================
 (function initScrollAnimation() {
+    // Check if mobile - don't initialize on mobile
+    if (window.innerWidth <= 768) {
+        console.log('Scroll animation: Mobile detected, skipping initialization');
+        return;
+    }
+
     let scrollAnimation = null;
     let animationImg = null;
     let isInitialized = false;
@@ -1897,7 +1903,7 @@ if (currentPage === 'tech.html') {
         return scrollAnimation && animationImg;
     }
 
-    // Wait for DOM to be ready (not all images)
+    // Wait for DOM to be ready
     function waitForDOMReady(callback) {
         if (document.readyState === 'loading') {
             document.addEventListener('DOMContentLoaded', () => setTimeout(callback, 50));
@@ -1919,16 +1925,13 @@ if (currentPage === 'tech.html') {
         const viewportHeight = window.innerHeight;
         const totalScrollableHeight = document.documentElement.scrollHeight;
 
-        // Calculate thumb height
         const thumbHeight = Math.max(30, (viewportHeight / totalScrollableHeight) * viewportHeight);
         const maxThumbTop = viewportHeight - thumbHeight;
         const thumbTop = scrollPercentage * maxThumbTop;
 
-        // Center animation on thumb
         const animationHeight = scrollAnimation.offsetHeight || 70;
         const centeredPosition = thumbTop + (thumbHeight / 2) - (animationHeight / 2);
 
-        // Keep within bounds
         const minPosition = 10;
         const maxPosition = viewportHeight - animationHeight - 10;
 
@@ -1946,7 +1949,6 @@ if (currentPage === 'tech.html') {
         // Keep animation hidden initially
         scrollAnimation.style.display = 'none';
 
-        // Wait for DOM to be ready (quick)
         waitForDOMReady(() => {
             // Load animation images
             const pausedImg = new Image();
@@ -1958,23 +1960,16 @@ if (currentPage === 'tech.html') {
             function imageLoaded() {
                 imagesLoaded++;
                 if (imagesLoaded === 3) {
-                    // Calculate correct position
                     const correctTop = getAccurateThumbPosition();
                     scrollAnimation.style.top = correctTop + 'px';
-
-                    // Set the image source
                     animationImg.src = pausedImg.src;
-
-                    // Show the animation
                     scrollAnimation.style.display = 'block';
 
-                    // Quick position adjustment after showing
                     requestAnimationFrame(() => {
                         const finalTop = getAccurateThumbPosition();
                         scrollAnimation.style.top = finalTop + 'px';
                     });
 
-                    // Store image sources for later use
                     window._scrollAnimationImages = {
                         paused: pausedImg.src,
                         forward: forwardImg.src,
@@ -1994,7 +1989,7 @@ if (currentPage === 'tech.html') {
             forwardImg.src = './assets/scroll-animation-forward.gif';
             reversedImg.src = './assets/scroll-animation-reversed.gif';
 
-            // Fast fallback - if images take more than 1 second, show anyway
+            // Fast fallback
             setTimeout(() => {
                 if (imagesLoaded < 3) {
                     const correctTop = getAccurateThumbPosition();
@@ -2011,7 +2006,7 @@ if (currentPage === 'tech.html') {
                     isInitialized = true;
                     setupScrollHandling();
                 }
-            }, 1000); // 1 second timeout instead of 5 seconds
+            }, 1000);
         });
     }
 
@@ -2030,14 +2025,12 @@ if (currentPage === 'tech.html') {
         let lastScrollTop = window.pageYOffset || document.documentElement.scrollTop;
         let currentState = 'paused';
 
-        // Function to update animation position
         function updatePosition() {
             if (!scrollAnimationElem) return;
             const newTop = getAccurateThumbPosition();
             scrollAnimationElem.style.top = newTop + 'px';
         }
 
-        // Function to change animation state
         function setState(state) {
             if (currentState === state) return;
             currentState = state;
@@ -2051,7 +2044,6 @@ if (currentPage === 'tech.html') {
             }
         }
 
-        // Handle scroll
         let ticking = false;
 
         function onScroll() {
@@ -2096,14 +2088,12 @@ if (currentPage === 'tech.html') {
         window.addEventListener('scroll', onScroll, { passive: true });
         setState('paused');
 
-        // Update on resize
         let resizeTimeout;
         window.addEventListener('resize', () => {
             clearTimeout(resizeTimeout);
             resizeTimeout = setTimeout(updatePosition, 100);
         });
 
-        // Update on DOM changes (but not too frequently)
         let updateTimeout;
         const observer = new MutationObserver(() => {
             if (updateTimeout) clearTimeout(updateTimeout);
@@ -2117,6 +2107,6 @@ if (currentPage === 'tech.html') {
         });
     }
 
-    // Start initialization immediately
+    // Start initialization
     initialize();
 })();
