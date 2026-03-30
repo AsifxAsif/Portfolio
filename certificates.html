@@ -97,13 +97,13 @@
 <body>
     <!-- Loading Screen -->
     <div id="loadingScreen" class="loading-screen">
-        <div class="loading-content">
-            <div class="loading-spinner-large"></div>
-            <div class="loading-text">Loading Portfolio...</div>
-            <div class="loading-progress">
-                <div class="loading-progress-bar" id="loadingProgressBar"></div>
+        <div class="loading-matrix">
+            <canvas id="matrixCanvas" class="matrix-canvas"></canvas>
+            <div class="loading-text-container">
+                <div id="loadingTerminal" class="loading-terminal">
+                    <div class="terminal-line"></div>
+                </div>
             </div>
-            <div class="loading-percent" id="loadingPercent">0%</div>
         </div>
     </div>
 
@@ -171,7 +171,7 @@
 
         <div class="certificates-container">
             <div class="certificate-item" data-cert-id="phoenix-ctf-2025">
-                <div class="certificate-image-container" onclick="openLightbox('phoenix-ctf-2025')">
+                <div class="certificate-image-container">
                     <img src="./assets/certificates/Phoenix CTF 2025.webp" alt="Phoenix Summit CTF 2025 Certificate"
                         class="certificate-image">
                     <div class="image-overlay">
@@ -232,7 +232,7 @@
             </div>
 
             <div class="certificate-item" data-cert-id="vishwactf-2025">
-                <div class="certificate-image-container" onclick="openLightbox('vishwactf-2025')">
+                <div class="certificate-image-container">
                     <img src="./assets/certificates/VishwaCTF.webp" alt="VishwaCTF Certificate"
                         class="certificate-image">
                     <div class="image-overlay">
@@ -292,7 +292,7 @@
             </div>
 
             <div class="certificate-item" data-cert-id="bcs-ict-fest-2025">
-                <div class="certificate-image-container" onclick="openLightbox('bcs-ict-fest-2025')">
+                <div class="certificate-image-container">
                     <img src="./assets/certificates/BCS ICT FEST.webp" alt="BCS ICT FEST Certificate"
                         class="certificate-image">
                     <div class="image-overlay">
@@ -352,7 +352,7 @@
             </div>
 
             <div class="certificate-item" data-cert-id="nahamcon-2025">
-                <div class="certificate-image-container" onclick="openLightbox('nahamcon-2025')">
+                <div class="certificate-image-container">
                     <img src="./assets/certificates/NahamCon 2025.webp" alt="NahamCon 2025 Certificate"
                         class="certificate-image">
                     <div class="image-overlay">
@@ -412,7 +412,7 @@
             </div>
 
             <div class="certificate-item" data-cert-id="smp-ctf-2024">
-                <div class="certificate-image-container" onclick="openLightbox('smp-ctf-2024')">
+                <div class="certificate-image-container">
                     <img src="./assets/certificates/SMP CTF.webp" alt="SMP CTF Certificate" class="certificate-image">
                     <div class="image-overlay">
                         <span class="view-btn">
@@ -471,7 +471,7 @@
             </div>
 
             <div class="certificate-item" data-cert-id="ai-academy-2024">
-                <div class="certificate-image-container" onclick="openLightbox('ai-academy-2024')">
+                <div class="certificate-image-container">
                     <img src="./assets/certificates/Ai Academy.webp" alt="AI Academy Certificate"
                         class="certificate-image">
                     <div class="image-overlay">
@@ -531,7 +531,7 @@
             </div>
 
             <div class="certificate-item" data-cert-id="web-dev-bootcamp-2024">
-                <div class="certificate-image-container" onclick="openLightbox('web-dev-bootcamp-2024')">
+                <div class="certificate-image-container">
                     <img src="./assets/certificates/Web Development.webp" alt="Web Development Bootcamp Certificate"
                         class="certificate-image">
                     <div class="image-overlay">
@@ -591,7 +591,7 @@
             </div>
 
             <div class="certificate-item" data-cert-id="problem-solving-bootcamp-2024">
-                <div class="certificate-image-container" onclick="openLightbox('problem-solving-bootcamp-2024')">
+                <div class="certificate-image-container">
                     <img src="./assets/certificates/Problem Solving.webp" alt="Problem Solving Bootcamp Certificate"
                         class="certificate-image">
                     <div class="image-overlay">
@@ -651,7 +651,7 @@
             </div>
 
             <div class="certificate-item" data-cert-id="beginner-ctf-training-2024">
-                <div class="certificate-image-container" onclick="openLightbox('beginner-ctf-training-2024')">
+                <div class="certificate-image-container">
                     <img src="./assets/certificates/Beginner CTF Training.webp" alt="Beginner CTF Training Certificate"
                         class="certificate-image">
                     <div class="image-overlay">
@@ -712,7 +712,7 @@
             </div>
 
             <div class="certificate-item" data-cert-id="htb-certificate-2024">
-                <div class="certificate-image-container" onclick="openLightbox('htb-certificate-2024')">
+                <div class="certificate-image-container">
                     <img src="./assets/certificates/HTB Certificate.webp" alt="HackTheBox Certificate"
                         class="certificate-image">
                     <div class="image-overlay">
