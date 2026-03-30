@@ -39,25 +39,25 @@ body {
     z-index: 1;
     margin: 0 auto;
     max-width: 1400px;
-    position: relative;
     padding-top: 100px;
+    position: relative;
 }
 
 /* ==================== LOADING SCREEN ==================== */
 .loading-screen {
-    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: #000000;
-    z-index: 10000;
     display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s ease;
-    transform-origin: center center;
+    z-index: 10000;
+    position: fixed;
     overflow: hidden;
+    align-items: center;
+    background: #000000;
+    justify-content: center;
+    transform-origin: center center;
+    transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s ease;
 }
 
 .loading-screen.zoom-out {
