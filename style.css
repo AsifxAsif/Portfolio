@@ -54,7 +54,7 @@ body {
     position: fixed;
     overflow: hidden;
     align-items: center;
-    background: #000000;
+    background: var(--bg-color);
     justify-content: center;
     transform-origin: center center;
     transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s ease;
@@ -93,7 +93,7 @@ body {
 
 .loading-terminal {
     font-family: 'Create Future';
-    font-size: 2.5rem;
+    font-size: 3rem;
     font-weight: 700;
     color: var(--accent-red);
     letter-spacing: 2px;
@@ -102,6 +102,7 @@ body {
     border-right: 3px solid #ff2a2a;
     animation: blinkCursor 0.75s step-end infinite;
     transition: all 0.3s ease;
+    text-shadow: 0 0 1px rgba(0, 0, 0, 1);
 }
 
 .terminal-line {
@@ -111,8 +112,7 @@ body {
 }
 
 .terminal-line.final-text {
-    font-size: 4rem;
-    animation: pulseText 1s ease-in-out;
+    font-size: 5rem;
 }
 
 body.loading-active {
@@ -120,28 +120,11 @@ body.loading-active {
     height: 100vh;
 }
 
-@keyframes pulseText {
-    0% {
-        transform: scale(1);
-        opacity: 1;
-    }
-
-    50% {
-        transform: scale(1.05);
-        text-shadow: 0 0 20px rgba(255, 42, 42, 0.8);
-    }
-
-    100% {
-        transform: scale(1);
-        opacity: 1;
-    }
-}
-
 @keyframes blinkCursor {
 
     0%,
     100% {
-        border-color: var(--accent-red);
+        border-color: #000000;
     }
 
     50% {

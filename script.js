@@ -108,10 +108,10 @@
         }
 
         function draw() {
-            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+            ctx.fillStyle = 'rgba(224, 229, 236, 0.03)';
             ctx.fillRect(0, 0, width, canvas.height);
 
-            ctx.fillStyle = '#00ff40';
+            ctx.fillStyle = '#000000';
             ctx.font = '16px monospace';
 
             for (let i = 0; i < drops.length; i++) {
@@ -1020,8 +1020,8 @@ const projectsData = [
             problem: "Online shoppers face high return rates (~30%) due to inability to physically try accessories before purchase. Existing solutions either lack interactivity (static overlays) or require separate app downloads.",
             solution: "A hybrid AR solution that provides real-time, interactive virtual try-on directly within the shopping flow, using three-layer architecture for optimal performance and user experience.",
             team: [
-                "Anika Nawal (2021-3-60-161)",
                 "Md. Asifuzzaman (2021-3-60-167)",
+                "Anika Nawal (2021-3-60-161)",
                 "Sudipta Roy (2021-2-60-009)",
                 "Md Rayhan Al Islam (2019-1-60-265)"
             ],
@@ -1221,176 +1221,174 @@ if (typeof module !== 'undefined' && module.exports) {
 
 // ==================== INDEX.HTML FUNCTIONS ====================
 function initializeIndexPage() {
-    document.addEventListener('DOMContentLoaded', function () {
-        // Matrix Text Effect
-        const titleElement = document.getElementById('dynamicTitle');
-        if (titleElement) {
-            const phrases = ['SOFTWARE ENGINEER', 'CYBERSECURITY ENTHUSIAST'];
-            let currentPhraseIndex = 0;
-            const matrixChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*';
+    // Matrix Text Effect
+    const titleElement = document.getElementById('dynamicTitle');
+    if (titleElement) {
+        const phrases = ['SOFTWARE ENGINEER', 'CYBERSECURITY ENTHUSIAST'];
+        let currentPhraseIndex = 0;
+        const matrixChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*';
 
-            function getRandomChar() {
-                return matrixChars[Math.floor(Math.random() * matrixChars.length)];
-            }
+        function getRandomChar() {
+            return matrixChars[Math.floor(Math.random() * matrixChars.length)];
+        }
 
-            function matrixTextChange(targetText) {
-                if (!titleElement) return;
+        function matrixTextChange(targetText) {
+            if (!titleElement) return;
 
-                const originalText = titleElement.textContent;
-                const targetLength = targetText.length;
-                const currentLength = originalText.length;
-                const maxLength = Math.max(currentLength, targetLength);
+            const originalText = titleElement.textContent;
+            const targetLength = targetText.length;
+            const currentLength = originalText.length;
+            const maxLength = Math.max(currentLength, targetLength);
 
-                let steps = 0;
-                const totalSteps = 15;
+            let steps = 0;
+            const totalSteps = 15;
 
-                const padText = (text, length) => {
-                    return text.padEnd(length, ' ');
-                };
+            const padText = (text, length) => {
+                return text.padEnd(length, ' ');
+            };
 
-                let paddedOriginal = padText(originalText, maxLength);
-                let paddedTarget = padText(targetText, maxLength);
+            let paddedTarget = padText(targetText, maxLength);
 
-                const interval = setInterval(() => {
-                    steps++;
+            const interval = setInterval(() => {
+                steps++;
 
-                    let result = '';
-                    for (let i = 0; i < maxLength; i++) {
-                        const revealThreshold = Math.floor((steps / totalSteps) * maxLength);
+                let result = '';
+                for (let i = 0; i < maxLength; i++) {
+                    const revealThreshold = Math.floor((steps / totalSteps) * maxLength);
 
-                        if (i <= revealThreshold && steps > totalSteps / 2) {
-                            result += paddedTarget[i];
-                        } else if (i > revealThreshold && steps < totalSteps * 0.7) {
+                    if (i <= revealThreshold && steps > totalSteps / 2) {
+                        result += paddedTarget[i];
+                    } else if (i > revealThreshold && steps < totalSteps * 0.7) {
+                        result += getRandomChar();
+                    } else {
+                        if (Math.random() > steps / totalSteps) {
                             result += getRandomChar();
                         } else {
-                            if (Math.random() > steps / totalSteps) {
-                                result += getRandomChar();
-                            } else {
-                                result += paddedTarget[i];
-                            }
+                            result += paddedTarget[i];
                         }
                     }
+                }
 
-                    titleElement.textContent = result;
+                titleElement.textContent = result;
 
-                    if (steps >= totalSteps) {
-                        clearInterval(interval);
-                        titleElement.textContent = targetText;
-                    }
-                }, 60);
-            }
-
-            function rotatePhrase() {
-                currentPhraseIndex = (currentPhraseIndex + 1) % phrases.length;
-                matrixTextChange(phrases[currentPhraseIndex]);
-            }
-
-            setInterval(rotatePhrase, 3000);
+                if (steps >= totalSteps) {
+                    clearInterval(interval);
+                    titleElement.textContent = targetText;
+                }
+            }, 60);
         }
 
-        // Scrolling numbers
-        function initScrollingNumbers() {
-            const numbersContainer = document.getElementById('scrollingNumbers');
-            if (!numbersContainer) return;
-
-            const numbers = [
-                '45.21.99.01',
-                '88.21.45.22',
-                '10.00.59.99',
-                '72.34.18.66',
-                '29.88.11.77'
-            ];
-
-            numbersContainer.innerHTML = '';
-            const track = document.createElement('div');
-            track.className = 'scrolling-numbers-track';
-
-            const allNumbers = [...numbers, ...numbers, ...numbers];
-            allNumbers.forEach(num => {
-                const span = document.createElement('span');
-                span.textContent = num;
-                span.style.display = 'block';
-                span.style.marginBottom = '15px';
-                span.style.opacity = '0.8';
-                track.appendChild(span);
-            });
-
-            numbersContainer.appendChild(track);
+        function rotatePhrase() {
+            currentPhraseIndex = (currentPhraseIndex + 1) % phrases.length;
+            matrixTextChange(phrases[currentPhraseIndex]);
         }
 
-        // Update real-time date
-        function updateCurrentDate() {
-            const dateElement = document.getElementById('currentDate');
-            if (!dateElement) return;
+        // Set initial text and start rotation
+        titleElement.textContent = phrases[0];
+        setInterval(rotatePhrase, 3000);
+    }
 
-            const now = new Date();
-            const day = now.getDate();
-            const month = now.getMonth() + 1;
-            const year = String(now.getFullYear()).slice(-2);
+    // Scrolling numbers
+    function initScrollingNumbers() {
+        const numbersContainer = document.getElementById('scrollingNumbers');
+        if (!numbersContainer) return;
 
-            dateElement.textContent = `${day}/${month}/${year}`;
+        const numbers = [
+            '45.21.99.01',
+            '88.21.45.22',
+            '10.00.59.99',
+            '72.34.18.66',
+            '29.88.11.77'
+        ];
+
+        numbersContainer.innerHTML = '';
+        const track = document.createElement('div');
+        track.className = 'scrolling-numbers-track';
+
+        const allNumbers = [...numbers, ...numbers, ...numbers];
+        allNumbers.forEach(num => {
+            const span = document.createElement('span');
+            span.textContent = num;
+            span.style.display = 'block';
+            span.style.marginBottom = '15px';
+            span.style.opacity = '0.8';
+            track.appendChild(span);
+        });
+
+        numbersContainer.appendChild(track);
+    }
+
+    // Update real-time date
+    function updateCurrentDate() {
+        const dateElement = document.getElementById('currentDate');
+        if (!dateElement) return;
+
+        const now = new Date();
+        const day = now.getDate();
+        const month = now.getMonth() + 1;
+        const year = String(now.getFullYear()).slice(-2);
+
+        dateElement.textContent = `${day}/${month}/${year}`;
+    }
+
+    setInterval(updateCurrentDate, 60000);
+
+    // System status toggle
+    let isSystemActive = true;
+    window.toggleSystemStatus = function () {
+        const statusText = document.querySelector('.red-box-label small');
+        const statusDot = document.querySelector('.status-dot');
+        isSystemActive = !isSystemActive;
+
+        if (isSystemActive) {
+            statusText.textContent = 'SYSTEM ACTIVE';
+            statusText.style.color = '';
+            statusDot.style.animation = 'blink 0.8s infinite';
+        } else {
+            statusText.textContent = 'SYSTEM STANDBY';
+            statusText.style.color = '#888';
+            statusDot.style.animation = 'none';
+            statusDot.style.opacity = '0.3';
         }
 
-        setInterval(updateCurrentDate, 60000);
+        const box = document.querySelector('.red-box-label');
+        box.style.transform = 'scale(0.95)';
+        setTimeout(() => {
+            box.style.transform = 'scale(1)';
+        }, 150);
+    };
 
-        // System status toggle
-        let isSystemActive = true;
-        window.toggleSystemStatus = function () {
-            const statusText = document.querySelector('.red-box-label small');
-            const statusDot = document.querySelector('.status-dot');
-            isSystemActive = !isSystemActive;
+    // Initialize
+    initScrollingNumbers();
+    updateCurrentDate();
 
-            if (isSystemActive) {
-                statusText.textContent = 'SYSTEM ACTIVE';
-                statusText.style.color = '';
-                statusDot.style.animation = 'blink 0.8s infinite';
-            } else {
-                statusText.textContent = 'SYSTEM STANDBY';
-                statusText.style.color = '#888';
-                statusDot.style.animation = 'none';
-                statusDot.style.opacity = '0.3';
-            }
+    const heroContent = document.querySelector('.hero-content');
+    if (heroContent) {
+        heroContent.style.opacity = '0';
+        heroContent.style.transform = 'translateY(20px)';
+        heroContent.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
 
-            const box = document.querySelector('.red-box-label');
-            box.style.transform = 'scale(0.95)';
-            setTimeout(() => {
-                box.style.transform = 'scale(1)';
-            }, 150);
-        };
+        setTimeout(() => {
+            heroContent.style.opacity = '1';
+            heroContent.style.transform = 'translateY(0)';
+        }, 300);
+    }
 
-        // Initialize
-        initScrollingNumbers();
-        updateCurrentDate();
+    const heroImage = document.querySelector('.hero-image');
+    if (heroImage) {
+        heroImage.style.opacity = '0';
+        heroImage.style.transform = 'translateY(20px)';
+        heroImage.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
 
-        const heroContent = document.querySelector('.hero-content');
-        if (heroContent) {
-            heroContent.style.opacity = '0';
-            heroContent.style.transform = 'translateY(20px)';
-            heroContent.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-
-            setTimeout(() => {
-                heroContent.style.opacity = '1';
-                heroContent.style.transform = 'translateY(0)';
-            }, 300);
-        }
-
-        const heroImage = document.querySelector('.hero-image');
-        if (heroImage) {
-            heroImage.style.opacity = '0';
-            heroImage.style.transform = 'translateY(20px)';
-            heroImage.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-
-            setTimeout(() => {
-                heroImage.style.opacity = '1';
-                heroImage.style.transform = 'translateY(0)';
-            }, 300);
-        }
-    });
+        setTimeout(() => {
+            heroImage.style.opacity = '1';
+            heroImage.style.transform = 'translateY(0)';
+        }, 300);
+    }
 }
 
 // ==================== PROJECTS.HTML FUNCTIONS ====================
 function initializeProjectsPage() {
-    // Don't wait for DOMContentLoaded - just execute directly since DOM is ready
     let allProjects = [];
 
     // Create count badge element
@@ -1588,7 +1586,6 @@ function initializeProjectsPage() {
 
 // ==================== PROJECT-DETAILS.HTML FUNCTIONS ====================
 function initializeProjectDetailsPage() {
-    // Execute immediately since DOM is already ready
     let currentImages = [];
     let currentImageIndex = 0;
 
@@ -1677,7 +1674,6 @@ function initializeProjectDetailsPage() {
                             <div class="member-avatar">${role.charAt(0)}</div>
                             <div class="member-info">
                                 <h4>${team[role]}</h4>
-                                <p>${role}</p>
                             </div>
                         </div>
                     `;
@@ -1995,7 +1991,6 @@ function initializeProjectDetailsPage() {
 
 // ==================== CERTIFICATES.HTML FUNCTIONS ====================
 function initializeCertificatesPage() {
-    // No need for DOMContentLoaded wrapper since DOM is already ready when this is called
     const certificates = [
         { id: 'phoenix-ctf-2025', image: './assets/certificates/Phoenix CTF 2025.webp', title: 'Phoenix Summit CTF 2025', subtitle: 'Team Rank #7 | 18/24 Challenges Solved | 720 Points' },
         { id: 'vishwactf-2025', image: './assets/certificates/VishwaCTF.webp', title: 'VishwaCTF 2025 Participation', subtitle: '3-5 March 2025 | VIIT University & HackerOne' },
@@ -2179,66 +2174,81 @@ function initializeCertificatesPage() {
 
 // ==================== PROFILE.HTML FUNCTIONS ====================
 function initializeProfilePage() {
-    document.addEventListener('DOMContentLoaded', function () {
-        const revealLayer = document.querySelector('.reveal-container');
-        const revealWrapper = document.querySelector('.reveal-wrapper');
-        let isActive = false;
+    const revealLayer = document.querySelector('.reveal-container');
+    const revealWrapper = document.querySelector('.reveal-wrapper');
 
-        revealWrapper.addEventListener('mouseenter', () => {
-            isActive = true;
-            revealLayer.classList.add('active');
-        });
+    // Check if elements exist before proceeding
+    if (!revealWrapper || !revealLayer) {
+        console.log('Profile animation elements not found');
+        return;
+    }
 
-        revealWrapper.addEventListener('mouseleave', () => {
-            isActive = false;
-            revealLayer.classList.remove('active');
-        });
+    let isActive = false;
 
-        // Check if jQuery and GSAP are loaded
-        if (typeof $ !== 'undefined' && typeof gsap !== 'undefined') {
-            $(document).mousemove((e) => {
-                if (!isActive) return;
-
-                const wrapperRect = revealWrapper.getBoundingClientRect();
-                const x = e.clientX - wrapperRect.left;
-                const y = e.clientY - wrapperRect.top;
-
-                if (x >= 0 && x <= wrapperRect.width && y >= 0 && y <= wrapperRect.height) {
-                    gsap.to(revealLayer, {
-                        '--x': `${x}px`,
-                        '--y': `${y}px`,
-                        duration: 0.3,
-                        ease: 'power2.out'
-                    });
-                }
-            });
-        }
+    revealWrapper.addEventListener('mouseenter', () => {
+        isActive = true;
+        revealLayer.classList.add('active');
     });
+
+    revealWrapper.addEventListener('mouseleave', () => {
+        isActive = false;
+        revealLayer.classList.remove('active');
+    });
+
+    // Check if jQuery and GSAP are loaded
+    if (typeof $ !== 'undefined' && typeof gsap !== 'undefined') {
+        $(document).mousemove((e) => {
+            if (!isActive) return;
+
+            const wrapperRect = revealWrapper.getBoundingClientRect();
+            const x = e.clientX - wrapperRect.left;
+            const y = e.clientY - wrapperRect.top;
+
+            if (x >= 0 && x <= wrapperRect.width && y >= 0 && y <= wrapperRect.height) {
+                gsap.to(revealLayer, {
+                    '--x': `${x}px`,
+                    '--y': `${y}px`,
+                    duration: 0.3,
+                    ease: 'power2.out'
+                });
+            }
+        });
+    } else {
+        // Fallback: use vanilla JavaScript if GSAP not loaded
+        revealWrapper.addEventListener('mousemove', (e) => {
+            if (!isActive) return;
+
+            const wrapperRect = revealWrapper.getBoundingClientRect();
+            const x = e.clientX - wrapperRect.left;
+            const y = e.clientY - wrapperRect.top;
+
+            if (x >= 0 && x <= wrapperRect.width && y >= 0 && y <= wrapperRect.height) {
+                revealLayer.style.setProperty('--x', `${x}px`);
+                revealLayer.style.setProperty('--y', `${y}px`);
+            }
+        });
+    }
 }
 
 // ==================== RESUME.HTML FUNCTIONS ====================
 function initializeResumePage() {
-    document.addEventListener('DOMContentLoaded', () => {
-        const skillBars = document.querySelectorAll('.cv-skill-progress');
-        skillBars.forEach(bar => {
-            const width = bar.style.width;
-            bar.style.width = '0';
-            setTimeout(() => {
-                bar.style.transition = 'width 1s ease-in-out';
-                bar.style.width = width;
-            }, 500);
-        });
+    const skillBars = document.querySelectorAll('.cv-skill-progress');
+    skillBars.forEach(bar => {
+        const width = bar.style.width;
+        bar.style.width = '0';
+        setTimeout(() => {
+            bar.style.transition = 'width 1s ease-in-out';
+            bar.style.width = width;
+        }, 500);
     });
 }
 
 // ==================== TECH.HTML FUNCTIONS ====================
 function initializeTechPage() {
-    document.addEventListener('DOMContentLoaded', function () {
-        const techItems = document.querySelectorAll('.tech-item');
-        techItems.forEach(item => {
-            item.addEventListener('click', () => {
-                const techName = item.querySelector('h4').textContent;
-            });
+    const techItems = document.querySelectorAll('.tech-item');
+    techItems.forEach(item => {
+        item.addEventListener('click', () => {
+            const techName = item.querySelector('h4').textContent;
         });
     });
 }
