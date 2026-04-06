@@ -58,23 +58,26 @@ function setActiveNavLink() {
         'tech.html': 'tech',
         'certificates.html': 'certificates',
         'profile.html': 'profile',
-        'resume.html': 'resume'
+        'resume.html': 'resume',
+        'games.html': null
     };
 
     // Get the corresponding navbar page identifier
-    const activePage = pageMap[currentPage] || 'index';
+    const activePage = pageMap[currentPage] || null;
 
     // Remove active class from all nav links
     document.querySelectorAll('.nav-link').forEach(link => {
         link.classList.remove('active');
     });
 
-    // Add active class to the matching nav link
-    document.querySelectorAll('.nav-link').forEach(link => {
-        if (link.dataset.page === activePage) {
-            link.classList.add('active');
-        }
-    });
+    // Only add active class if there's a matching page (not null)
+    if (activePage) {
+        document.querySelectorAll('.nav-link').forEach(link => {
+            if (link.dataset.page === activePage) {
+                link.classList.add('active');
+            }
+        });
+    }
 }
 
 // ==================== BACK BUTTON FUNCTIONALITY ====================
@@ -889,6 +892,8 @@ document.addEventListener('DOMContentLoaded', function () {
         initializeResumePage();
     } else if (currentPage === 'tech.html') {
         initializeTechPage();
+    } else if (currentPage === 'games.html') {
+        initializeGamesPage();
     }
 });
 
@@ -1598,7 +1603,7 @@ function initializeProjectDetailsPage() {
                 </div>
             </div>
             
-            <div style="text-align: center; margin-top: 40px;">
+            <div style="text-align: center; margin-top: 20px;">
                 <a href="projects.html" class="back-to-projects">
                     <i class="fa-solid fa-arrow-left"></i>
                     Back to All Projects
@@ -1926,6 +1931,695 @@ function initializeTechPage() {
     });
 }
 
+
+
+// ==================== SCROLL ANIMATION SYSTEM ====================
+(function initScrollAnimationSystem() {
+    let animation = null;
+    let animationImg = null;
+    let isMobile = window.innerWidth <= 768;
+    let isGamesPage = window.location.pathname.split('/').pop() === 'games.html';
+
+    // Mobile animation
+    let mobileInterval = null;
+    let mobilePos = 0;
+    let mobileDirection = 1;
+    let mobileMoving = true;
+    let mobilePaused = false;
+    let mobileStopTimer = null;
+    let mobileContainerWidth = 0;
+    let mobileAnimationWidth = 60;
+    let hasScrollListenerAttached = false;
+
+    // Desktop animation
+    let desktopScrollTimer = null;
+    let desktopLastScrollTop = 0;
+    let desktopIsScrolling = false;
+    let rafId = null;
+
+    function getElements() {
+        animation = document.getElementById('scrollAnimation');
+        animationImg = document.getElementById('scrollAnimationImg');
+        return animation && animationImg;
+    }
+
+    function checkIfScrollNeeded() {
+        const docHeight = Math.max(
+            document.documentElement.scrollHeight,
+            document.body.scrollHeight
+        );
+        const windowHeight = window.innerHeight;
+        return docHeight > windowHeight + 5;
+    }
+
+    function getScrollbarThumbInfo() {
+        const docHeight = Math.max(
+            document.documentElement.scrollHeight,
+            document.body.scrollHeight
+        );
+        const windowHeight = window.innerHeight;
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+        const scrollPercent = scrollTop / (docHeight - windowHeight);
+        const thumbHeightPercent = windowHeight / docHeight;
+        let thumbHeight = Math.max(30, thumbHeightPercent * windowHeight);
+        let thumbTop = scrollPercent * (windowHeight - thumbHeight);
+
+        return {
+            thumbTop: isNaN(thumbTop) ? 0 : thumbTop,
+            thumbHeight: thumbHeight,
+            windowHeight: windowHeight,
+            scrollPercent: isNaN(scrollPercent) ? 0 : scrollPercent
+        };
+    }
+
+    // ========== MOBILE ==========
+    function updateMobileContainer() {
+        if (!animation || !animation.parentElement) return;
+        const container = animation.parentElement;
+        const containerRect = container.getBoundingClientRect();
+        mobileContainerWidth = containerRect.width - mobileAnimationWidth - 20;
+        if (mobileContainerWidth < 0) mobileContainerWidth = 0;
+    }
+
+    function updateMobilePosition() {
+        if (!animation || !isMobile || mobilePaused || isGamesPage) return;
+
+        mobilePos += mobileDirection * 4;
+
+        if (mobilePos <= 0) {
+            mobilePos = 0;
+            mobileDirection = 1;
+        }
+        if (mobilePos >= mobileContainerWidth) {
+            mobilePos = mobileContainerWidth;
+            mobileDirection = -1;
+        }
+
+        animation.style.position = 'relative';
+        animation.style.left = mobilePos + 'px';
+        animation.style.right = 'auto';
+        animation.style.margin = '0';
+        animation.style.top = 'auto';
+        animation.style.bottom = 'auto';
+    }
+
+    function mobileStop() {
+        if (!isMobile || isGamesPage) return;
+
+        mobileMoving = false;
+        mobilePaused = true;
+        if (animationImg) animationImg.src = './assets/scroll-animation-paused.webp';
+
+        mobileStopTimer = setTimeout(() => {
+            mobileMoving = true;
+            mobilePaused = false;
+            mobileDirection = Math.random() > 0.5 ? 1 : -1;
+            if (animationImg) {
+                animationImg.src = mobileDirection === 1 ?
+                    './assets/scroll-animation-forward.gif' :
+                    './assets/scroll-animation-reversed.gif';
+            }
+            const nextDelay = Math.random() * 6000 + 4000;
+            mobileStopTimer = setTimeout(mobileStop, nextDelay);
+        }, Math.random() * 3000 + 1500);
+    }
+
+    function startMobile() {
+        if (!isMobile || isGamesPage) return;
+        if (mobileInterval) clearInterval(mobileInterval);
+        if (mobileStopTimer) clearTimeout(mobileStopTimer);
+
+        updateMobileContainer();
+        mobileMoving = true;
+        mobilePaused = false;
+        mobilePos = 0;
+        mobileDirection = 1;
+
+        if (animation) {
+            animation.style.display = 'block';
+            animation.style.left = '0px';
+            animation.style.margin = '0';
+            animation.style.top = 'auto';
+            animation.style.bottom = 'auto';
+        }
+        if (animationImg) animationImg.src = './assets/scroll-animation-forward.gif';
+
+        mobileInterval = setInterval(() => {
+            if (mobileMoving && !mobilePaused && isMobile && !isGamesPage) {
+                updateMobilePosition();
+            }
+        }, 25);
+
+        const firstStop = Math.random() * 4000 + 3000;
+        mobileStopTimer = setTimeout(mobileStop, firstStop);
+    }
+
+    function stopMobile() {
+        if (mobileInterval) { clearInterval(mobileInterval); mobileInterval = null; }
+        if (mobileStopTimer) { clearTimeout(mobileStopTimer); mobileStopTimer = null; }
+    }
+
+    // ========== DESKTOP ==========
+    function updateDesktopPosition() {
+        if (!animation || isMobile || isGamesPage) return;
+        if (!checkIfScrollNeeded()) return;
+
+        const thumbInfo = getScrollbarThumbInfo();
+        const thumbCenter = thumbInfo.thumbTop + (thumbInfo.thumbHeight / 2);
+        let animationSize = Math.max(40, Math.min(70, thumbInfo.thumbHeight * 0.8));
+
+        animation.style.width = animationSize + 'px';
+        animation.style.height = animationSize + 'px';
+
+        let newTop = thumbCenter - (animationSize / 2);
+        newTop = Math.max(10, Math.min(thumbInfo.windowHeight - animationSize - 10, newTop));
+
+        animation.style.position = 'fixed';
+        animation.style.top = newTop + 'px';
+        animation.style.right = '0px';
+        animation.style.left = 'auto';
+    }
+
+    function updateDesktopGif() {
+        if (!animationImg || isMobile || isGamesPage) return;
+
+        const currentScroll = window.pageYOffset;
+        // Only update GIF when scrolling direction changes or scrolling starts/stops
+        if (desktopIsScrolling) {
+            if (currentScroll > desktopLastScrollTop + 1) {
+                // Scrolling down
+                if (animationImg.src.indexOf('forward.gif') === -1) {
+                    animationImg.src = './assets/scroll-animation-forward.gif';
+                }
+            } else if (currentScroll < desktopLastScrollTop - 1) {
+                // Scrolling up
+                if (animationImg.src.indexOf('reversed.gif') === -1) {
+                    animationImg.src = './assets/scroll-animation-reversed.gif';
+                }
+            }
+        } else {
+            if (animationImg.src.indexOf('paused.webp') === -1) {
+                animationImg.src = './assets/scroll-animation-paused.webp';
+            }
+        }
+        desktopLastScrollTop = currentScroll;
+    }
+
+    function smoothUpdate() {
+        if (!desktopIsScrolling && !isMobile && !isGamesPage) {
+            updateDesktopPosition();
+            return;
+        }
+
+        updateDesktopPosition();
+        updateDesktopGif();
+
+        if (desktopIsScrolling && !isMobile && !isGamesPage) {
+            rafId = requestAnimationFrame(smoothUpdate);
+        }
+    }
+
+    function handleScroll() {
+        if (isMobile || isGamesPage) return;
+
+        if (!desktopIsScrolling) {
+            desktopIsScrolling = true;
+            // Immediately set the GIF based on scroll direction
+            const currentScroll = window.pageYOffset;
+            if (currentScroll > desktopLastScrollTop) {
+                animationImg.src = './assets/scroll-animation-forward.gif';
+            } else if (currentScroll < desktopLastScrollTop) {
+                animationImg.src = './assets/scroll-animation-reversed.gif';
+            }
+            desktopLastScrollTop = currentScroll;
+
+            if (rafId) cancelAnimationFrame(rafId);
+            rafId = requestAnimationFrame(smoothUpdate);
+        }
+
+        if (desktopScrollTimer) clearTimeout(desktopScrollTimer);
+        desktopScrollTimer = setTimeout(() => {
+            desktopIsScrolling = false;
+            animationImg.src = './assets/scroll-animation-paused.webp';
+            if (rafId) {
+                cancelAnimationFrame(rafId);
+                rafId = null;
+            }
+            updateDesktopPosition();
+        }, 100);
+    }
+
+    // ========== CLICK HANDLERS ==========
+    function onMobileClick() {
+        if (!animation || !isMobile || isGamesPage) return;
+        window.location.href = 'games.html';
+    }
+
+    function onDesktopClick() {
+        if (!animation || isMobile || isGamesPage) return;
+        window.location.href = 'games.html';
+    }
+
+    function updateVisibility() {
+        if (isGamesPage) {
+            if (animation) animation.style.display = 'none';
+            return;
+        }
+        if (!animation) return;
+
+        const hasScroll = checkIfScrollNeeded();
+
+        if (hasScroll) {
+            animation.classList.add('visible');
+            if (!isMobile) {
+                updateDesktopPosition();
+                // Also ensure scroll listener is attached
+                if (!window.hasScrollListener && !isMobile) {
+                    window.addEventListener('scroll', handleScroll);
+                    window.hasScrollListener = true;
+                }
+            } else {
+                // For mobile, ensure animation is running
+                if (!mobileInterval && !mobilePaused) {
+                    startMobile();
+                }
+            }
+        } else {
+            animation.classList.remove('visible');
+            if (!isMobile && window.hasScrollListener) {
+                window.removeEventListener('scroll', handleScroll);
+                window.hasScrollListener = false;
+            }
+        }
+    }
+
+    // ========== RESIZE ==========
+    let resizeTimer;
+    function onResize() {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(() => {
+            const newIsMobile = window.innerWidth <= 768;
+            const newIsGames = window.location.pathname.split('/').pop() === 'games.html';
+
+            if (newIsGames) {
+                if (animation) animation.style.display = 'none';
+                return;
+            }
+
+            const hasScroll = checkIfScrollNeeded();
+
+            if (newIsMobile !== isMobile) {
+                if (animation) {
+                    animation.removeEventListener('click', onDesktopClick);
+                    animation.removeEventListener('click', onMobileClick);
+                }
+                window.removeEventListener('scroll', handleScroll);
+                if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
+
+                isMobile = newIsMobile;
+
+                if (isMobile) {
+                    if (animation) animation.addEventListener('click', onMobileClick);
+                    if (hasScroll) {
+                        startMobile();
+                        if (animation) animation.classList.add('visible');
+                    } else if (animation) {
+                        animation.classList.remove('visible');
+                    }
+                } else {
+                    if (animation) animation.addEventListener('click', onDesktopClick);
+                    if (hasScroll) {
+                        updateDesktopPosition();
+                        window.addEventListener('scroll', handleScroll);
+                        if (animation) animation.classList.add('visible');
+                    } else if (animation) {
+                        animation.classList.remove('visible');
+                    }
+                    if (animationImg) animationImg.src = './assets/scroll-animation-paused.webp';
+                }
+            } else if (isMobile) {
+                if (hasScroll) {
+                    if (animation && !animation.classList.contains('visible')) {
+                        animation.classList.add('visible');
+                        startMobile();
+                    }
+                    updateMobileContainer();
+                    if (mobilePos > mobileContainerWidth) mobilePos = mobileContainerWidth;
+                    if (animation) animation.style.left = mobilePos + 'px';
+                } else {
+                    if (animation && animation.classList.contains('visible')) {
+                        animation.classList.remove('visible');
+                        stopMobile();
+                    }
+                }
+            } else {
+                if (hasScroll) {
+                    if (animation && !animation.classList.contains('visible')) {
+                        animation.classList.add('visible');
+                        updateDesktopPosition();
+                        window.addEventListener('scroll', handleScroll);
+                    } else if (animation && animation.classList.contains('visible')) {
+                        updateDesktopPosition();
+                    }
+                } else {
+                    if (animation && animation.classList.contains('visible')) {
+                        animation.classList.remove('visible');
+                        window.removeEventListener('scroll', handleScroll);
+                    }
+                }
+            }
+        }, 150);
+    }
+
+    function observeDOMChanges() {
+        const observer = new MutationObserver(() => {
+            setTimeout(() => {
+                updateVisibility();
+                if (!isMobile && !isGamesPage && checkIfScrollNeeded()) {
+                    updateDesktopPosition();
+                }
+            }, 100);
+        });
+
+        observer.observe(document.body, {
+            childList: true,
+            subtree: true
+        });
+    }
+
+    // ========== INIT ==========
+    function init() {
+        if (isGamesPage) {
+            if (animation) animation.style.display = 'none';
+            return;
+        }
+
+        if (!getElements()) {
+            setTimeout(init, 100);
+            return;
+        }
+
+        // Set initial image
+        animationImg.src = './assets/scroll-animation-paused.webp';
+        animationImg.alt = 'Scroll Animation';
+        animation.style.cursor = 'pointer';
+
+        // Force a delayed check for dynamic content
+        function forceUpdateVisibility() {
+            updateVisibility();
+            if (!isMobile && !isGamesPage && checkIfScrollNeeded()) {
+                updateDesktopPosition();
+            }
+        }
+
+        if (isMobile) {
+            animation.addEventListener('click', onMobileClick);
+            if (checkIfScrollNeeded()) {
+                animation.classList.add('visible');
+                startMobile();
+            } else {
+                // Even if no scroll now, check again after content loads
+                setTimeout(forceUpdateVisibility, 500);
+                setTimeout(forceUpdateVisibility, 1000);
+                setTimeout(forceUpdateVisibility, 2000);
+            }
+        } else {
+            animation.addEventListener('click', onDesktopClick);
+            if (checkIfScrollNeeded()) {
+                animation.classList.add('visible');
+                updateDesktopPosition();
+                window.addEventListener('scroll', handleScroll);
+            } else {
+                // Even if no scroll now, check again after content loads
+                setTimeout(forceUpdateVisibility, 500);
+                setTimeout(forceUpdateVisibility, 1000);
+                setTimeout(forceUpdateVisibility, 2000);
+            }
+        }
+
+        window.addEventListener('resize', onResize);
+
+        // Use multiple load events to catch dynamic content
+        window.addEventListener('load', () => {
+            setTimeout(forceUpdateVisibility, 100);
+            setTimeout(forceUpdateVisibility, 500);
+        });
+
+        // Also check when DOM changes (for dynamically loaded projects)
+        const domObserver = new MutationObserver(() => {
+            forceUpdateVisibility();
+        });
+
+        domObserver.observe(document.body, {
+            childList: true,
+            subtree: true,
+            attributes: false
+        });
+
+        // Specific observer for projects container
+        const projectsContainer = document.getElementById('projectsContainer');
+        if (projectsContainer) {
+            const projectsObserver = new MutationObserver(() => {
+                forceUpdateVisibility();
+            });
+            projectsObserver.observe(projectsContainer, {
+                childList: true,
+                subtree: true
+            });
+        }
+
+        observeDOMChanges();
+
+        // Additional check for projects page specific content
+        if (window.location.pathname.includes('projects.html') ||
+            window.location.pathname.includes('project-details.html')) {
+            // Check every 500ms for up to 5 seconds for content to load
+            let checks = 0;
+            const intervalCheck = setInterval(() => {
+                forceUpdateVisibility();
+                checks++;
+                if (checks > 10) clearInterval(intervalCheck);
+            }, 500);
+        }
+    }
+
+    init();
+})();
+
+
+
+// ==================== GAMES PAGE INITIALIZATION ====================
+function initializeGamesPage() {
+    const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+
+    if (currentPage === 'games.html') {
+        // Add class to body to hide scroll animation
+        document.body.classList.add('games-page');
+
+        const gamesData = [
+            {
+                id: 1,
+                title: "The Cube",
+                icon: "fa-brain",
+                image: null,
+                iconUrl: "https://img.icons8.com/external-smashingstocks-hand-drawn-color-smashing-stocks/100/external-Rubik's-Cube-recreation-and-hobbies-smashingstocks-hand-drawn-color-smashing-stocks.png",
+                iconType: "colored",
+                description: "Solve the Rubik's Cube with our interactive solver! Learn algorithms and improve your solving skills.",
+                tags: ["Puzzle", "Brain Training", "Logic"],
+                status: "available",
+                gameFile: "rubiks-cube.html",
+                color: "#00a86b"
+            },
+            {
+                id: 2,
+                title: "Tic Tac Toe",
+                icon: "fa-xmark",
+                image: null,
+                iconUrl: "https://img.icons8.com/external-tal-revivo-shadow-tal-revivo/96/external-tic-tak-toe-cross-and-circle-matrix-game-with-work-strategy-concept-business-shadow-tal-revivo.png",
+                iconType: "colored",
+                description: "Classic X's and O's! Play against a friend and see who can get three in a row first.",
+                tags: ["Strategy", "2-Player", "Classic"],
+                status: "available",
+                gameFile: "tic-tac-toe.html",
+                color: "#ff9800"
+            },
+            {
+                id: 3,
+                title: "Snake Game",
+                icon: "fa-arrow-right",
+                image: null,
+                iconUrl: "https://img.icons8.com/external-those-icons-lineal-color-those-icons/96/external-snake-video-games-those-icons-lineal-color-those-icons.png",
+                iconType: "colored",
+                description: "Control the snake, eat food, and grow longer! Don't hit the walls or yourself.",
+                tags: ["Arcade", "Retro", "Reaction"],
+                status: "available",
+                gameFile: "snake.html",
+                color: "#ff2a2a"
+            },
+            {
+                id: 4,
+                title: "Flappy Bird",
+                icon: "fa-dove",
+                image: null,
+                iconUrl: "https://img.icons8.com/ios/50/dove.png",
+                iconType: "white",
+                description: "Navigate through pipes and see how far you can go in this addictive arcade game.",
+                tags: ["Arcade", "Endless", "Coming Soon"],
+                status: "coming-soon",
+                gameFile: null,
+                color: "#9c27b0"
+            },
+            {
+                id: 5,
+                title: "2048 Puzzle",
+                icon: "fa-cube",
+                image: null,
+                iconUrl: "https://img.icons8.com/ios/50/rubiks-cube.png",
+                iconType: "white",
+                description: "Merge the tiles and reach the 2048 tile! An addictive number puzzle game.",
+                tags: ["Puzzle", "Numbers", "Strategy"],
+                status: "coming-soon",
+                gameFile: null,
+                color: "#3f51b5"
+            },
+            {
+                id: 6,
+                title: "Space Shooter",
+                icon: "fa-rocket",
+                image: null,
+                iconUrl: "https://img.icons8.com/ios/50/rocket.png",
+                iconType: "white",
+                description: "Defend Earth from alien invaders! Shoot down enemies and survive as long as possible.",
+                tags: ["Arcade", "Action", "Shooter"],
+                status: "coming-soon",
+                gameFile: null,
+                color: "#e91e63"
+            }
+        ];
+
+        const gamesContainer = document.getElementById('gamesContainer');
+        if (gamesContainer) {
+            gamesContainer.innerHTML = gamesData.map(game => {
+                // Determine what to show in the image area
+                let imageContent = '';
+
+                if (game.status === 'available' && game.image) {
+                    // Use local image for available games
+                    imageContent = `<img src="${game.image}" alt="${game.title}" loading="lazy">`;
+                } else if (game.iconUrl) {
+                    // Use icon URL with appropriate class based on iconType
+                    // Force all icons to 100x100 using CSS class
+                    const iconClass = game.iconType === 'colored' ? 'game-icon-img colored-icon' : 'game-icon-img white-icon';
+                    imageContent = `<img src="${game.iconUrl}" alt="${game.title}" class="${iconClass}" width="100" height="100">`;
+                } else {
+                    // Fallback to Font Awesome icon
+                    imageContent = `<div class="game-placeholder"><i class="fa-solid ${game.icon}"></i></div>`;
+                }
+
+                return `
+                    <div class="game-card ${game.status === 'coming-soon' ? 'coming-soon' : ''}" data-game-id="${game.id}" data-status="${game.status}" data-game-file="${game.gameFile || ''}">
+                        <div class="game-card-image">
+                            ${imageContent}
+                            <div class="game-status-badge ${game.status}">${game.status === 'available' ? 'Available' : 'Coming Soon'}</div>
+                        </div>
+                        <div class="game-card-content">
+                            <h3>${game.title}</h3>
+                            <p>${game.description}</p>
+                            <div class="game-tags">
+                                ${game.tags.map(tag => `<span class="game-tag">${tag}</span>`).join('')}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            // Add click handlers for game cards
+            document.querySelectorAll('.game-card').forEach(card => {
+                const status = card.dataset.status;
+                const gameFile = card.dataset.gameFile;
+
+                card.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+
+                    if (status === 'available' && gameFile && gameFile !== '') {
+                        // Open the game in a new tab
+                        window.open(`./assets/games/${gameFile}`, '_blank');
+                    } else {
+                        showGamePopup("Coming Soon! 🎮", "This game is under development. Check back later!", e);
+                    }
+                });
+            });
+        }
+    }
+}
+
+// Helper function for game popup
+let activeGamePopup = null;
+
+function showGamePopup(title, message, clickEvent) {
+    // Remove existing popup if any
+    if (activeGamePopup && activeGamePopup.remove) {
+        activeGamePopup.remove();
+        activeGamePopup = null;
+    }
+
+    // Get click position
+    let clickX = window.innerWidth / 2;
+    let clickY = window.innerHeight / 2;
+
+    if (clickEvent && clickEvent.clientX) {
+        clickX = clickEvent.clientX;
+        clickY = clickEvent.clientY;
+    }
+
+    const popup = document.createElement('div');
+    popup.className = 'chat-bubble';
+    popup.style.background = '#ff9800';
+    popup.style.color = 'white';
+    popup.style.borderColor = '#ff9800';
+    popup.style.whiteSpace = 'normal';
+    popup.style.maxWidth = '200px';
+    popup.style.textAlign = 'center';
+    popup.innerHTML = `<strong>${title}</strong><br>${message}`;
+
+    // Position popup near click
+    popup.style.position = 'fixed';
+    popup.style.top = (clickY - 100) + 'px';
+    popup.style.left = (clickX - 100) + 'px';
+    popup.style.zIndex = '10000';
+
+    // Adjust if popup goes off screen
+    setTimeout(() => {
+        const rect = popup.getBoundingClientRect();
+        if (rect.left < 10) {
+            popup.style.left = '10px';
+        }
+        if (rect.right > window.innerWidth - 10) {
+            popup.style.left = (window.innerWidth - rect.width - 10) + 'px';
+        }
+        if (rect.top < 10) {
+            popup.style.top = '10px';
+        }
+        if (rect.bottom > window.innerHeight - 10) {
+            popup.style.top = (window.innerHeight - rect.height - 10) + 'px';
+        }
+    }, 100);
+
+    document.body.appendChild(popup);
+    activeGamePopup = popup;
+
+    setTimeout(() => {
+        if (activeGamePopup && activeGamePopup.remove) {
+            activeGamePopup.remove();
+            activeGamePopup = null;
+        }
+    }, 3000);
+}
+
+
+
 // ==================== BACK TO TOP BUTTON ====================
 (function initBackToTop() {
     // Create button if it doesn't exist (as fallback)
@@ -1941,6 +2635,11 @@ function initializeTechPage() {
     const backToTop = document.getElementById('backToTop');
 
     if (backToTop) {
+        // Ensure button doesn't affect layout when hidden
+        backToTop.style.position = 'fixed';
+        backToTop.style.bottom = '30px';
+        backToTop.style.right = '30px';
+
         window.addEventListener('scroll', function () {
             if (window.scrollY > 500) {
                 backToTop.classList.add('visible');
@@ -1955,318 +2654,5 @@ function initializeTechPage() {
                 behavior: 'smooth'
             });
         });
-    }
-})();
-
-// ==================== SCROLL ANIMATION INDICATOR ====================
-(function initScrollAnimation() {
-    let scrollAnimation = null;
-    let animationImg = null;
-    let isInitialized = false;
-    let scrollHandlersSetup = false;
-    let isMobile = window.innerWidth <= 768;
-
-    // Immediately hide scroll animation if preloading is active
-    const loadingScreen = document.getElementById('loadingScreen');
-    const scrollAnimationElement = document.getElementById('scrollAnimation');
-    if (loadingScreen && loadingScreen.style.display !== 'none' && scrollAnimationElement) {
-        scrollAnimationElement.style.display = 'none';
-    }
-
-    // Check if preloading is still active
-    function isPreloadingActive() {
-        const loadingScreenEl = document.getElementById('loadingScreen');
-        // Check if loading screen exists and is visible (not hidden and not zoomed out)
-        return loadingScreenEl &&
-            loadingScreenEl.style.display !== 'none' &&
-            !loadingScreenEl.classList.contains('zoom-out');
-    }
-
-    function getElements() {
-        scrollAnimation = document.getElementById('scrollAnimation');
-        animationImg = document.getElementById('scrollAnimationImg');
-        return scrollAnimation && animationImg;
-    }
-
-    // Check if animation should be visible based on screen size
-    function shouldBeVisible() {
-        return window.innerWidth > 768 && !isPreloadingActive();
-    }
-
-    // Update visibility based on screen size
-    function updateVisibility() {
-        const visible = shouldBeVisible();
-
-        if (visible && !isInitialized && getElements()) {
-            initialize();
-        } else if (!visible && scrollAnimation) {
-            if (scrollHandlersSetup) {
-                window.removeEventListener('scroll', onScroll);
-                scrollHandlersSetup = false;
-            }
-            scrollAnimation.style.display = 'none';
-            isInitialized = false;
-        } else if (visible && scrollAnimation && !isInitialized) {
-            initialize();
-        }
-    }
-
-    // Wait for DOM to be ready
-    function waitForDOMReady(callback) {
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', () => setTimeout(callback, 50));
-        } else {
-            setTimeout(callback, 50);
-        }
-    }
-
-    // Calculate accurate scrollbar thumb position
-    function getAccurateThumbPosition() {
-        if (!scrollAnimation) return 20;
-
-        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-        const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
-
-        if (scrollHeight <= 0) return 20;
-
-        const scrollPercentage = scrollTop / scrollHeight;
-        const viewportHeight = window.innerHeight;
-        const totalScrollableHeight = document.documentElement.scrollHeight;
-
-        const thumbHeight = Math.max(30, (viewportHeight / totalScrollableHeight) * viewportHeight);
-        const maxThumbTop = viewportHeight - thumbHeight;
-        const thumbTop = scrollPercentage * maxThumbTop;
-
-        const animationHeight = scrollAnimation.offsetHeight || 70;
-        const centeredPosition = thumbTop + (thumbHeight / 2) - (animationHeight / 2);
-
-        const minPosition = 10;
-        const maxPosition = viewportHeight - animationHeight - 10;
-
-        return Math.max(minPosition, Math.min(maxPosition, centeredPosition));
-    }
-
-    // Update animation position
-    function updatePosition() {
-        if (!scrollAnimation || !shouldBeVisible()) return;
-        const newTop = getAccurateThumbPosition();
-        scrollAnimation.style.top = newTop + 'px';
-    }
-
-    // Scroll handler
-    let scrollTimeout = null;
-    let lastScrollTop = window.pageYOffset || document.documentElement.scrollTop;
-    let currentState = 'paused';
-    let preloadImages = null;
-    let ticking = false;
-
-    function setState(state) {
-        if (!animationImg || !preloadImages) return;
-        if (currentState === state) return;
-        currentState = state;
-
-        if (state === 'forward') {
-            animationImg.src = preloadImages.forward;
-        } else if (state === 'reversed') {
-            animationImg.src = preloadImages.reversed;
-        } else {
-            animationImg.src = preloadImages.paused;
-        }
-    }
-
-    function onScroll() {
-        if (!shouldBeVisible()) return;
-
-        const currentScrollTop = window.pageYOffset || document.documentElement.scrollTop;
-        const deltaY = currentScrollTop - lastScrollTop;
-
-        if (!ticking) {
-            requestAnimationFrame(() => {
-                updatePosition();
-
-                if (Math.abs(deltaY) > 2) {
-                    if (scrollTimeout) clearTimeout(scrollTimeout);
-
-                    if (deltaY > 0 && currentState !== 'forward') {
-                        setState('forward');
-                    } else if (deltaY < 0 && currentState !== 'reversed') {
-                        setState('reversed');
-                    }
-
-                    scrollTimeout = setTimeout(() => {
-                        if (currentState !== 'paused') {
-                            setState('paused');
-                        }
-                        scrollTimeout = null;
-                    }, 400);
-                } else {
-                    if (currentState !== 'paused' && !scrollTimeout) {
-                        scrollTimeout = setTimeout(() => {
-                            setState('paused');
-                            scrollTimeout = null;
-                        }, 200);
-                    }
-                }
-
-                lastScrollTop = currentScrollTop;
-                ticking = false;
-            });
-            ticking = true;
-        }
-    }
-
-    function setupScrollHandling() {
-        if (scrollHandlersSetup) return;
-        scrollHandlersSetup = true;
-
-        window.addEventListener('scroll', onScroll, { passive: true });
-
-        // Initial state
-        if (preloadImages) {
-            setState('paused');
-        }
-
-        // Update on resize
-        let resizeTimeout;
-        window.addEventListener('resize', () => {
-            clearTimeout(resizeTimeout);
-            resizeTimeout = setTimeout(() => {
-                if (shouldBeVisible()) {
-                    updatePosition();
-                }
-            }, 100);
-        });
-
-        // Update on DOM changes
-        let updateTimeout;
-        const observer = new MutationObserver(() => {
-            if (shouldBeVisible()) {
-                if (updateTimeout) clearTimeout(updateTimeout);
-                updateTimeout = setTimeout(updatePosition, 150);
-            }
-        });
-        observer.observe(document.body, {
-            childList: true,
-            subtree: true,
-            attributes: true,
-            attributeFilter: ['style', 'class']
-        });
-    }
-
-    function initialize() {
-        if (!getElements()) {
-            setTimeout(initialize, 100);
-            return;
-        }
-
-        if (isInitialized) return;
-
-        // Check if should be visible
-        if (!shouldBeVisible()) {
-            scrollAnimation.style.display = 'none';
-            return;
-        }
-
-        // Keep animation hidden initially
-        scrollAnimation.style.display = 'none';
-
-        waitForDOMReady(() => {
-            // Load animation images
-            const pausedImg = new Image();
-            const forwardImg = new Image();
-            const reversedImg = new Image();
-
-            let imagesLoaded = 0;
-
-            function imageLoaded() {
-                imagesLoaded++;
-                if (imagesLoaded === 3) {
-                    preloadImages = {
-                        paused: pausedImg.src,
-                        forward: forwardImg.src,
-                        reversed: reversedImg.src
-                    };
-
-                    const correctTop = getAccurateThumbPosition();
-                    scrollAnimation.style.top = correctTop + 'px';
-                    animationImg.src = pausedImg.src;
-                    scrollAnimation.style.display = 'block';
-
-                    requestAnimationFrame(() => {
-                        const finalTop = getAccurateThumbPosition();
-                        scrollAnimation.style.top = finalTop + 'px';
-                    });
-
-                    isInitialized = true;
-                    setupScrollHandling();
-                }
-            }
-
-            pausedImg.onload = imageLoaded;
-            forwardImg.onload = imageLoaded;
-            reversedImg.onload = imageLoaded;
-
-            pausedImg.src = './assets/scroll-animation-paused.webp';
-            forwardImg.src = './assets/scroll-animation-forward.gif';
-            reversedImg.src = './assets/scroll-animation-reversed.gif';
-
-            // Fast fallback
-            setTimeout(() => {
-                if (imagesLoaded < 3) {
-                    preloadImages = {
-                        paused: './assets/scroll-animation-paused.webp',
-                        forward: './assets/scroll-animation-forward.gif',
-                        reversed: './assets/scroll-animation-reversed.gif'
-                    };
-
-                    const correctTop = getAccurateThumbPosition();
-                    scrollAnimation.style.top = correctTop + 'px';
-                    animationImg.src = './assets/scroll-animation-paused.webp';
-                    scrollAnimation.style.display = 'block';
-
-                    isInitialized = true;
-                    setupScrollHandling();
-                }
-            }, 1000);
-        });
-    }
-
-    // Listen for window resize to handle orientation/screen size changes
-    window.addEventListener('resize', function () {
-        const newIsMobile = window.innerWidth <= 768;
-
-        // If mobile state changed
-        if (isMobile !== newIsMobile) {
-            isMobile = newIsMobile;
-            updateVisibility();
-        }
-    });
-
-    // Add a MutationObserver to watch for loading screen changes
-    const observer = new MutationObserver(function (mutations) {
-        mutations.forEach(function (mutation) {
-            if (mutation.attributeName === 'class' || mutation.attributeName === 'style') {
-                updateVisibility();
-            }
-        });
-    });
-
-    const loadingScreenEl = document.getElementById('loadingScreen');
-    if (loadingScreenEl) {
-        observer.observe(loadingScreenEl, { attributes: true });
-    }
-
-    // Listen for preload completion
-    window.addEventListener('preloadComplete', function () {
-        updateVisibility();
-    });
-
-    // Initial check
-    if (shouldBeVisible()) {
-        initialize();
-    } else {
-        if (getElements()) {
-            scrollAnimation.style.display = 'none';
-        }
     }
 })();

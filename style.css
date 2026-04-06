@@ -43,6 +43,230 @@ body {
     position: relative;
 }
 
+/* ==================== CHAT BUBBLE ==================== */
+.chat-bubble {
+    position: fixed;
+    background: white;
+    color: black;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+    white-space: nowrap;
+    z-index: 1002;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--accent-red);
+    pointer-events: none;
+    animation: bubbleFade 2s ease-out forwards;
+    font-family: var(--font-main);
+}
+
+.chat-bubble::before {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 8px 8px 0 8px;
+    border-style: solid;
+    border-color: white transparent transparent transparent;
+}
+
+.chat-bubble::after {
+    content: '';
+    position: absolute;
+    bottom: -9px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 9px 9px 0 9px;
+    border-style: solid;
+    border-color: #ff9800 transparent transparent transparent;
+    z-index: -1;
+}
+
+@keyframes bubbleFade {
+    0% {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    15% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    85% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateY(-10px);
+        display: none;
+    }
+}
+
+/* ==================== GAMES PAGE STYLES ==================== */
+.games-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 30px;
+    margin-bottom: 0;
+}
+
+.game-card {
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.9);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.game-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+}
+
+.game-card-image {
+    position: relative;
+    height: 200px;
+    overflow: hidden;
+    background: linear-gradient(135deg, #1a1a2e, #16213e);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.game-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.game-card:hover .game-card-image img {
+    transform: scale(1.05);
+}
+
+.game-card-image .game-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #1a1a2e, #16213e);
+}
+
+.game-card-image .game-placeholder i {
+    font-size: 60px;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.game-card-image .game-icon-img {
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+}
+
+/* For white icons that need to be visible on dark background */
+.game-card-image .game-icon-img.white-icon {
+    filter: brightness(0) invert(1);
+}
+
+/* For colored icons - no filter, keep original colors */
+.game-card-image .game-icon-img.colored-icon {
+    filter: none;
+}
+
+.game-status-badge {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    backdrop-filter: blur(10px);
+    z-index: 2;
+}
+
+.game-status-badge.available {
+    background: rgba(0, 168, 107, 0.9);
+    color: white;
+}
+
+.game-status-badge.coming-soon {
+    background: rgba(255, 152, 0, 0.9);
+    color: white;
+}
+
+.game-card-content {
+    padding: 25px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.game-card-content h3 {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 10px;
+}
+
+.game-card-content p {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.game-tags {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: auto;
+}
+
+.game-tag {
+    padding: 5px 12px;
+    background: #f0f0f0;
+    border-radius: 15px;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.game-card.coming-soon {
+    opacity: 0.8;
+}
+
+.game-card.coming-soon:hover {
+    transform: translateY(-5px);
+    opacity: 1;
+}
+
+/* Coming Soon card overlay effect */
+.game-card[data-status="coming-soon"] .game-image-placeholder {
+    opacity: 0.7;
+}
+
+.game-card[data-status="coming-soon"]:hover .game-image-placeholder {
+    transform: scale(1);
+}
+
 /* ==================== CUSTOM SCROLLBAR ==================== */
 ::-webkit-scrollbar {
     width: 5px;
@@ -63,26 +287,9 @@ body {
     background: var(--accent-red);
 }
 
-/* ==================== SCROLL ANIMATION INDICATOR ==================== */
-.scroll-animation {
-    z-index: 1;
-    right: 2px;
-    width: 70px;
-    height: 70px;
-    position: fixed;
-    will-change: top;
-    pointer-events: none;
-    transition: top 0.05s linear;
+body.games-page .scroll-animation {
+    display: none !important;
 }
-
-.scroll-animation img {
-    width: 100%;
-    height: 100%;
-    display: block;
-    object-fit: contain;
-}
-
-
 
 /* ==================== NAVBAR STYLES ==================== */
 .navbar {
@@ -452,7 +659,7 @@ body {
     gap: 40px;
     display: grid;
     margin: 0 auto;
-    align-items: center;
+    align-items: stretch;
     justify-content: center;
     grid-template-columns: 1fr 1fr;
     min-height: calc(100vh - 180px);
@@ -460,23 +667,22 @@ body {
 
 .hero-content {
     width: 100%;
-    height: auto;
-    padding: 30px;
+    height: 100%;
+    padding: 0 30px;
     display: flex;
     border-radius: 30px;
     background: white;
     box-sizing: border-box;
     flex-direction: column;
     justify-content: center;
-    border: 1px solid rgba(255, 255, 255, 0.9);
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
 }
 
 .hero-image {
-    height: 87%;
+    height: 100%;
     display: flex;
     overflow: hidden;
-    min-height: 500px;
+    min-height: 0;
     position: relative;
     border-radius: 30px;
     background: black;
@@ -708,7 +914,6 @@ body {
     gap: 30px;
     display: grid;
     position: relative;
-    margin-bottom: 60px;
     transition: min-height 0.3s ease;
     grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
 }
@@ -1020,7 +1225,6 @@ body {
     display: grid;
     grid-template-columns: 2fr 1fr;
     gap: 30px;
-    margin-bottom: 50px;
     width: 100%;
 }
 
@@ -1285,7 +1489,6 @@ body {
     text-transform: uppercase;
     letter-spacing: 1px;
     transition: all 0.3s ease;
-    margin-bottom: 50px;
 }
 
 .back-to-projects:hover {
@@ -1417,7 +1620,6 @@ body {
     display: flex;
     flex-direction: column;
     gap: 60px;
-    margin-bottom: 60px;
 }
 
 .certificate-item {
@@ -1987,7 +2189,6 @@ body {
     display: grid;
     grid-template-columns: 1fr 2fr;
     gap: 40px;
-    margin-bottom: 60px;
 }
 
 .cv-sidebar-container {
@@ -2536,28 +2737,31 @@ body {
 }
 
 .timeline-dot {
-    position: absolute;
-    left: 50%;
     top: 50%;
-    transform: translate(-50%, -50%);
+    left: 50%;
     width: 16px;
     height: 16px;
-    background: var(--accent-red);
+    position: absolute;
     border-radius: 50%;
     border: 3px solid white;
+    background: var(--accent-red);
     box-shadow: 0 0 0 2px #f0f0f0;
+    transform: translate(-50%, -50%);
 }
 
 .pub-list {
     max-width: 800px;
     margin: 0 auto;
+    gap: 25px;
+    display: flex;
+    flex-direction: column;
+
 }
 
 .pub-item {
     background: white;
     border-radius: 16px;
     padding: 25px;
-    margin-bottom: 20px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
     border: 1px solid rgba(255, 255, 255, 0.9);
 }
@@ -2584,7 +2788,6 @@ body {
     font-size: 13px;
     color: var(--text-secondary);
     line-height: 1.6;
-    margin-bottom: 15px;
 }
 
 .pub-link {
@@ -2768,7 +2971,25 @@ body {
 
 @media (min-width: 769px) {
     .scroll-animation {
+        position: fixed;
+        right: 20px;
+        width: 50px;
+        height: 50px;
+        z-index: 1000;
+        cursor: pointer;
+        transition: top 0.05s linear;
+        display: none;
+        overflow: hidden;
+    }
+
+    .scroll-animation.visible {
         display: block;
+    }
+
+    .scroll-animation img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
     }
 }
 
@@ -2787,6 +3008,30 @@ body {
         display: flex;
     }
 
+    .games-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .game-card-image {
+        height: 160px;
+    }
+
+    .game-image-placeholder i {
+        font-size: 55px;
+    }
+
+    .game-card-content h3 {
+        font-size: 1.3rem;
+    }
+
+    .game-status-badge {
+        top: 12px;
+        right: 12px;
+        padding: 5px 12px;
+        font-size: 9px;
+    }
+
     .nav-links {
         position: absolute;
         top: 100%;
@@ -2796,6 +3041,7 @@ body {
         flex-direction: column;
         padding: 20px;
         border-radius: 20px;
+        border: 1px solid black;
         box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
         margin-top: 10px;
         display: none;
@@ -2810,6 +3056,21 @@ body {
         width: 100%;
         text-align: center;
         padding: 12px 20px;
+    }
+
+    .scroll-animation {
+        position: relative;
+        width: 60px;
+        height: 60px;
+        cursor: pointer;
+        display: inline-block;
+    }
+
+    .scroll-animation img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        transform: rotate(90deg);
     }
 
     .page-header h1 {
@@ -2912,10 +3173,6 @@ body {
     .research-card,
     .pub-item {
         padding: 25px;
-    }
-
-    .scroll-animation {
-        display: none !important;
     }
 
     .certificate-item {
@@ -3173,6 +3430,26 @@ body {
         border-radius: 20px;
         top: 10px;
         width: calc(100% - 20px);
+    }
+
+    .game-card-image {
+        height: 140px;
+    }
+
+    .game-image-placeholder i {
+        font-size: 45px;
+    }
+
+    .game-card-content {
+        padding: 20px;
+    }
+
+    .game-card-content h3 {
+        font-size: 1.2rem;
+    }
+
+    .game-card-content p {
+        font-size: 13px;
     }
 
     .main-container {

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Game Hub - Md. Asifuzzaman</title>
+    <meta name="description" content="Collection of fun browser games. Play Memory Match, Tic Tac Toe, Snake and more!">
+    <meta name="robots" content="index, follow">
+
+    <link rel="canonical" href="https://asifxasif.github.io/Portfolio/games.html">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://asifxasif.github.io/Portfolio/games.html">
+    <meta property="og:title" content="Game Hub - Md. Asifuzzaman">
+    <meta property="og:description" content="Play fun browser games!">
+    <meta property="og:image" content="https://asifxasif.github.io/Portfolio/assets/og-image.webp">
+
+    <meta name="theme-color" content="#ff2a2a">
+
+    <link rel="icon" type="image/x-icon" href="/Portfolio/assets/favicon.ico">
+    <link rel="apple-touch-icon" href="/Portfolio/assets/apple-touch-icon.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="main-container">
+        <a href="javascript:history.back()" class="back-btn">
+            <i class="fa-solid fa-arrow-left"></i> Go Back
+        </a>
+
+        <div class="page-header">
+            <h1>🎮 GAME HUB</h1>
+            <p>Take a break and play some classic browser games. Click any card to start playing!</p>
+        </div>
+
+        <div class="games-container" id="gamesContainer">
+            <!-- Games will be dynamically loaded here -->
+        </div>
+
+        <!-- Scroll Animation Indicator -->
+        <div id="scrollAnimation" class="scroll-animation">
+            <img id="scrollAnimationImg" alt="Scroll Animation">
+        </div>
+    </div>
+
+    <!-- Back to Top Button -->
+    <button id="backToTop" class="back-to-top" aria-label="Back to top">
+        <i class="fa-solid fa-arrow-up"></i>
+    </button>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
