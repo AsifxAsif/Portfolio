@@ -966,6 +966,8 @@ body.games-page .scroll-animation {
 .project-content {
     flex: 1;
     padding: 25px;
+    display: flex;
+    flex-direction: column;
 }
 
 .project-description {
@@ -1019,7 +1021,7 @@ body.games-page .scroll-animation {
 .project-links {
     gap: 10px;
     display: flex;
-    margin-top: 20px;
+    margin-top: auto;
 }
 
 .project-link {
