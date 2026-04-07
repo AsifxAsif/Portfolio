@@ -627,8 +627,8 @@ body.games-page .scroll-animation {
 
 .lightbox-nav:hover {
     color: white;
-    background: var(--accent-red);
     border: 1px solid white;
+    background: var(--accent-red);
 }
 
 .lightbox-nav.prev {
