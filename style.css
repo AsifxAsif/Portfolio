@@ -620,6 +620,7 @@ body.games-page .scroll-animation {
     align-items: center;
     justify-content: center;
     transition: all 0.3s ease;
+    border: 1px solid black;
     transform: translateY(-50%);
     background: rgba(255, 255, 255, 0.1);
 }
@@ -627,6 +628,7 @@ body.games-page .scroll-animation {
 .lightbox-nav:hover {
     color: white;
     background: var(--accent-red);
+    border: 1px solid white;
 }
 
 .lightbox-nav.prev {
