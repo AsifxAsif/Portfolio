@@ -3800,9 +3800,9 @@ body.games-page .scroll-animation {
     }
 
     .back-to-top {
-        font-size: 14px;
         width: 30px;
         height: 30px;
+        font-size: 14px;
         border: 1px solid black;
     }
 }
