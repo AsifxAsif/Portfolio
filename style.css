@@ -549,6 +549,7 @@ body.games-page .scroll-animation {
     z-index: 2000;
     position: fixed;
     overflow: hidden;
+    isolation: isolate;
     background-color: rgba(0, 0, 0, 0.95);
 }
 
@@ -2843,7 +2844,7 @@ body.games-page .scroll-animation {
     bottom: 30px;
     height: 50px;
     border: none;
-    z-index: 1000;
+    z-index: 999;
     display: flex;
     color: black;
     position: fixed;
@@ -2867,6 +2868,7 @@ body.games-page .scroll-animation {
 
 .back-to-top.visible {
     opacity: 1;
+    z-index: 999;
     visibility: visible;
     animation: pulse 2s infinite;
 }
@@ -2975,7 +2977,7 @@ body.games-page .scroll-animation {
         right: 20px;
         width: 50px;
         height: 50px;
-        z-index: 1000;
+        z-index: 999;
         display: none;
         position: fixed;
         cursor: pointer;

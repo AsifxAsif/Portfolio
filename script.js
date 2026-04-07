@@ -1692,10 +1692,16 @@ function initializeCertificatesPage() {
             document.getElementById('lightboxModal').style.display = 'block';
             document.body.style.overflow = 'hidden';
 
-            // Hide scroll animation when lightbox is open
+            // Make back-to-top non-interactable but visible in background
+            const backToTop = document.getElementById('backToTop');
+            if (backToTop) {
+                backToTop.style.pointerEvents = 'none';
+            }
+
+            // Make scroll animation non-interactable but visible in background
             const scrollAnimation = document.getElementById('scrollAnimation');
             if (scrollAnimation) {
-                scrollAnimation.style.display = 'none';
+                scrollAnimation.style.pointerEvents = 'none';
             }
         }
     };
@@ -1714,10 +1720,15 @@ function initializeCertificatesPage() {
         document.getElementById('lightboxModal').style.display = 'none';
         document.body.style.overflow = 'auto';
 
-        // Show scroll animation again if on desktop
+        // Restore interactability
+        const backToTop = document.getElementById('backToTop');
+        if (backToTop) {
+            backToTop.style.pointerEvents = '';
+        }
+
         const scrollAnimation = document.getElementById('scrollAnimation');
-        if (scrollAnimation && window.innerWidth > 768) {
-            scrollAnimation.style.display = 'block';
+        if (scrollAnimation) {
+            scrollAnimation.style.pointerEvents = '';
         }
     };
 
