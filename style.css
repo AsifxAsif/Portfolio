@@ -239,18 +239,6 @@ body {
     margin-top: auto;
 }
 
-.game-tag {
-    font-size: 10px;
-    font-weight: 500;
-    padding: 5px 12px;
-    border-radius: 15px;
-    background: #f0f0f0;
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
-    transition: all 0.3s ease;
-    color: var(--text-secondary);
-}
-
 .game-card.coming-soon {
     opacity: 0.8;
 }
@@ -759,23 +747,6 @@ body.games-page .scroll-animation {
     display: flex;
     flex-wrap: wrap;
     margin-top: 10px;
-}
-
-.tech-tag {
-    color: black;
-    font-size: 10px;
-    padding: 6px 16px;
-    letter-spacing: 1px;
-    border-radius: 20px;
-    background: #f0f0f0;
-    text-transform: uppercase;
-    transition: all 0.3s ease;
-}
-
-.tech-tag:hover {
-    color: white;
-    transform: translateY(-2px);
-    background: var(--accent-red);
 }
 
 .cta-section {
@@ -2103,24 +2074,57 @@ body.games-page .scroll-animation {
     border: 1px solid rgba(0, 0, 0, 0.05);
 }
 
+/* Merged skill name styles */
+.profile-skill-name,
+.cv-skill-name {
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
 .profile-skill-name {
     font-size: 13px;
-    font-weight: 700;
     margin-bottom: 8px;
-    color: var(--text-primary);
+}
+
+.cv-skill-name {
+    font-size: 12px;
+    margin-bottom: 5px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+/* Merged skill level styles */
+.profile-skill-level,
+.cv-skill-level {
+    overflow: hidden;
 }
 
 .profile-skill-level {
     height: 4px;
-    overflow: hidden;
     border-radius: 2px;
     background: #e0e0e0;
 }
 
-.profile-skill-progress {
+.cv-skill-level {
+    height: 6px;
+    border-radius: 3px;
+    background: #f0f0f0;
+}
+
+/* Merged skill progress styles */
+.profile-skill-progress,
+.cv-skill-progress {
     height: 100%;
-    border-radius: 2px;
     background: black;
+}
+
+.profile-skill-progress {
+    border-radius: 2px;
+}
+
+.cv-skill-progress {
+    border-radius: 3px;
+    transition: width 1s ease-in-out;
 }
 
 .profile-experience-list {
@@ -2321,29 +2325,6 @@ body.games-page .scroll-animation {
     margin-bottom: 15px;
 }
 
-.cv-skill-name {
-    font-size: 12px;
-    font-weight: 700;
-    margin-bottom: 5px;
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
-    color: var(--text-primary);
-}
-
-.cv-skill-level {
-    height: 6px;
-    overflow: hidden;
-    border-radius: 3px;
-    background: #f0f0f0;
-}
-
-.cv-skill-progress {
-    height: 100%;
-    border-radius: 3px;
-    background: black;
-    transition: width 1s ease-in-out;
-}
-
 .cv-content {
     padding: 40px;
     background: white;
@@ -2369,6 +2350,7 @@ body.games-page .scroll-animation {
     margin-bottom: 30px;
 }
 
+/* Merged header styles */
 .cv-experience-header,
 .cv-education-header {
     gap: 10px;
@@ -2392,6 +2374,7 @@ body.games-page .scroll-animation {
     color: var(--text-secondary);
 }
 
+/* Merged date styles */
 .cv-experience-date,
 .cv-education-date {
     color: white;
@@ -2625,6 +2608,31 @@ body.games-page .scroll-animation {
     font-size: 11px;
     letter-spacing: 0.5px;
     text-transform: uppercase;
+    color: var(--text-secondary);
+}
+
+/* Merged tag styles */
+.tech-tag,
+.game-tag {
+    background: #f0f0f0;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+}
+
+.tech-tag {
+    color: black;
+    font-size: 10px;
+    padding: 6px 16px;
+    letter-spacing: 1px;
+    border-radius: 20px;
+}
+
+.game-tag {
+    font-size: 10px;
+    font-weight: 500;
+    padding: 5px 12px;
+    border-radius: 15px;
+    letter-spacing: 0.5px;
     color: var(--text-secondary);
 }
 
@@ -3512,11 +3520,6 @@ body.games-page .scroll-animation {
     .quick-stats {
         gap: 12px;
         grid-template-columns: 1fr;
-    }
-
-    .tech-tag {
-        font-size: 9px;
-        padding: 5px 12px;
     }
 
     .cta-btn {
