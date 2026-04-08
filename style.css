@@ -227,6 +227,7 @@ body {
 .game-card-content p {
     font-size: 13px;
     line-height: 1.6;
+    text-align: justify;
     margin-bottom: 20px;
     color: var(--text-secondary);
 }
@@ -246,6 +247,7 @@ body {
     background: #f0f0f0;
     letter-spacing: 0.5px;
     text-transform: uppercase;
+    transition: all 0.3s ease;
     color: var(--text-secondary);
 }
 
@@ -678,6 +680,7 @@ body.games-page .scroll-animation {
     box-sizing: border-box;
     flex-direction: column;
     justify-content: center;
+    border: 1px solid rgba(255, 255, 255, 0.9);
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
 }
 
@@ -734,6 +737,7 @@ body.games-page .scroll-animation {
 .hero-content p {
     font-size: 14px;
     line-height: 1.5;
+    text-align: justify;
     margin-bottom: 15px;
     color: var(--text-secondary);
 }
@@ -1186,6 +1190,7 @@ body.games-page .scroll-animation {
 
 .project-header-section {
     padding: 40px;
+    text-align: justify;
     background: white;
     border-radius: 30px;
     margin-bottom: 30px;
@@ -1250,6 +1255,7 @@ body.games-page .scroll-animation {
 .project-section {
     width: 100%;
     padding: 30px;
+    text-align: justify;
     background: white;
     border-radius: 20px;
     box-sizing: border-box;
@@ -1760,6 +1766,7 @@ body.games-page .scroll-animation {
 .certificate-description {
     font-size: 14px;
     line-height: 1.6;
+    text-align: justify;
     margin-bottom: 25px;
     color: var(--text-secondary);
 }
@@ -1787,9 +1794,9 @@ body.games-page .scroll-animation {
     display: flex;
     color: white;
     font-size: 16px;
-    background: black;
     border-radius: 10px;
     align-items: center;
+    background: black;
     justify-content: center;
 }
 
@@ -2021,6 +2028,7 @@ body.games-page .scroll-animation {
     font-size: 13px;
     line-height: 1.6;
     max-width: 600px;
+    text-align: justify;
     color: var(--text-secondary);
 }
 
@@ -2157,6 +2165,7 @@ body.games-page .scroll-animation {
 .profile-experience-details .description {
     font-size: 12px;
     line-height: 1.6;
+    text-align: justify;
     color: var(--text-secondary);
 }
 
@@ -2360,7 +2369,8 @@ body.games-page .scroll-animation {
     margin-bottom: 30px;
 }
 
-.cv-experience-header {
+.cv-experience-header,
+.cv-education-header {
     gap: 10px;
     display: flex;
     flex-wrap: wrap;
@@ -2382,7 +2392,8 @@ body.games-page .scroll-animation {
     color: var(--text-secondary);
 }
 
-.cv-experience-date {
+.cv-experience-date,
+.cv-education-date {
     color: white;
     font-size: 10px;
     font-weight: 700;
@@ -2397,20 +2408,12 @@ body.games-page .scroll-animation {
     font-size: 13px;
     line-height: 1.6;
     margin-top: 10px;
+    text-align: justify;
     color: var(--text-secondary);
 }
 
 .cv-education-item {
     margin-bottom: 25px;
-}
-
-.cv-education-header {
-    gap: 10px;
-    display: flex;
-    flex-wrap: wrap;
-    margin-bottom: 10px;
-    align-items: flex-start;
-    justify-content: space-between;
 }
 
 .cv-education-title h3 {
@@ -2426,20 +2429,10 @@ body.games-page .scroll-animation {
     color: var(--text-secondary);
 }
 
-.cv-education-date {
-    color: white;
-    font-size: 10px;
-    font-weight: 700;
-    padding: 8px 16px;
-    border-radius: 20px;
-    letter-spacing: 1px;
-    background: black;
-    text-transform: uppercase;
-}
-
 .cv-education-details {
     font-size: 13px;
     line-height: 1.6;
+    text-align: justify;
     color: var(--text-secondary);
 }
 
@@ -2513,8 +2506,8 @@ body.games-page .scroll-animation {
     margin-top: 30px;
     border-radius: 30px;
     background: white;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
     border: 1px solid rgba(255, 255, 255, 0.9);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
 }
 
 .location-card h3 {
@@ -2647,8 +2640,8 @@ body.games-page .scroll-animation {
     border-radius: 20px;
     background: white;
     transition: all 0.3s ease;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
     border: 1px solid rgba(255, 255, 255, 0.9);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
 }
 
 .research-card:hover {
@@ -2679,6 +2672,7 @@ body.games-page .scroll-animation {
 .research-card p {
     font-size: 13px;
     line-height: 1.6;
+    text-align: justify;
     margin-bottom: 20px;
     color: var(--text-secondary);
 }
@@ -2711,6 +2705,7 @@ body.games-page .scroll-animation {
     position: relative;
     align-items: center;
     margin-bottom: 40px;
+    text-align: justify;
     justify-content: space-between;
 }
 
@@ -2732,12 +2727,17 @@ body.games-page .scroll-animation {
 }
 
 .timeline-year {
-    width: 45%;
+    width: auto;
+    margin: 0 auto;
+    color: white;
     font-size: 14px;
     font-weight: 700;
+    padding: 10px 20px;
     text-align: center;
     letter-spacing: 1px;
-    color: var(--text-primary);
+    border-radius: 15px;
+    background: black;
+    display: inline-block;
     text-transform: uppercase;
 }
 
@@ -2792,6 +2792,7 @@ body.games-page .scroll-animation {
 .pub-item p {
     font-size: 13px;
     line-height: 1.6;
+    text-align: justify;
     color: var(--text-secondary);
 }
 
@@ -3162,11 +3163,11 @@ body.games-page .scroll-animation {
     }
 
     .timeline-year {
-        left: 0;
         top: 0;
-        width: 60px;
+        left: 0;
         font-size: 12px;
         text-align: left;
+        padding: 5px 10px;
         position: absolute;
     }
 

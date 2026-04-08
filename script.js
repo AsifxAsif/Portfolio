@@ -2441,72 +2441,72 @@ function initializeGamesPage() {
                 status: "available",
                 gameFile: "rubiks-cube.html",
                 color: "#00a86b"
-            },
-            {
-                id: 2,
-                title: "Tic Tac Toe",
-                icon: "fa-xmark",
-                image: null,
-                iconUrl: "https://img.icons8.com/external-tal-revivo-shadow-tal-revivo/96/external-tic-tak-toe-cross-and-circle-matrix-game-with-work-strategy-concept-business-shadow-tal-revivo.png",
-                iconType: "colored",
-                description: "Classic X's and O's! Play against a friend and see who can get three in a row first.",
-                tags: ["Strategy", "2-Player", "Classic"],
-                status: "available",
-                gameFile: "tic-tac-toe.html",
-                color: "#ff9800"
-            },
-            {
-                id: 3,
-                title: "Snake Game",
-                icon: "fa-arrow-right",
-                image: null,
-                iconUrl: "https://img.icons8.com/external-those-icons-lineal-color-those-icons/96/external-snake-video-games-those-icons-lineal-color-those-icons.png",
-                iconType: "colored",
-                description: "Control the snake, eat food, and grow longer! Don't hit the walls or yourself.",
-                tags: ["Arcade", "Retro", "Reaction"],
-                status: "available",
-                gameFile: "snake.html",
-                color: "#ff2a2a"
-            },
-            {
-                id: 4,
-                title: "Flappy Bird",
-                icon: "fa-dove",
-                image: null,
-                iconUrl: "https://img.icons8.com/ios/50/dove.png",
-                iconType: "white",
-                description: "Navigate through pipes and see how far you can go in this addictive arcade game.",
-                tags: ["Arcade", "Endless", "Coming Soon"],
-                status: "coming-soon",
-                gameFile: null,
-                color: "#9c27b0"
-            },
-            {
-                id: 5,
-                title: "2048 Puzzle",
-                icon: "fa-cube",
-                image: null,
-                iconUrl: "https://img.icons8.com/ios/50/rubiks-cube.png",
-                iconType: "white",
-                description: "Merge the tiles and reach the 2048 tile! An addictive number puzzle game.",
-                tags: ["Puzzle", "Numbers", "Strategy"],
-                status: "coming-soon",
-                gameFile: null,
-                color: "#3f51b5"
-            },
-            {
-                id: 6,
-                title: "Space Shooter",
-                icon: "fa-rocket",
-                image: null,
-                iconUrl: "https://img.icons8.com/ios/50/rocket.png",
-                iconType: "white",
-                description: "Defend Earth from alien invaders! Shoot down enemies and survive as long as possible.",
-                tags: ["Arcade", "Action", "Shooter"],
-                status: "coming-soon",
-                gameFile: null,
-                color: "#e91e63"
             }
+            // {
+            //     id: 2,
+            //     title: "Tic Tac Toe",
+            //     icon: "fa-xmark",
+            //     image: null,
+            //     iconUrl: "https://img.icons8.com/external-tal-revivo-shadow-tal-revivo/96/external-tic-tak-toe-cross-and-circle-matrix-game-with-work-strategy-concept-business-shadow-tal-revivo.png",
+            //     iconType: "colored",
+            //     description: "Classic X's and O's! Play against a friend and see who can get three in a row first.",
+            //     tags: ["Strategy", "2-Player", "Classic"],
+            //     status: "coming-soon",
+            //     gameFile: null,
+            //     color: "#ff9800"
+            // },
+            // {
+            //     id: 3,
+            //     title: "Snake Game",
+            //     icon: "fa-arrow-right",
+            //     image: null,
+            //     iconUrl: "https://img.icons8.com/external-those-icons-lineal-color-those-icons/96/external-snake-video-games-those-icons-lineal-color-those-icons.png",
+            //     iconType: "colored",
+            //     description: "Control the snake, eat food, and grow longer! Don't hit the walls or yourself.",
+            //     tags: ["Arcade", "Retro", "Reaction"],
+            //     status: "coming-soon",
+            //     gameFile: null,
+            //     color: "#ff2a2a"
+            // },
+            // {
+            //     id: 4,
+            //     title: "Flappy Bird",
+            //     icon: "fa-dove",
+            //     image: null,
+            //     iconUrl: "https://img.icons8.com/ios/50/dove.png",
+            //     iconType: "white",
+            //     description: "Navigate through pipes and see how far you can go in this addictive arcade game.",
+            //     tags: ["Arcade", "Endless", "Coming Soon"],
+            //     status: "coming-soon",
+            //     gameFile: null,
+            //     color: "#9c27b0"
+            // },
+            // {
+            //     id: 5,
+            //     title: "2048 Puzzle",
+            //     icon: "fa-cube",
+            //     image: null,
+            //     iconUrl: "https://img.icons8.com/ios/50/rubiks-cube.png",
+            //     iconType: "white",
+            //     description: "Merge the tiles and reach the 2048 tile! An addictive number puzzle game.",
+            //     tags: ["Puzzle", "Numbers", "Strategy"],
+            //     status: "coming-soon",
+            //     gameFile: null,
+            //     color: "#3f51b5"
+            // },
+            // {
+            //     id: 6,
+            //     title: "Space Shooter",
+            //     icon: "fa-rocket",
+            //     image: null,
+            //     iconUrl: "https://img.icons8.com/ios/50/rocket.png",
+            //     iconType: "white",
+            //     description: "Defend Earth from alien invaders! Shoot down enemies and survive as long as possible.",
+            //     tags: ["Arcade", "Action", "Shooter"],
+            //     status: "coming-soon",
+            //     gameFile: null,
+            //     color: "#e91e63"
+            // }
         ];
 
         const gamesContainer = document.getElementById('gamesContainer');
