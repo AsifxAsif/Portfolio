@@ -456,7 +456,7 @@ const projectsData = [
             platform: "Oracle APEX"
         },
         links: {
-            sourceCode: null,
+            sourceCode: "https://github.com/AsifxAsif/RestaurantManagement",
             liveDemo: "https://oracleapex.com/ords/r/158156327795239139129/rms",
             documentation: null
         },
@@ -1204,7 +1204,7 @@ function initializeProjectsPage() {
                 3: "https://github.com/AsifxAsif/Hog_plum_disease",
                 4: "https://github.com/AsifxAsif/Smart-Energy-Monitoring",
                 5: "https://github.com/AsifxAsif/Campus-Network-Design",
-                6: null,
+                6: "https://github.com/AsifxAsif/RestaurantManagement",
                 7: "https://github.com/AsifxAsif/CSE412_Group2",
                 8: "https://github.com/yourusername/edmond-karp-algorithm",
                 9: "https://github.com/AsifxAsif/XTry-Visual-TryOn"
