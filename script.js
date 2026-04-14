@@ -456,15 +456,12 @@ const projectsData = [
             platform: "Oracle APEX"
         },
         links: {
-            sourceCode: "https://github.com/yourusername/restaurant-management",
-            liveDemo: "https://apex.oracle.com/yourworkspace/restaurant",
-            documentation: "./assets/document/restaurant-management-documentation.pdf"
+            sourceCode: null,
+            liveDemo: "https://oracleapex.com/ords/r/158156327795239139129/rms",
+            documentation: null
         },
         details: {
             overview: "Complete restaurant management system developed using Oracle Application Express (APEX) with comprehensive database design and reporting capabilities.",
-            projectId: "128755",
-            workspace: "ahanaf",
-            authentication: "Custom authentication system",
             users: [
                 "Admin: Asif (asif12)",
                 "Admin: Ahanaf (ahanaf12)",
@@ -479,7 +476,7 @@ const projectsData = [
                 trigger: "Customer form trigger to assign random value to customer points"
             },
             database: {
-                tables: ["Usera", "Menu", "Order", "Reservation", "Restaurant_table", "Employee", "Customer"],
+                tables: ["Users", " Menu", " Order", " Reservation", " Restaurant_table", " Employee", " Customer"],
                 relationships: "Properly normalized with foreign key constraints",
                 queries: "Complex SQL queries with joins and aggregations"
             },
@@ -1195,19 +1192,25 @@ function initializeProjectsPage() {
         }
 
         function getCodeSampleLink(project) {
+            // Check if sourceCode exists and is not null/empty
+            if (project.links && project.links.sourceCode && project.links.sourceCode !== '') {
+                return project.links.sourceCode;
+            }
+
+            // Fallback for backward compatibility
             const codeLinks = {
                 1: "https://github.com/AsifxAsif/Nexus_backend",
                 2: "https://github.com/Nayma-Amin/Lost-and-Found",
                 3: "https://github.com/AsifxAsif/Hog_plum_disease",
                 4: "https://github.com/AsifxAsif/Smart-Energy-Monitoring",
                 5: "https://github.com/AsifxAsif/Campus-Network-Design",
-                6: "https://github.com/yourusername/restaurant-management",
+                6: null,
                 7: "https://github.com/AsifxAsif/CSE412_Group2",
                 8: "https://github.com/yourusername/edmond-karp-algorithm",
                 9: "https://github.com/AsifxAsif/XTry-Visual-TryOn"
             };
 
-            return codeLinks[project.id] || "https://github.com/yourusername";
+            return codeLinks[project.id] || null;
         }
 
         card.innerHTML = `
@@ -1235,9 +1238,12 @@ function initializeProjectsPage() {
                 </div>
 
                 <div class="project-links">
-                    <a href="project-details.html?id=${project.id}" class="project-link primary">View Details</a>
-                    <a href="${getCodeSampleLink(project)}" class="project-link secondary" target="_blank" rel="noopener noreferrer">Code Samples</a>
-                </div>
+    <a href="project-details.html?id=${project.id}" class="project-link primary">View Details</a>
+    ${getCodeSampleLink(project) ?
+                `<a href="${getCodeSampleLink(project)}" class="project-link secondary" target="_blank" rel="noopener noreferrer">Code Samples</a>` :
+                `<a href="javascript:void(0)" class="project-link secondary disabled" style="opacity: 0.5; cursor: not-allowed; pointer-events: none;">Code Samples</a>`
+            }
+</div>
             </div>
             <div class="project-stats">
                 <div class="project-stat">
@@ -1483,12 +1489,24 @@ function initializeProjectDetailsPage() {
             });
         }
 
-        const sourceCodeLink = project.links?.sourceCode || '#';
+        // Check for valid links (not null, not empty string)
+        const sourceCodeLink = project.links?.sourceCode;
         const liveDemoLink = project.links?.liveDemo;
-        const documentationLink = project.links?.documentation || '#';
+        const documentationLink = project.links?.documentation;
+
+        // Create buttons only if links exist
+        let sourceCodeButton = '';
+        if (sourceCodeLink && sourceCodeLink !== '') {
+            sourceCodeButton = `
+                <a href="${sourceCodeLink}" class="project-link-btn primary" target="_blank" rel="noopener noreferrer">
+                    <i class="fa-brands fa-github"></i>
+                    <span>View Source Code</span>
+                </a>
+            `;
+        }
 
         let liveDemoButton = '';
-        if (liveDemoLink) {
+        if (liveDemoLink && liveDemoLink !== '') {
             liveDemoButton = `
                 <a href="${liveDemoLink}" class="project-link-btn secondary" target="_blank" rel="noopener noreferrer">
                     <i class="fa-solid fa-external-link-alt"></i>
@@ -1496,6 +1514,19 @@ function initializeProjectDetailsPage() {
                 </a>
             `;
         }
+
+        let documentationButton = '';
+        if (documentationLink && documentationLink !== '') {
+            documentationButton = `
+                <a href="${documentationLink}" class="project-link-btn secondary" target="_blank" rel="noopener noreferrer">
+                    <i class="fa-solid fa-file-pdf"></i>
+                    <span>Documentation</span>
+                </a>
+            `;
+        }
+
+        // Check if there are any valid links
+        const hasAnyLinks = sourceCodeButton || liveDemoButton || documentationButton;
 
         return `
             <div class="project-header-section">
@@ -1557,20 +1588,16 @@ function initializeProjectDetailsPage() {
                 </div>
                 
                 <div class="sidebar-content">
-                    <div class="project-section">
-                        <h2>PROJECT LINKS</h2>
-                        <div class="project-links-section">
-                            <a href="${sourceCodeLink}" class="project-link-btn primary" ${sourceCodeLink !== '#' ? 'target="_blank" rel="noopener noreferrer"' : ''}>
-                                <i class="fa-brands fa-github"></i>
-                                <span>View Source Code</span>
-                            </a>
-                            ${liveDemoButton}
-                            <a href="${documentationLink}" class="project-link-btn secondary" ${documentationLink !== '#' ? 'target="_blank" rel="noopener noreferrer"' : ''}>
-                                <i class="fa-solid fa-file-pdf"></i>
-                                <span>Documentation</span>
-                            </a>
+                    ${hasAnyLinks ? `
+                        <div class="project-section">
+                            <h2>PROJECT LINKS</h2>
+                            <div class="project-links-section">
+                                ${sourceCodeButton}
+                                ${liveDemoButton}
+                                ${documentationButton}
+                            </div>
                         </div>
-                    </div>
+                    ` : ''}
                     
                     ${teamMembersHTML ? `
                         <div class="project-section">
