@@ -519,8 +519,8 @@ const projectsData = [
             }
         ],
         links: {
-            sourceCode: "https://github.com/AsifxAsif/CSE412_Group2",
-            liveDemo: "https://asifxasif.github.io/CSE412_Group2/",
+            sourceCode: "https://github.com/AsifxAsif/DropNova",
+            liveDemo: "https://dropnova.infinityfree.me/",
             documentation: "./assets/document/dropnova-documentation.pdf"
         },
         details: {
@@ -1205,7 +1205,7 @@ function initializeProjectsPage() {
                 4: "https://github.com/AsifxAsif/Smart-Energy-Monitoring",
                 5: "https://github.com/AsifxAsif/Campus-Network-Design",
                 6: "https://github.com/AsifxAsif/RestaurantManagement",
-                7: "https://github.com/AsifxAsif/CSE412_Group2",
+                7: "https://github.com/AsifxAsif/DropNova",
                 8: "https://github.com/yourusername/edmond-karp-algorithm",
                 9: "https://github.com/AsifxAsif/XTry-Visual-TryOn"
             };
