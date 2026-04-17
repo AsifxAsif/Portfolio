@@ -549,73 +549,83 @@ const projectsData = [
     },
     {
         id: 8,
-        title: "Edmond Karp Algorithm",
+        title: "Infix To Prefix/Postfix Calculator",
         category: "Algorithms",
-        categories: ["system"],
-        date: "June 2024",
-        team: "Individual Project",
-        description: "Implementation of the Edmonds-Karp algorithm for computing maximum flow in flow networks. Includes theoretical foundations, algorithm steps, Java implementation, and real-world applications analysis.",
-        tech: ["Java", "Algorithms", "Graph Theory", "BFS", "Network Flow"],
+        categories: ["system", "testing"],
+        date: "Fall 2024",
+        team: "Team: 5",
+        description: "Data Structures project implementing infix to prefix/postfix conversion and evaluation using stack and queue data structures. Features include expression conversion, evaluation, and operator precedence handling.",
+        tech: ["C", "Data Structures", "Stack", "Queue", "Expression Evaluation", "Algorithm Design"],
         features: [
-            "Edmonds-Karp algorithm implementation",
-            "BFS for shortest augmenting paths",
-            "Time complexity analysis O(VE²)",
-            "Graphical representation of flow",
-            "Real-world applications analysis"
+            "Infix to Postfix conversion using Stack",
+            "Infix to Prefix conversion with string reversal",
+            "Postfix expression evaluation",
+            "Prefix expression evaluation",
+            "Operator precedence handling (+, -, *, /, ^)",
+            "Interactive console-based menu system"
         ],
         stats: {
-            complexity: "O(VE²)",
-            implementation: "Java",
-            applications: "6+"
+            operations: "4",
+            structures: "2"
         },
         images: [
             {
-                url: "./assets/images/edmond-karp-graph.webp",
-                caption: "Flow Network Visualization"
+                url: "./assets/images/infix-prefix-postfix-menu.webp",
+                caption: "Calculator Menu Interface"
             },
             {
-                url: "./assets/images/edmond-karp-residual.webp",
-                caption: "Residual Graph"
-            },
-            {
-                url: "./assets/images/edmond-karp-output.webp",
-                caption: "Algorithm Output"
+                url: "./assets/images/infix-prefix-postfix-conversion.webp",
+                caption: "Expression Conversion Example"
             }
         ],
         links: {
-            sourceCode: "https://github.com/yourusername/edmond-karp-algorithm",
+            sourceCode: "https://github.com/AsifxAsif/Infix-Prefix-Postfix-Calculator",
             liveDemo: null,
-            documentation: "./assets/document/edmond-karp-documentation.pdf"
+            documentation: "./assets/document/infix-calculator-documentation.pdf"
         },
         details: {
-            overview: "The Edmonds-Karp algorithm is an implementation of the Ford-Fulkerson method for computing the maximum flow in a flow network, using BFS to find shortest augmenting paths.",
-            algorithm: {
-                steps: [
-                    "Initialize flow to zero",
-                    "Find augmenting path using BFS",
-                    "Augment flow along the path",
-                    "Repeat until no augmenting path exists"
-                ],
-                complexity: "O(VE²) where V = vertices, E = edges",
-                advantage: "Polynomial time complexity, simplicity, general applicability"
+            overview: "The Infix to Prefix and Postfix Calculator converts arithmetic expressions from infix notation to prefix and postfix notations using stack and queue data structures. This project demonstrates fundamental data structure concepts in expression evaluation, compiler design, and mathematical software development.",
+            problem: "Arithmetic expressions in standard infix notation require operator precedence and parentheses handling, making direct evaluation complex for computers.",
+            solution: "Convert infix expressions to postfix (Reverse Polish Notation) or prefix notation using stack-based algorithms, then evaluate them efficiently.",
+            technologies: ["C Programming", "Dynamic Memory Allocation", "Stack Implementation", "Queue Implementation", "String Manipulation"],
+            algorithms: {
+                "infix To Postfix": "Uses stack to handle operators and parentheses, outputting operands in order while managing operator precedence",
+                "infix To Prefix": "Reverses the infix expression, swaps parentheses, applies similar logic to postfix conversion, then reverses the result",
+                evaluation: "Postfix uses stack with operands; Prefix processes from right to left using stack"
             },
-            implementation: {
-                language: "Java",
-                features: ["BFS for path finding", "Residual graph management", "Flow augmentation"],
-                output: "Maximum flow value calculation"
+            dataStructures: {
+                stack: "createStack(), isEmpty(), push(), pop(), peek() for LIFO operations",
+                queue: "createQueue(), isQueueEmpty(), enqueue(), dequeue() for FIFO operations"
+            },
+            operatorPrecedence: {
+                level1: "+ , - (Precedence 1)",
+                level2: "* , / (Precedence 2)",
+                level3: "^ (Precedence 3)"
+            },
+            features: {
+                menu: "Interactive menu with 3 options: Prefix conversion, Postfix conversion, Exit",
+                conversion: "Convert any valid infix expression to prefix or postfix notation",
+                evaluation: "Automatically evaluate converted expressions and display results",
+                validation: "Handles invalid choices and prompts user for correct input"
             },
             applications: [
-                "Network Design: Maximum data transfer capacity",
-                "Image Segmentation: Graph-based segmentation",
-                "Airline Scheduling: Flight routing optimization",
-                "Traffic Routing: Vehicle flow management",
-                "Water Distribution: Resource flow optimization",
-                "Power Grid Management: Electricity flow balancing"
+                "Compiler Design: Expression parsing and code generation",
+                "Calculator Development: Scientific and programming calculators",
+                "Interpreter Implementation: Expression evaluation in scripting languages",
+                "Mathematical Software: Symbolic computation systems"
             ],
             limitations: [
-                "High complexity for dense graphs",
-                "Memory intensive for large networks",
-                "Not suitable for real-time applications"
+                "Single-digit operands only (0-9)",
+                "No support for variables or functions",
+                "Basic arithmetic operators only",
+                "Console-based interface"
+            ],
+            futureWork: [
+                "Support for multi-digit numbers and decimal points",
+                "Variable support and memory storage",
+                "Additional mathematical functions (sin, cos, log, sqrt)",
+                "Graphical user interface implementation",
+                "Support for unary operators"
             ]
         }
     },
