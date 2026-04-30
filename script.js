@@ -679,7 +679,7 @@ const projectsData = [
         },
         details: {
             overview: "XTry is a visual try-on application that uses Augmented Reality to enhance the online shopping experience for fashion accessories. It combines native Android capabilities with WebAR technology to provide real-time virtual try-on for glasses, jewelry, watches, and rings.",
-            problem: "Online shoppers face high return rates (~30%) due to inability to physically try accessories before purchase. Existing solutions either lack interactivity (static overlays) or require separate app downloads.",
+            problem: "Online shoppers face high return rates (~30%) due to inability to physically try accessories before purchase. Existing solutions either lack interactivity (static overlays).",
             solution: "A hybrid AR solution that provides real-time, interactive virtual try-on directly within the shopping flow, using three-layer architecture for optimal performance and user experience.",
             team: [
                 "Md. Asifuzzaman (2021-3-60-167)",
@@ -689,9 +689,9 @@ const projectsData = [
             ],
             supervisor: "Md Al-Imran, Senior Lecturer, Department of Computer Science & Engineering, East West University",
             technologies: {
-                native: ["Android Studio", "Java", "Firebase Authentication", "SharedPreferences"],
-                web: ["HTML5", "CSS3", "JavaScript", "WebAR Studio", "WebXR Device API"],
-                architecture: ["Three-layer hybrid architecture", "WebView configuration", "JavaScriptInterface bridge"]
+                native: ["Android Studio", " Java", " Firebase Authentication", " SharedPreferences"],
+                web: ["HTML5", " CSS3", " JavaScript", " WebAR Studio", " WebXR Device API"],
+                architecture: ["Three-layer hybrid architecture", " WebView configuration", " JavaScriptInterface bridge"]
             },
             architecture: {
                 nativeContainer: "Manages Android lifecycle, runtime permissions (CAMERA, STORAGE), WebView configuration, hardware acceleration",
@@ -707,7 +707,7 @@ const projectsData = [
             features: {
                 authentication: "Firebase email/password authentication with email verification and Remember Me functionality",
                 arIntegration: "WebAR via WebView with contextual camera permission requests",
-                productCategories: ["Glasses", "Jewelry (necklaces, rings, earrings)", "Watches"],
+                productCategories: ["Glasses", " Jewelry (necklaces, rings, earrings)", " Watches"],
                 navigation: "Bottom navigation tabs, side drawer menu, category-based filtering",
                 ui: "Consistent theming, responsive layouts, vector icons, touch-optimized targets"
             },
