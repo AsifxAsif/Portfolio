@@ -2474,6 +2474,7 @@ function initializeGamesPage() {
                 iconUrl: "https://img.icons8.com/external-smashingstocks-hand-drawn-color-smashing-stocks/100/external-Rubik's-Cube-recreation-and-hobbies-smashingstocks-hand-drawn-color-smashing-stocks.png",
                 iconType: "colored",
                 description: "Solve the Rubik's Cube with our interactive solver! Learn algorithms and improve your solving skills.",
+                features: ["Interactive 3D Rubik's Cube", "Timer to track your solves", "Multiple scramble lengths", "Smooth touch/drag controls", "Solve statistics tracking"],
                 tags: ["Puzzle", "Brain Training", "Logic"],
                 status: "available",
                 gameFile: "rubiks-cube.html",
@@ -2553,15 +2554,11 @@ function initializeGamesPage() {
                 let imageContent = '';
 
                 if (game.status === 'available' && game.image) {
-                    // Use local image for available games
                     imageContent = `<img src="${game.image}" alt="${game.title}" loading="lazy">`;
                 } else if (game.iconUrl) {
-                    // Use icon URL with appropriate class based on iconType
-                    // Force all icons to 100x100 using CSS class
                     const iconClass = game.iconType === 'colored' ? 'game-icon-img colored-icon' : 'game-icon-img white-icon';
                     imageContent = `<img src="${game.iconUrl}" alt="${game.title}" class="${iconClass}" width="100" height="100">`;
                 } else {
-                    // Fallback to Font Awesome icon
                     imageContent = `<div class="game-placeholder"><i class="fa-solid ${game.icon}"></i></div>`;
                 }
 
@@ -2574,6 +2571,14 @@ function initializeGamesPage() {
                         <div class="game-card-content">
                             <h3>${game.title}</h3>
                             <p>${game.description}</p>
+                            ${game.features ? `
+                            <div class="game-features">
+                                <strong>Key Features:</strong>
+                                <ul class="game-features-list">
+                                    ${game.features.map(feature => `<li>${feature}</li>`).join('')}
+                                </ul>
+                            </div>
+                            ` : ''}
                             <div class="game-tags">
                                 ${game.tags.map(tag => `<span class="game-tag">${tag}</span>`).join('')}
                             </div>
@@ -2592,7 +2597,6 @@ function initializeGamesPage() {
                     e.stopPropagation();
 
                     if (status === 'available' && gameFile && gameFile !== '') {
-                        // Open the game in a new tab
                         window.open(`./assets/games/${gameFile}`, '_blank');
                     } else {
                         showGamePopup("Coming Soon! 🎮", "This game is under development. Check back later!", e);
