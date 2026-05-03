@@ -1235,6 +1235,84 @@ body.games-page .scroll-animation {
 }
 
 /* ==================== PROJECT-DETAILS.HTML STYLES ==================== */
+.performance-table-container {
+    margin: 20px 0;
+    overflow-x: auto;
+}
+
+.performance-table {
+    width: 100%;
+    font-size: 13px;
+    overflow: hidden;
+    border-radius: 16px;
+    background: white;
+    border-collapse: collapse;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.performance-table thead tr {
+    color: white;
+    background: black;
+}
+
+.performance-table th,
+.performance-table td {
+    padding: 12px 15px;
+    text-align: center;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.performance-table th {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+.performance-table td {
+    color: var(--text-secondary);
+}
+
+.performance-table tr:hover td {
+    background: #f8f9fa;
+}
+
+.device-badge {
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 20px;
+    display: inline-block;
+    letter-spacing: 0.5px;
+}
+
+.device-badge.high {
+    color: white;
+    background: #00a86b;
+}
+
+.device-badge.mid {
+    color: white;
+    background: #ff9800;
+}
+
+.device-badge.entry {
+    color: white;
+    background: #ff2a2a;
+}
+
+.high-end td {
+    background: rgba(0, 168, 107, 0.05);
+}
+
+.mid-range td {
+    background: rgba(255, 152, 0, 0.05);
+}
+
+.entry-level td {
+    background: rgba(255, 42, 42, 0.05);
+}
+
 .project-details-container {
     width: 100%;
     margin: 0 auto;
@@ -3187,6 +3265,17 @@ body.games-page .scroll-animation {
     .project-stats {
         gap: 15px;
         flex-wrap: wrap;
+    }
+
+    .performance-table th,
+    .performance-table td {
+        padding: 8px 10px;
+        font-size: 11px;
+    }
+
+    .device-badge {
+        padding: 3px 8px;
+        font-size: 9px;
     }
 
     .category-filters {

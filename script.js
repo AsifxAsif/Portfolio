@@ -1459,9 +1459,62 @@ function initializeProjectDetailsPage() {
         }
 
         let detailsSections = '';
+
+        // Special handling for XTry project (id: 9) - Add performance table
+        if (project.id === 9 && project.details && project.details.performance) {
+            const perf = project.details.performance;
+            detailsSections += `
+        <div class="project-section">
+            <h2>📊 PERFORMANCE METRICS</h2>
+            <div class="section-content">
+                <div class="performance-table-container">
+                    <table class="performance-table">
+                        <thead>
+                            <tr>
+                                <th>Device Tier</th>
+                                <th>App Launch</th>
+                                <th>AR Load Time</th>
+                                <th>Memory Usage</th>
+                                <th>Frame Rate</th>
+                                <th>Success Rate</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="high-end">
+                                <td><span class="device-badge high">High-End</span></td>
+                                <td>${perf.highEnd?.split(',')[0]?.split(':')[1]?.trim() || '1.2s'}</td>
+                                <td>${perf.highEnd?.split(',')[1]?.split(':')[1]?.trim() || '2.1s'}</td>
+                                <td>${perf.highEnd?.split(',')[2]?.split(':')[1]?.trim() || '142MB'}</td>
+                                <td>${perf.highEnd?.split(',')[3]?.split(':')[1]?.trim() || '58fps'}</td>
+                                <td>${perf.successRate?.split(',')[0]?.trim() || '98%'}</td>
+                            </tr>
+                            <tr class="mid-range">
+                                <td><span class="device-badge mid">Mid-Range</span></td>
+                                <td>${perf.midRange?.split(',')[0]?.split(':')[1]?.trim() || '1.8s'}</td>
+                                <td>${perf.midRange?.split(',')[1]?.split(':')[1]?.trim() || '3.2s'}</td>
+                                <td>${perf.midRange?.split(',')[2]?.split(':')[1]?.trim() || '156MB'}</td>
+                                <td>${perf.midRange?.split(',')[3]?.split(':')[1]?.trim() || '42fps'}</td>
+                                <td>${perf.successRate?.split(',')[1]?.trim() || '92%'}</td>
+                            </tr>
+                            <tr class="entry-level">
+                                <td><span class="device-badge entry">Entry-Level</span></td>
+                                <td>${perf.entryLevel?.split(',')[0]?.split(':')[1]?.trim() || '3.1s'}</td>
+                                <td>${perf.entryLevel?.split(',')[1]?.split(':')[1]?.trim() || '6.8s'}</td>
+                                <td>${perf.entryLevel?.split(',')[2]?.split(':')[1]?.trim() || '175MB'}</td>
+                                <td>${perf.entryLevel?.split(',')[3]?.split(':')[1]?.trim() || '24fps'}</td>
+                                <td>${perf.successRate?.split(',')[2]?.trim() || '76%'}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    `;
+        }
+
         if (project.details) {
             Object.keys(project.details).forEach(sectionKey => {
-                if (sectionKey !== 'team' && sectionKey !== 'id') {
+                if (sectionKey !== 'team' && sectionKey !== 'id' && sectionKey !== 'performance') {
                     let sectionContent = '';
                     const sectionData = project.details[sectionKey];
 
