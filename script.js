@@ -673,9 +673,9 @@ const projectsData = [
             }
         ],
         links: {
-            sourceCode: "https://github.com/AsifxAsif/XTry-Visual-TryOn",
+            sourceCode: null,
             liveDemo: null,
-            documentation: "./assets/document/xtry-capstone-documentation.pdf"
+            documentation: "./assets/document/xtry-documentation.pdf"
         },
         details: {
             overview: "XTry is a visual try-on application that uses Augmented Reality to enhance the online shopping experience for fashion accessories. It combines native Android capabilities with WebAR technology to provide real-time virtual try-on for glasses, jewelry, watches, and rings.",
